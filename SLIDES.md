@@ -25,16 +25,15 @@ Part 1 — Coding & Development Basics:
 - Icebreaker (10m)
 - Inference as Coding Scaffold
 - Problematics of Agentic Coding
-- Social Coding + Collaboration with GitHub
 - Setting up an IDE
 - The Command Line
-- Versioning + Project Management with Git
+- Initializing a Git Repo
 
 Part 2 — Installation & Setup:
 - Installing Gemini CLI
 - Login Setup
-- Exit Ticket (5m)
-- Next Steps (2.5m)
+- Exit Ticket
+- Next Steps
 
 ---
 
@@ -84,15 +83,7 @@ Part 2 — Installation & Setup:
 
 ---
 
-## Slide 8 — Social Coding + GitHub
-
-**Label:** Tool
-**Title:** Social Coding + Collaboration with GitHub
-**Stage:** _(visual — pending ITP materials)_
-
----
-
-## Slide 9 — Setting up an Interactive Development Environment
+## Slide 8 — Setting up an Interactive Development Environment
 
 **Label:** Setup
 **Title:** Setting up an Interactive Development Environment
@@ -105,7 +96,7 @@ Part 2 — Installation & Setup:
 
 ---
 
-## Slide 10 — What is VS Code?
+## Slide 9 — What is VS Code?
 
 **Label:** Concept
 **Title:** What is VS Code?
@@ -120,7 +111,7 @@ Part 2 — Installation & Setup:
 
 ---
 
-## Slide 11 — What is the Command Line?
+## Slide 10 — What is the Command Line?
 
 **Label:** Concept
 **Title:** What is the Command Line?
@@ -135,7 +126,7 @@ Part 2 — Installation & Setup:
 
 ---
 
-## Slide 12 — Opening Your Terminal
+## Slide 11 — Opening Your Terminal
 
 **Label:** Setup
 **Title:** Opening Your Terminal
@@ -146,20 +137,17 @@ Part 2 — Installation & Setup:
 
 ---
 
-## Slide 13 — Command Line Basics
+## Slide 12 — Command Line Basics
 
 **Label:** Tool
 **Title:** Command Line Basics
 
 **Stage (terminal):**
 ```
-# where am I?
-pwd
+# make a new folder
+mkdir my-project
 
-# list files
-ls -la
-
-# move into a folder
+# move into it
 cd my-project
 
 # go up one level
@@ -168,13 +156,19 @@ cd ..
 # create a file
 touch index.html
 
-# make a new folder
-mkdir assets
+# move file into folder
+mv index.html my-project
+
+# move into it
+cd my-project
+
+# list files
+ls
 ```
 
 ---
 
-## Slide 14 — What is Git? What is GitHub?
+## Slide 13 — What is Git? What is GitHub?
 
 **Label:** Concept
 **Title:** What is Git? What is GitHub?
@@ -182,6 +176,34 @@ mkdir assets
 **Stage (stageCompare):**
 - **Local — Git:** A version control system that runs on your computer. Tracks every change to your files so you can go back in time, undo mistakes, and work in parallel.
 - **Cloud — GitHub:** A website that stores your Git repositories online. Share code, collaborate with others, and host websites — all from your browser.
+
+---
+
+## Slide 14 — Initializing a Git Repo
+
+**Label:** Tool
+**Title:** Initializing a Git Repo
+
+**Stage (terminal, fragments):**
+```
+# initialize a repo
+git init
+
+# stage your changes
+git add .
+
+# save a snapshot
+git commit -m "first commit"
+
+# push to GitHub
+git push origin main
+
+# view history
+git log --oneline
+
+# check what changed
+git status
+```
 
 ---
 
@@ -212,35 +234,7 @@ mkdir assets
 
 ---
 
-## Slide 17 — Versioning + Project Management with Git
-
-**Label:** Tool
-**Title:** Versioning + Project Management with Git
-
-**Stage (terminal, fragments):**
-```
-# initialize a repo
-git init
-
-# stage your changes
-git add .
-
-# save a snapshot
-git commit -m "first commit"
-
-# push to GitHub
-git push origin main
-
-# view history
-git log --oneline
-
-# check what changed
-git status
-```
-
----
-
-## Slide 18 — Section Break: Part 2
+## Slide 17 — Section Break: Part 2
 
 **Tag:** Part 2
 **Title:** Installation & Setup
@@ -249,7 +243,7 @@ git status
 
 ---
 
-## Slide 19 — Installing Gemini CLI
+## Slide 18 — Installing Gemini CLI
 
 **Label:** Setup
 **Title:** Installing Gemini CLI
@@ -260,7 +254,7 @@ git status
 
 ---
 
-## Slide 20 — Login Setup
+## Slide 19 — Login Setup
 
 **Label:** Setup
 **Title:** Login Setup
@@ -273,7 +267,7 @@ git status
 
 ---
 
-## Slide 21 — Troubleshooting
+## Slide 20 — Troubleshooting
 
 **Label:** Check-in
 **Title:** Troubleshooting
@@ -287,25 +281,23 @@ git status
 
 ---
 
-## Slide 22 — Exit Ticket
+## Slide 21 — Exit Ticket
 
-**Label:** Exit Ticket · 5 min
-**Title:** Exit Ticket
-**Time:** 5 min
+**Label:** Exit Ticket
+**Title:** What's Your Next Move?
 **Stage:** _(reflection prompts · to fill)_
 
 ---
 
-## Slide 23 — Next Steps
+## Slide 22 — Next Steps
 
-**Label:** Next Steps · 2.5 min
+**Label:** Next Steps
 **Title:** Next Steps
-**Time:** 2.5 min
 **Stage:** _(to fill)_
 
 ---
 
-## Slide 24 — Resources
+## Slide 23 — Resources
 
 **Label:** Resources
 **Title:** Links & References
@@ -326,4 +318,4 @@ git status
 
 ---
 
-_Last synced: 2026-03-01. Update both this file and `index.html` together._
+_Last synced: 2026-03-01 (sync from gen-dev-foundations; removed Slide 8 — Social Coding + GitHub; exit ticket updated). Update both this file and `index.html` together._

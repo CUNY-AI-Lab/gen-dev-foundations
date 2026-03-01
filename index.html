@@ -554,10 +554,9 @@
           <a class="agenda-item" href="#5"><span class="agenda-item-label">Demo</span></a>
           <a class="agenda-item" href="#6"><span class="agenda-item-label">Inference as Coding Scaffold</span></a>
           <a class="agenda-item" href="#7"><span class="agenda-item-label">Problematics of Agentic Coding</span></a>
-          <a class="agenda-item" href="#8"><span class="agenda-item-label">Social Coding + Collaboration with GitHub</span></a>
-          <a class="agenda-item" href="#9"><span class="agenda-item-label">Setting up an IDE</span></a>
-          <a class="agenda-item" href="#11"><span class="agenda-item-label">The Command Line</span></a>
-          <a class="agenda-item" href="#17"><span class="agenda-item-label">Versioning + Project Management with Git</span></a>
+          <a class="agenda-item" href="#8"><span class="agenda-item-label">Setting up an IDE</span></a>
+          <a class="agenda-item" href="#10"><span class="agenda-item-label">The Command Line</span></a>
+          <a class="agenda-item" href="#16"><span class="agenda-item-label">Initializing a Git Repo</span></a>
         </div>
 
         <div class="agenda-section">
@@ -565,10 +564,10 @@
             <span class="agenda-section-title">Part 2 — Installation &amp; Setup</span>
             <span class="agenda-section-time">30m</span>
           </div>
-          <a class="agenda-item" href="#19"><span class="agenda-item-label">Installing Gemini CLI</span></a>
-          <a class="agenda-item" href="#20"><span class="agenda-item-label">Login Setup</span></a>
-          <a class="agenda-item" href="#22"><span class="agenda-item-label">Exit Ticket</span></a>
-          <a class="agenda-item" href="#23"><span class="agenda-item-label">Next Steps</span></a>
+          <a class="agenda-item" href="#18"><span class="agenda-item-label">Installing Gemini CLI</span></a>
+          <a class="agenda-item" href="#19"><span class="agenda-item-label">Login Setup</span></a>
+          <a class="agenda-item" href="#21"><span class="agenda-item-label">Exit Ticket</span></a>
+          <a class="agenda-item" href="#22"><span class="agenda-item-label">Next Steps</span></a>
         </div>
 
       </div>
@@ -637,16 +636,6 @@
       <h1>Problematics of Agentic Coding</h1>
     </div>
     <!-- no-review vs deliberate iteration · oversight / authorship framing — content pending -->
-    <div class="stage" aria-hidden="true"><div class="ph"></div></div>
-  </section>
-
-  <!-- 8 · GITHUB -->
-  <section class="slide" data-slide="github" aria-label="Social coding and collaboration with GitHub">
-    <div class="content">
-      <div class="label">Tool</div>
-      <h1>Social Coding + Collaboration with GitHub</h1>
-    </div>
-    <!-- visual: repos, forks, issues, pull requests, GitHub Pages — pending ITP materials -->
     <div class="stage" aria-hidden="true"><div class="ph"></div></div>
   </section>
 
@@ -740,12 +729,13 @@
     </div>
     <div class="stage" aria-hidden="true">
       <div class="term-box" role="img" aria-label="CLI command examples">
-        <div class="frag"><span class="dim"># where am I?</span><br><span class="hl">pwd</span></div>
-        <div class="frag"><br><span class="dim"># list files</span><br><span class="hl">ls</span> -la</div>
-        <div class="frag"><br><span class="dim"># move into a folder</span><br><span class="hl">cd</span> my-project</div>
+        <div class="frag"><span class="dim"># make a new folder</span><br><span class="hl">mkdir</span> my-project</div>
+        <div class="frag"><br><span class="dim"># move into it</span><br><span class="hl">cd</span> my-project</div>
         <div class="frag"><br><span class="dim"># go up one level</span><br><span class="hl">cd</span> ..</div>
         <div class="frag"><br><span class="dim"># create a file</span><br><span class="hl">touch</span> index.html</div>
-        <div class="frag"><br><span class="dim"># make a new folder</span><br><span class="hl">mkdir</span> assets</div>
+        <div class="frag"><br><span class="dim"># move file into folder</span><br><span class="hl">mv</span> index.html my-project</div>
+        <div class="frag"><br><span class="dim"># move into it</span><br><span class="hl">cd</span> my-project</div>
+        <div class="frag"><br><span class="dim"># list files</span><br><span class="hl">ls</span></div>
       </div>
     </div>
   </section>
@@ -772,7 +762,25 @@
     </div>
   </section>
 
-  <!-- 15 · LOGGING INTO GITHUB -->
+  <!-- 15 · GIT COMMANDS -->
+  <section class="slide" data-slide="git" aria-label="Initializing a Git repo">
+    <div class="content">
+      <div class="label">Tool</div>
+      <h1>Initializing a Git Repo</h1>
+    </div>
+    <div class="stage" aria-hidden="true">
+      <div class="term-box" role="img" aria-label="Git command examples">
+        <div class="frag"><span class="dim"># initialize a repo</span><br>git <span class="hl">init</span></div>
+        <div class="frag"><br><span class="dim"># stage your changes</span><br>git <span class="hl">add</span> .</div>
+        <div class="frag"><br><span class="dim"># save a snapshot</span><br>git <span class="hl">commit</span> -m <span class="str">"first commit"</span></div>
+        <div class="frag"><br><span class="dim"># push to GitHub</span><br>git <span class="hl">push</span> origin main</div>
+        <div class="frag"><br><span class="dim"># view history</span><br>git <span class="hl">log</span> --oneline</div>
+        <div class="frag"><br><span class="dim"># check what changed</span><br>git <span class="hl">status</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 16 · LOGGING INTO GITHUB -->
   <section class="slide" data-slide="gh-login" aria-label="Logging into GitHub from the command line">
     <div class="content">
       <div class="label">Setup</div>
@@ -790,7 +798,7 @@ winget install GitHub.cli  # Windows</span></div></div>
     </div>
   </section>
 
-  <!-- 16 · CREATING A GITHUB REPOSITORY -->
+  <!-- 17 · CREATING A GITHUB REPOSITORY -->
   <section class="slide" data-slide="gh-repo" aria-label="Creating a GitHub repository">
     <div class="content">
       <div class="label">Setup</div>
@@ -803,24 +811,6 @@ winget install GitHub.cli  # Windows</span></div></div>
         <div class="step-row frag"><div class="step-num">3</div><div class="step-text">Stage, commit, and publish to GitHub:<span class="code-block">git add . &amp;&amp; git commit -m "first commit"
 gh repo create my-project --public --source=. --push</span></div></div>
         <div class="step-row frag"><div class="step-num">4</div><div class="step-text">Visit <strong>github.com/your-username/my-project</strong> to see it live</div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 17 · GIT COMMANDS -->
-  <section class="slide" data-slide="git" aria-label="Versioning and project management with Git">
-    <div class="content">
-      <div class="label">Tool</div>
-      <h1>Versioning + Project Management with Git</h1>
-    </div>
-    <div class="stage" aria-hidden="true">
-      <div class="term-box" role="img" aria-label="Git command examples">
-        <div class="frag"><span class="dim"># initialize a repo</span><br>git <span class="hl">init</span></div>
-        <div class="frag"><br><span class="dim"># stage your changes</span><br>git <span class="hl">add</span> .</div>
-        <div class="frag"><br><span class="dim"># save a snapshot</span><br>git <span class="hl">commit</span> -m <span class="str">"first commit"</span></div>
-        <div class="frag"><br><span class="dim"># push to GitHub</span><br>git <span class="hl">push</span> origin main</div>
-        <div class="frag"><br><span class="dim"># view history</span><br>git <span class="hl">log</span> --oneline</div>
-        <div class="frag"><br><span class="dim"># check what changed</span><br>git <span class="hl">status</span></div>
       </div>
     </div>
   </section>
@@ -909,8 +899,8 @@ eval "$(/opt/homebrew/bin/brew shellenv)"</span>
   <!-- 22 · EXIT TICKET -->
   <section class="slide" data-slide="exit" aria-label="Exit ticket">
     <div class="content">
-      <div class="label">Exit Ticket · 5 min</div>
-      <h1>Exit Ticket</h1>
+      <div class="label">Exit Ticket</div>
+      <h1>What's Your Next Move?</h1>
     </div>
     <!-- reflection prompts — to be filled from workshop materials -->
     <div class="stage" aria-hidden="true"><div class="ph"></div></div>
@@ -919,7 +909,7 @@ eval "$(/opt/homebrew/bin/brew shellenv)"</span>
   <!-- 23 · NEXT STEPS -->
   <section class="slide" data-slide="nextsteps" aria-label="Next steps">
     <div class="content">
-      <div class="label">Next Steps · 2.5 min</div>
+      <div class="label">Next Steps</div>
       <h1>Next Steps</h1>
     </div>
     <!-- next steps — to be filled from workshop materials -->
