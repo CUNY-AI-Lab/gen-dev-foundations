@@ -44,6 +44,10 @@ Part 2 section break overrides `--part` to `#2ea043` (green) via inline style.
 
 Agenda items are `<a>` elements with `href="#N"` pointing to slide numbers. If slides are reordered, update these href values.
 
+## Slide Design Workflow
+
+When making significant visual changes to a slide or adding a new slide, always invoke the `frontend-design` skill. This ensures design quality, consistent aesthetics, and intentional layout decisions across the deck.
+
 ## Commit Style
 
 Short, lowercase messages, no sign-off.
