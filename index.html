@@ -286,8 +286,9 @@
     }
     .agenda-item {
       display: flex; justify-content: space-between; align-items: baseline;
-      padding: 6px 0;
+      padding: 6px 0; text-decoration: none; cursor: pointer;
     }
+    a.agenda-item:hover .agenda-item-label { color: var(--fg); }
     .agenda-item-label {
       font-size: clamp(13px,1.4vw,17px); color: var(--muted);
     }
@@ -422,26 +423,26 @@
         <div class="agenda-section">
           <div class="agenda-section-head">
             <span class="agenda-section-title">Part 1 — Coding &amp; Development Basics</span>
-            <span class="agenda-section-time">~45m</span>
+            <span class="agenda-section-time">~55m</span>
           </div>
-          <div class="agenda-item"><span class="agenda-item-label">Icebreaker</span></div>
-          <div class="agenda-item"><span class="agenda-item-label">Inference as Coding Scaffold</span></div>
-          <div class="agenda-item"><span class="agenda-item-label">Problematics of Agentic Coding</span></div>
-          <div class="agenda-item"><span class="agenda-item-label">Social Coding + Collaboration with GitHub</span></div>
-          <div class="agenda-item"><span class="agenda-item-label">Setting up an IDE</span></div>
-          <div class="agenda-item"><span class="agenda-item-label">Command Line Basics</span></div>
-          <div class="agenda-item"><span class="agenda-item-label">Versioning + Project Management with Git</span></div>
+          <a class="agenda-item" href="#4"><span class="agenda-item-label">Icebreaker</span></a>
+          <a class="agenda-item" href="#5"><span class="agenda-item-label">Inference as Coding Scaffold</span></a>
+          <a class="agenda-item" href="#6"><span class="agenda-item-label">Problematics of Agentic Coding</span></a>
+          <a class="agenda-item" href="#7"><span class="agenda-item-label">Social Coding + Collaboration with GitHub</span></a>
+          <a class="agenda-item" href="#8"><span class="agenda-item-label">Setting up an IDE</span></a>
+          <a class="agenda-item" href="#9"><span class="agenda-item-label">Command Line Basics</span></a>
+          <a class="agenda-item" href="#10"><span class="agenda-item-label">Versioning + Project Management with Git</span></a>
         </div>
 
         <div class="agenda-section">
           <div class="agenda-section-head">
             <span class="agenda-section-title">Part 2 — Putting It Together</span>
-            <span class="agenda-section-time">~30m</span>
+            <span class="agenda-section-time">~35m</span>
           </div>
-          <div class="agenda-item"><span class="agenda-item-label">Activity 1a</span></div>
-          <div class="agenda-item"><span class="agenda-item-label">Activity 1b</span></div>
-          <div class="agenda-item"><span class="agenda-item-label">Exit Ticket</span></div>
-          <div class="agenda-item"><span class="agenda-item-label">Next Steps</span></div>
+          <a class="agenda-item" href="#12"><span class="agenda-item-label">Activity 1a</span></a>
+          <a class="agenda-item" href="#13"><span class="agenda-item-label">Activity 1b</span></a>
+          <a class="agenda-item" href="#14"><span class="agenda-item-label">Exit Ticket</span></a>
+          <a class="agenda-item" href="#15"><span class="agenda-item-label">Next Steps</span></a>
         </div>
 
       </div>
