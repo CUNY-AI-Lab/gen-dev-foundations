@@ -11,8 +11,8 @@
       --bg:          #0b0e14;
       --fg:          rgba(255,255,255,0.92);
       --muted:       rgba(255,255,255,0.55);
-      --accent:      #7ea8d8;
-      --part:        #3a7bd5;
+      --accent:      #79c0ff;   /* matches .hl code-blue */
+      --part:        #b89060;   /* warm bronze — chainwheel spoke tone */
       --card:        rgba(255,255,255,0.055);
       --stroke:      rgba(255,255,255,0.13);
       --radius:      14px;
@@ -41,22 +41,20 @@
       background: linear-gradient(to bottom, rgba(11,14,20,.96), transparent);
       z-index: 20; pointer-events: none;
     }
-    header .bar { pointer-events: auto; display: flex; align-items: center; gap: 10px; }
-    .pill {
-      font-family: ui-monospace, monospace; font-size: 12px;
-      padding: 3px 10px; border-radius: 20px;
+    header .bar { pointer-events: auto; display: flex; align-items: center; gap: 12px; }
+    #counter { font-variant-numeric: tabular-nums; font-size: 13px; opacity: 0.8; color: var(--fg); }
+    .kbd {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
       border: 1px solid var(--stroke); background: rgba(255,255,255,0.04);
-      color: var(--muted); white-space: nowrap;
+      padding: 2px 8px; border-radius: 8px; font-size: 12px; opacity: 0.8; color: var(--muted);
     }
-    #counter { font-variant-numeric: tabular-nums; }
-    .logo-text { font-size: 13px; font-weight: 600; letter-spacing: -0.01em; color: var(--fg); opacity: 0.7; }
     .nav-btn {
-      display: none; width: 36px; height: 36px; border-radius: 50%;
-      border: 1px solid var(--stroke); background: var(--card);
-      color: var(--fg); cursor: pointer; align-items: center; justify-content: center;
-      font-size: 16px; pointer-events: auto; transition: background 0.15s;
+      display: inline-flex; width: 26px; height: 26px; border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.04);
+      color: var(--muted); cursor: pointer; align-items: center; justify-content: center;
+      font-size: 13px; pointer-events: auto; transition: background 0.15s, opacity 0.15s; opacity: 0.7;
     }
-    .nav-btn:hover { background: rgba(255,255,255,0.1); }
+    .nav-btn:hover { background: rgba(255,255,255,0.09); opacity: 1; }
     .nav-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
     /* ── SLIDE HOST ── */
@@ -75,19 +73,21 @@
     .content {
       flex: 0 0 auto;
       display: flex; flex-direction: column; justify-content: center;
-      padding: clamp(20px,4vw,40px) clamp(18px,4vw,36px);
-      border-radius: var(--radius);
-      border: 1px solid rgba(255,255,255,0.07);
+      padding: clamp(28px,4vw,48px) clamp(24px,3.5vw,44px);
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.05);
       background: rgba(255,255,255,0.025);
+      backdrop-filter: blur(6px);
       min-height: 120px;
     }
+    .content:focus { outline: none; }
 
     /* ── STAGE SLOT ── */
     .stage {
       flex: 0 0 auto; position: relative; width: 100%;
       height: auto; min-height: var(--stage-min);
-      border-radius: var(--radius);
-      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.05);
       background: #05070b; overflow: hidden;
     }
 
@@ -147,19 +147,19 @@
       align-items: stretch;
     }
     .stageCompare .col {
-      padding: clamp(20px,3vw,36px) clamp(16px,2.5vw,28px);
+      padding: clamp(24px,3.5vw,44px) clamp(20px,2.8vw,36px);
     }
     .stageCompare .col + .col {
-      border-left: 1px solid rgba(255,255,255,0.10);
+      border-left: 1px solid rgba(255,255,255,0.08);
     }
     .stageCompare .col-title {
       font-weight: 700; letter-spacing: -0.01em;
-      font-size: clamp(14px,1.8vw,20px);
-      margin-bottom: 10px; color: rgba(255,255,255,0.9);
+      font-size: clamp(18px,2.2vw,26px);
+      margin-bottom: 12px; color: rgba(255,255,255,0.9);
     }
     .stageCompare .col-sub {
-      font-size: clamp(12px,1.4vw,15px);
-      color: var(--muted); line-height: 1.55;
+      font-size: clamp(15px,1.8vw,21px);
+      color: var(--muted); line-height: 1.55; opacity: 0.85;
     }
     .stageCompare .col-tag {
       display: inline-block; margin-bottom: 10px;
@@ -170,12 +170,12 @@
 
     /* Big text + hint */
     .stageBig {
-      font-size: clamp(20px,3vw,34px); font-weight: 650;
+      font-size: clamp(24px,3vw,36px); font-weight: 650;
       line-height: 1.3; color: rgba(255,255,255,0.9);
     }
     .stageHint {
-      margin-top: 22px; opacity: 0.65;
-      font-size: clamp(13px,1.5vw,18px); line-height: 1.5;
+      margin-top: 22px; opacity: 0.72;
+      font-size: clamp(16px,1.6vw,20px); line-height: 1.5;
       color: var(--muted);
     }
     .stageTitle {
@@ -197,13 +197,13 @@
     /* List inside stage */
     .stageListTitle {
       font-weight: 700; margin-bottom: 14px;
-      font-size: clamp(16px,1.9vw,22px);
+      font-size: clamp(20px,2.2vw,26px);
     }
     .stageList {
       margin: 0; padding-left: 22px; opacity: 0.9;
-      font-size: clamp(14px,1.6vw,19px); line-height: 1.6;
+      font-size: clamp(17px,1.8vw,22px); line-height: 1.55;
     }
-    .stageList li { margin: 8px 0; }
+    .stageList li { margin: 10px 0; }
 
     /* Spectrum bar */
     .spectrumBar {
@@ -226,20 +226,26 @@
       font-size: 16px; color: rgba(255,255,255,0.2); flex-shrink: 0;
     }
 
-    /* card grid (icebreaker) */
-    .q-grid {
+    /* icebreaker two-question layout */
+    .ib-pair {
       position: relative; width: 100%;
-      display: grid; grid-template-columns: 1fr; gap: 0;
-      padding: clamp(8px,1.5vw,16px);
+      display: flex; flex-direction: column;
     }
-    .q-card {
-      padding: clamp(8px,1.5vw,14px) clamp(10px,1.5vw,16px);
+    .ib-q {
+      flex: 1;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: clamp(28px,4vw,56px) clamp(22px,3.5vw,48px);
       border-bottom: 1px solid rgba(255,255,255,0.07);
-      display: flex; gap: 10px; align-items: flex-start;
     }
-    .q-card:last-child { border-bottom: none; }
-    .q-num { font-size: 11px; font-weight: 700; color: var(--part); flex-shrink: 0; padding-top: 2px; min-width: 20px; font-family: ui-monospace, monospace; }
-    .q-text { font-size: clamp(12px,1.4vw,15px); color: rgba(255,255,255,0.78); line-height: 1.45; }
+    .ib-q:last-child { border-bottom: none; }
+    .ib-num {
+      font-size: clamp(12px,1.3vw,16px); font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--part); font-family: ui-monospace, monospace; margin-bottom: 20px; opacity: 0.9;
+    }
+    .ib-text {
+      font-size: clamp(22px,2.8vw,36px); line-height: 1.4;
+      color: rgba(255,255,255,0.9); font-weight: 500;
+    }
 
     /* step rows */
     .step-grid {
@@ -254,7 +260,7 @@
     .step-row:last-child { border-bottom: none; }
     .step-num { width: 22px; height: 22px; border-radius: 50%; background: var(--part); color: #fff; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; }
     .step-ph { font-size: clamp(12px,1.4vw,15px); color: rgba(255,255,255,0.2); font-family: ui-monospace, monospace; }
-    .step-text { font-size: clamp(13px,1.4vw,16px); color: rgba(255,255,255,0.86); line-height: 1.4; }
+    .step-text { font-size: clamp(16px,1.9vw,22px); color: rgba(255,255,255,0.86); line-height: 1.4; }
 
     /* agenda table */
     .agenda-table {
@@ -271,22 +277,22 @@
       margin-bottom: 8px;
     }
     .agenda-section-title {
-      font-size: clamp(13px,1.5vw,16px); font-weight: 700;
+      font-size: clamp(14px,1.6vw,18px); font-weight: 700;
       color: rgba(255,255,255,0.9); letter-spacing: 0.01em;
     }
     .agenda-section-time {
-      font-size: clamp(10px,1.1vw,13px); color: var(--part);
+      font-size: clamp(11px,1.2vw,14px); color: var(--part);
       font-family: ui-monospace, monospace; font-weight: 600; flex-shrink: 0;
     }
     .agenda-item {
       display: flex; justify-content: space-between; align-items: baseline;
-      padding: 5px 0;
+      padding: 6px 0;
     }
     .agenda-item-label {
-      font-size: clamp(12px,1.3vw,15px); color: var(--muted);
+      font-size: clamp(13px,1.4vw,17px); color: var(--muted);
     }
     .agenda-item-time {
-      font-size: clamp(10px,1.05vw,12px); color: rgba(255,255,255,0.3);
+      font-size: clamp(11px,1.1vw,13px); color: rgba(255,255,255,0.3);
       font-family: ui-monospace, monospace; flex-shrink: 0; padding-left: 12px;
     }
 
@@ -294,7 +300,7 @@
     .term-box {
       position: relative; width: 100%;
       background: #010409;
-      font: clamp(12px,1.4vw,15px)/1.75 ui-monospace, SFMono-Regular, Menlo, monospace;
+      font: clamp(13px,1.5vw,17px)/1.75 ui-monospace, SFMono-Regular, Menlo, monospace;
       color: rgba(200,255,200,0.88);
       padding: clamp(16px,2.5vw,28px) clamp(18px,2.5vw,32px);
     }
@@ -308,18 +314,18 @@
     .res-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
     .res-list li { padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06); }
     .res-list li:last-child { border-bottom: none; }
-    .res-list li a { font-size: clamp(12px,1.3vw,15px); color: var(--accent); text-decoration: none; }
+    .res-list li a { font-size: clamp(15px,1.7vw,20px); color: var(--accent); text-decoration: none; }
     .res-list li a:hover { text-decoration: underline; }
-    .res-desc { font-size: clamp(11px,1.1vw,12px); color: var(--muted); margin-top: 2px; opacity: 0.7; }
+    .res-desc { font-size: clamp(13px,1.3vw,15px); color: var(--muted); margin-top: 3px; opacity: 0.7; }
 
     /* ── TYPOGRAPHY ── */
-    .content h1 { font-size: clamp(26px,4.5vw,52px); letter-spacing: -0.025em; line-height: 1.08; margin-bottom: 8px; }
-    .content h2 { font-size: clamp(15px,2.2vw,24px); color: var(--muted); font-weight: 500; letter-spacing: -0.01em; line-height: 1.3; margin-bottom: 10px; }
+    .content h1 { font-size: clamp(36px,5vw,58px); letter-spacing: -0.025em; line-height: 1.08; margin-bottom: 8px; }
+    .content h2 { font-size: clamp(20px,2.6vw,32px); color: var(--muted); font-weight: 500; letter-spacing: -0.01em; line-height: 1.3; margin-bottom: 10px; }
     .content .label { font-size: clamp(10px,1vw,12px); letter-spacing: 0.12em; text-transform: uppercase; color: var(--part); font-weight: 700; margin-bottom: 10px; }
-    .content .time-tag { display: inline-flex; align-items: center; margin-top: 12px; padding: 3px 12px; border-radius: 20px; border: 1px solid var(--stroke); color: var(--muted); font-size: clamp(11px,1.1vw,13px); }
-    .content .authors { font-size: clamp(15px,1.9vw,21px); color: var(--muted); margin-top: 14px; }
-    .content .orgs { font-size: clamp(12px,1.4vw,16px); color: var(--muted); opacity: 0.6; line-height: 1.5; margin-top: 8px; }
-    .content .date { font-size: clamp(11px,1.2vw,14px); color: var(--muted); opacity: 0.45; margin-top: 14px; }
+    .content .time-tag { display: inline-flex; align-items: center; margin-top: 12px; padding: 3px 12px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.08); color: var(--muted); font-size: clamp(11px,1.1vw,13px); }
+    .content .authors { font-size: clamp(18px,2.2vw,26px); color: var(--muted); margin-top: 18px; }
+    .content .orgs { font-size: clamp(15px,1.8vw,20px); color: var(--muted); opacity: 0.65; line-height: 1.5; margin-top: 10px; }
+    .content .date { font-size: clamp(14px,1.5vw,18px); color: var(--muted); opacity: 0.5; margin-top: 18px; }
 
     /* ── SECTION BREAK ── */
     .slide-break.active {
@@ -344,12 +350,12 @@
       [data-slide="title"] .stage { flex: 1 1 auto; min-height: clamp(300px, 58vh, 760px); }
 
       .slide-break.active { flex-direction: column; overflow: hidden; }
-      .slide-icebreaker .content { flex: 0 0 clamp(260px, 36%, 440px); }
-      .slide-icebreaker .stage { flex: 1 1 auto; }
+      .slide-icebreaker .content { flex: 1 1 38%; max-width: 440px; }
+      .slide-icebreaker .stage { flex: 1 1 58%; }
       .slide-icebreaker .content h1 { font-size: clamp(22px, 3vw, 38px); }
-      .q-grid { grid-template-columns: 1fr 1fr; align-content: start; }
-      .q-card:last-child { grid-column: 1 / -1; }
-      .nav-btn { display: inline-flex; }
+      /* ib-pair fills stage at desktop */
+      .ib-pair { position: absolute; inset: 0; overflow-y: auto; }
+      #kbdSwipe { display: none; }
 
       /* Desktop: stage elements fill the full column */
       .term-box, .term-stub { position: absolute; inset: 0; width: auto; overflow-y: auto; }
@@ -357,7 +363,7 @@
       .stageCenter { position: absolute; inset: 0; width: auto; }
       .step-grid { position: absolute; inset: clamp(12px,2vw,24px); width: auto; overflow: hidden; }
       .agenda-table { position: absolute; inset: 0; width: auto; overflow: hidden; }
-      .q-grid { position: absolute; inset: clamp(12px,2vw,20px); width: auto; overflow-y: auto; align-content: start; }
+
       .res-wrap { position: absolute; inset: 0; width: auto; overflow-y: auto; }
       .ph { position: absolute; inset: 0; width: auto; min-height: unset; }
       .stageCompare { position: absolute; inset: 0; width: auto; overflow: hidden; }
@@ -380,12 +386,11 @@
 
 <header role="banner">
   <div class="bar">
-    <span class="logo-text">Foundations: Coding with Generative AI</span>
-  </div>
-  <div class="bar">
     <button class="nav-btn" id="btn-prev" aria-label="Previous slide">&#8592;</button>
-    <span class="pill" id="counter" aria-live="polite" aria-atomic="true">1 / 16</span>
+    <div id="counter" aria-live="polite" aria-atomic="true">1 / 16</div>
     <button class="nav-btn" id="btn-next" aria-label="Next slide">&#8594;</button>
+    <div class="kbd" id="kbdKeys">← →</div>
+    <div class="kbd" id="kbdSwipe">Swipe</div>
   </div>
 </header>
 
@@ -400,7 +405,7 @@
     </div>
     <div class="stage" aria-hidden="true">
       <div class="stage-fill">
-        <iframe src="gallery/chainwheel.html" title="Infinite Wheel" tabindex="-1"></iframe>
+        <iframe src="src/chainwheel.html" title="Infinite Wheel" tabindex="-1"></iframe>
       </div>
     </div>
   </section>
@@ -422,7 +427,7 @@
           <div class="agenda-item"><span class="agenda-item-label">Inference as Coding Scaffold</span><span class="agenda-item-time"></span></div>
           <div class="agenda-item"><span class="agenda-item-label">Problematics of Agentic Coding</span><span class="agenda-item-time"></span></div>
           <div class="agenda-item"><span class="agenda-item-label">Social Coding + Collaboration with GitHub</span><span class="agenda-item-time"></span></div>
-          <div class="agenda-item"><span class="agenda-item-label">VSC-IDE Intro + Setup</span><span class="agenda-item-time"></span></div>
+          <div class="agenda-item"><span class="agenda-item-label">Setting up an IDE</span><span class="agenda-item-time"></span></div>
           <div class="agenda-item"><span class="agenda-item-label">Command Line Basics</span><span class="agenda-item-time"></span></div>
           <div class="agenda-item"><span class="agenda-item-label">Versioning + Project Management with Git</span><span class="agenda-item-time"></span></div>
         </div>
@@ -457,26 +462,14 @@
       <h2>Pick one. Talk to a neighbor.</h2>
     </div>
     <div class="stage" aria-hidden="true">
-      <div class="q-grid">
-        <div class="q-card">
-          <div class="q-num">01</div>
-          <div class="q-text">What's one thing you've always wanted to code or build but never knew where to start?</div>
+      <div class="ib-pair">
+        <div class="ib-q">
+          <div class="ib-num">A</div>
+          <div class="ib-text">What would you create first if coding felt as natural as writing?</div>
         </div>
-        <div class="q-card">
-          <div class="q-num">02</div>
-          <div class="q-text">What's a project idea you've shelved because the technical side felt out of reach?</div>
-        </div>
-        <div class="q-card">
-          <div class="q-num">03</div>
-          <div class="q-text">What's something you've seen someone build with code that made you think "I want to do that"?</div>
-        </div>
-        <div class="q-card">
-          <div class="q-num">04</div>
-          <div class="q-text">What would you create first if coding felt as natural as writing?</div>
-        </div>
-        <div class="q-card">
-          <div class="q-num">05</div>
-          <div class="q-text">What's one thing you wish you could make your computer do for your research that it doesn't do right now?</div>
+        <div class="ib-q">
+          <div class="ib-num">B</div>
+          <div class="ib-text">What's one thing you wish you could make your computer do for your research that it doesn't do right now?</div>
         </div>
       </div>
     </div>
@@ -488,21 +481,8 @@
       <div class="label">Concept</div>
       <h1>Inference as Coding Scaffold</h1>
     </div>
-    <!-- spectrum: one-shot → iterative → constraint-based; temperature comparison -->
-    <div class="stage" aria-hidden="true">
-      <div class="stageCompare">
-        <div class="col">
-          <div class="col-tag">One-shot</div>
-          <div class="col-title">Generate and run</div>
-          <div class="col-sub">Describe what you want. Receive code. Open in browser. That's the loop.</div>
-        </div>
-        <div class="col">
-          <div class="col-tag">Deliberate</div>
-          <div class="col-title">Decompose and iterate</div>
-          <div class="col-sub">Break the task into parts. Review each output. Use constraints to keep the model on track.</div>
-        </div>
-      </div>
-    </div>
+    <!-- spectrum: one-shot → iterative → constraint-based; temperature comparison — content pending -->
+    <div class="stage" aria-hidden="true"><div class="ph"></div></div>
   </section>
 
   <!-- 6 · PROBLEMATICS OF AGENTIC CODING -->
@@ -511,15 +491,8 @@
       <div class="label">Concept</div>
       <h1>Problematics of Agentic Coding</h1>
     </div>
-    <!-- no-review vs deliberate iteration; oversight framing; credit / authorship / debugging -->
-    <div class="stage" aria-hidden="true">
-      <div class="stageCenter">
-        <div class="stageInner">
-          <div class="stageBig">The model can write all the code. That doesn't mean it should write all the code.</div>
-          <div class="stageHint">No-review iteration speeds things up. It also obscures what's happening — and why it breaks.</div>
-        </div>
-      </div>
-    </div>
+    <!-- no-review vs deliberate iteration · oversight / authorship framing — content pending -->
+    <div class="stage" aria-hidden="true"><div class="ph"></div></div>
   </section>
 
   <!-- 7 · GITHUB -->
@@ -532,11 +505,11 @@
     <div class="stage" aria-hidden="true"><div class="ph"></div></div>
   </section>
 
-  <!-- 8 · VSC-IDE -->
-  <section class="slide" data-slide="vscode" aria-label="VSC-IDE intro and setup">
+  <!-- 8 · IDE SETUP -->
+  <section class="slide" data-slide="vscode" aria-label="Setting up an Interactive Development Environment">
     <div class="content">
       <div class="label">Setup</div>
-      <h1>VSC-IDE Intro + Setup</h1>
+      <h1>Setting up an Interactive Development Environment</h1>
     </div>
     <div class="stage" aria-hidden="true">
       <div class="step-grid">

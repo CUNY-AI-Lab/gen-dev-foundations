@@ -10,7 +10,7 @@ Companion to `index.html`. Keep this file in sync whenever slide titles or text 
 **Label:** CAIL Spotlight Workshop #1
 **Title:** Foundations: Coding with Generative AI
 **Date:** Spring 2026
-**Stage:** Infinite wheel artifact (`gallery/chainwheel.html`)
+**Stage:** Infinite wheel artifact (`src/chainwheel.html`)
 
 ---
 
@@ -26,7 +26,7 @@ Part 1 — Coding & Development Basics:
 - Inference as Coding Scaffold
 - Problematics of Agentic Coding
 - Social Coding + Collaboration with GitHub
-- VSC-IDE Intro + Setup
+- Setting up an IDE
 - Command Line Basics
 - Versioning + Project Management with Git
 
@@ -51,12 +51,9 @@ Part 2 — Putting It Together:
 **Title:** Where does coding live in your imagination?
 **Subtitle:** Pick one. Talk to a neighbor.
 
-**Stage cards (Q1–Q5):**
-1. What's one thing you've always wanted to code or build but never knew where to start?
-2. What's a project idea you've shelved because the technical side felt out of reach?
-3. What's something you've seen someone build with code that made you think "I want to do that"?
-4. What would you create first if coding felt as natural as writing?
-5. What's one thing you wish you could make your computer do for your research that it doesn't do right now?
+**Stage (ib-pair):**
+- **A** — What would you create first if coding felt as natural as writing?
+- **B** — What's one thing you wish you could make your computer do for your research that it doesn't do right now?
 
 ---
 
@@ -64,13 +61,7 @@ Part 2 — Putting It Together:
 
 **Label:** Concept
 **Title:** Inference as Coding Scaffold
-
-**Stage (two-column compare):**
-
-| One-shot | Deliberate |
-|---|---|
-| **Generate and run** | **Decompose and iterate** |
-| Describe what you want. Receive code. Open in browser. That's the loop. | Break the task into parts. Review each output. Use constraints to keep the model on track. |
+**Stage:** _(content pending)_
 
 ---
 
@@ -78,10 +69,7 @@ Part 2 — Putting It Together:
 
 **Label:** Concept
 **Title:** Problematics of Agentic Coding
-
-**Stage (big text + hint):**
-- **Big:** The model can write all the code. That doesn't mean it should write all the code.
-- **Hint:** No-review iteration speeds things up. It also obscures what's happening — and why it breaks.
+**Stage:** _(content pending)_
 
 ---
 
@@ -93,10 +81,10 @@ Part 2 — Putting It Together:
 
 ---
 
-## Slide 8 — VSC-IDE Intro + Setup
+## Slide 8 — Setting up an Interactive Development Environment
 
 **Label:** Setup
-**Title:** VSC-IDE Intro + Setup
+**Title:** Setting up an Interactive Development Environment
 
 **Stage steps:**
 1. Download + install VS Code
