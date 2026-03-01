@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b0e14" />
+  <title>Foundations: Coding with Generative AI — CAIL Workshop #1</title>
+
+  <style>
+    :root {
+      --bg:          #0b0e14;
+      --fg:          rgba(255,255,255,0.92);
+      --muted:       rgba(255,255,255,0.55);
+      --accent:      #7ea8d8;
+      --part:        #3a7bd5;
+      --card:        rgba(255,255,255,0.055);
+      --stroke:      rgba(255,255,255,0.13);
+      --radius:      14px;
+      --header-h:    48px;
+      --stage-aspect: 16 / 9;
+      --stage-min:    160px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; background: var(--bg); color: var(--fg); overflow: hidden; }
+    body { font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: var(--accent); }
+
+    .skip-link {
+      position: absolute; top: -100px; left: 12px; z-index: 100;
+      padding: 8px 16px; background: var(--accent); color: #000;
+      border-radius: 6px; font-size: 14px; font-weight: 600;
+    }
+    .skip-link:focus { top: 12px; }
+
+    /* ── HEADER ── */
+    header {
+      position: fixed; inset: 0 0 auto 0; height: var(--header-h);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 16px;
+      background: linear-gradient(to bottom, rgba(11,14,20,.96), transparent);
+      z-index: 20; pointer-events: none;
+    }
+    header .bar { pointer-events: auto; display: flex; align-items: center; gap: 10px; }
+    .pill {
+      font-family: ui-monospace, monospace; font-size: 12px;
+      padding: 3px 10px; border-radius: 20px;
+      border: 1px solid var(--stroke); background: rgba(255,255,255,0.04);
+      color: var(--muted); white-space: nowrap;
+    }
+    #counter { font-variant-numeric: tabular-nums; }
+    .logo-text { font-size: 13px; font-weight: 600; letter-spacing: -0.01em; color: var(--fg); opacity: 0.7; }
+    .nav-btn {
+      display: none; width: 36px; height: 36px; border-radius: 50%;
+      border: 1px solid var(--stroke); background: var(--card);
+      color: var(--fg); cursor: pointer; align-items: center; justify-content: center;
+      font-size: 16px; pointer-events: auto; transition: background 0.15s;
+    }
+    .nav-btn:hover { background: rgba(255,255,255,0.1); }
+    .nav-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+    /* ── SLIDE HOST ── */
+    main { height: 100%; position: relative; }
+
+    section.slide {
+      display: none; position: absolute; inset: 0;
+      flex-direction: column;
+      padding: var(--header-h) 12px 12px; gap: 10px;
+      overflow-y: auto; overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+    }
+    section.slide.active { display: flex; }
+
+    /* ── CONTENT PANEL ── */
+    .content {
+      flex: 0 0 auto;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: clamp(20px,4vw,40px) clamp(18px,4vw,36px);
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,0.07);
+      background: rgba(255,255,255,0.025);
+      min-height: 120px;
+    }
+
+    /* ── STAGE SLOT ── */
+    .stage {
+      flex: 0 0 auto; position: relative; width: 100%;
+      height: auto; min-height: var(--stage-min);
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,0.07);
+      background: #05070b; overflow: hidden;
+    }
+
+    /* Title slide: left-align content from top, not centered */
+    [data-slide="title"] .content {
+      justify-content: flex-start;
+      padding-top: clamp(36px,5vw,72px);
+    }
+
+    /* Title slide: artifact fills remaining vertical space under title */
+    [data-slide="title"] {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    [data-slide="title"] .content {
+      flex: 0 0 auto;
+      overflow: visible;
+      padding-bottom: 10px;
+    }
+    [data-slide="title"] .stage {
+      flex: 1 1 auto;
+      min-height: clamp(260px, 52vh, 680px);
+      background: transparent;
+      border-color: transparent;
+      border-radius: 0;
+      overflow: hidden;
+    }
+    [data-slide="title"] .stage .stage-fill iframe {
+      border-radius: var(--radius);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.45);
+    }
+
+    /* ── STAGE INNER HELPERS ── */
+    .stage-fill { position: absolute; inset: 0; }
+    .stage-fill iframe, .stage-fill canvas, .stage-fill video { width: 100%; height: 100%; border: none; display: block; }
+
+    .stage-center {
+      position: relative; width: 100%;
+      display: flex; align-items: center; justify-content: center;
+      padding: clamp(14px,2.5vw,28px);
+    }
+    .stage-inner { width: 100%; max-width: 580px; }
+
+    /* placeholder */
+    .ph {
+      position: relative; width: 100%;
+      min-height: var(--stage-min);
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* ── STAGE FORMAT COMPONENTS (from creative-coding template) ── */
+
+    /* Two-column compare */
+    .stageCompare {
+      position: relative; width: 100%;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+      align-items: stretch;
+    }
+    .stageCompare .col {
+      padding: clamp(20px,3vw,36px) clamp(16px,2.5vw,28px);
+    }
+    .stageCompare .col + .col {
+      border-left: 1px solid rgba(255,255,255,0.10);
+    }
+    .stageCompare .col-title {
+      font-weight: 700; letter-spacing: -0.01em;
+      font-size: clamp(14px,1.8vw,20px);
+      margin-bottom: 10px; color: rgba(255,255,255,0.9);
+    }
+    .stageCompare .col-sub {
+      font-size: clamp(12px,1.4vw,15px);
+      color: var(--muted); line-height: 1.55;
+    }
+    .stageCompare .col-tag {
+      display: inline-block; margin-bottom: 10px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 2px 10px; border-radius: 20px;
+      border: 1px solid var(--stroke); color: var(--part);
+    }
+
+    /* Big text + hint */
+    .stageBig {
+      font-size: clamp(20px,3vw,34px); font-weight: 650;
+      line-height: 1.3; color: rgba(255,255,255,0.9);
+    }
+    .stageHint {
+      margin-top: 22px; opacity: 0.65;
+      font-size: clamp(13px,1.5vw,18px); line-height: 1.5;
+      color: var(--muted);
+    }
+    .stageTitle {
+      font-size: clamp(13px,1.6vw,17px); font-weight: 600;
+      margin-bottom: 12px; color: var(--muted); letter-spacing: 0.01em;
+    }
+
+    /* Centered inner block */
+    .stageCenter {
+      position: relative; width: 100%;
+      display: flex; align-items: center; justify-content: center;
+      padding: clamp(20px,3vw,36px);
+    }
+    .stageInner {
+      width: 100%; max-width: 90%;
+      color: rgba(255,255,255,0.86); line-height: 1.5;
+    }
+
+    /* List inside stage */
+    .stageListTitle {
+      font-weight: 700; margin-bottom: 14px;
+      font-size: clamp(16px,1.9vw,22px);
+    }
+    .stageList {
+      margin: 0; padding-left: 22px; opacity: 0.9;
+      font-size: clamp(14px,1.6vw,19px); line-height: 1.6;
+    }
+    .stageList li { margin: 8px 0; }
+
+    /* Spectrum bar */
+    .spectrumBar {
+      display: flex; align-items: center; width: 100%;
+      gap: 0;
+    }
+    .spectrumNode {
+      flex: 1; padding: clamp(14px,2vw,24px) clamp(10px,1.5vw,20px);
+      text-align: center; border-right: 1px solid rgba(255,255,255,0.08);
+    }
+    .spectrumNode:last-child { border-right: none; }
+    .spectrumNode .sn-label {
+      font-size: clamp(11px,1.3vw,15px); font-weight: 700;
+      color: rgba(255,255,255,0.9); margin-bottom: 6px;
+    }
+    .spectrumNode .sn-desc {
+      font-size: clamp(10px,1.1vw,13px); color: var(--muted); line-height: 1.4;
+    }
+    .spectrumArrow {
+      font-size: 16px; color: rgba(255,255,255,0.2); flex-shrink: 0;
+    }
+
+    /* card grid (icebreaker) */
+    .q-grid {
+      position: relative; width: 100%;
+      display: grid; grid-template-columns: 1fr; gap: 0;
+      padding: clamp(8px,1.5vw,16px);
+    }
+    .q-card {
+      padding: clamp(8px,1.5vw,14px) clamp(10px,1.5vw,16px);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      display: flex; gap: 10px; align-items: flex-start;
+    }
+    .q-card:last-child { border-bottom: none; }
+    .q-num { font-size: 11px; font-weight: 700; color: var(--part); flex-shrink: 0; padding-top: 2px; min-width: 20px; font-family: ui-monospace, monospace; }
+    .q-text { font-size: clamp(12px,1.4vw,15px); color: rgba(255,255,255,0.78); line-height: 1.45; }
+
+    /* step rows */
+    .step-grid {
+      position: relative; width: 100%;
+      display: flex; flex-direction: column; gap: 6px; justify-content: center;
+      padding: clamp(12px,2vw,24px);
+    }
+    .step-row {
+      display: flex; gap: 12px; align-items: center; padding: 10px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .step-row:last-child { border-bottom: none; }
+    .step-num { width: 22px; height: 22px; border-radius: 50%; background: var(--part); color: #fff; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; }
+    .step-ph { font-size: clamp(12px,1.4vw,15px); color: rgba(255,255,255,0.2); font-family: ui-monospace, monospace; }
+    .step-text { font-size: clamp(13px,1.4vw,16px); color: rgba(255,255,255,0.86); line-height: 1.4; }
+
+    /* agenda table */
+    .agenda-table {
+      position: relative; width: 100%;
+      padding: clamp(14px,2.5vw,28px) clamp(16px,3vw,32px);
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .agenda-section { margin-bottom: clamp(18px,3vw,32px); }
+    .agenda-section:last-child { margin-bottom: 0; }
+    .agenda-section-head {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.18);
+      margin-bottom: 8px;
+    }
+    .agenda-section-title {
+      font-size: clamp(13px,1.5vw,16px); font-weight: 700;
+      color: rgba(255,255,255,0.9); letter-spacing: 0.01em;
+    }
+    .agenda-section-time {
+      font-size: clamp(10px,1.1vw,13px); color: var(--part);
+      font-family: ui-monospace, monospace; font-weight: 600; flex-shrink: 0;
+    }
+    .agenda-item {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 5px 0;
+    }
+    .agenda-item-label {
+      font-size: clamp(12px,1.3vw,15px); color: var(--muted);
+    }
+    .agenda-item-time {
+      font-size: clamp(10px,1.05vw,12px); color: rgba(255,255,255,0.3);
+      font-family: ui-monospace, monospace; flex-shrink: 0; padding-left: 12px;
+    }
+
+    /* terminal */
+    .term-box {
+      position: relative; width: 100%;
+      background: #010409;
+      font: clamp(12px,1.4vw,15px)/1.75 ui-monospace, SFMono-Regular, Menlo, monospace;
+      color: rgba(200,255,200,0.88);
+      padding: clamp(16px,2.5vw,28px) clamp(18px,2.5vw,32px);
+    }
+    .term-box .dim  { color: rgba(255,255,255,0.28); }
+    .term-box .hl   { color: #79c0ff; }
+    .term-box .str  { color: #a5d6ff; }
+    .term-box .cmt  { color: rgba(130,200,100,0.55); }
+
+    /* resource list */
+    .res-wrap { position: relative; width: 100%; padding: clamp(14px,2vw,24px); }
+    .res-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .res-list li { padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .res-list li:last-child { border-bottom: none; }
+    .res-list li a { font-size: clamp(12px,1.3vw,15px); color: var(--accent); text-decoration: none; }
+    .res-list li a:hover { text-decoration: underline; }
+    .res-desc { font-size: clamp(11px,1.1vw,12px); color: var(--muted); margin-top: 2px; opacity: 0.7; }
+
+    /* ── TYPOGRAPHY ── */
+    .content h1 { font-size: clamp(26px,4.5vw,52px); letter-spacing: -0.025em; line-height: 1.08; margin-bottom: 8px; }
+    .content h2 { font-size: clamp(15px,2.2vw,24px); color: var(--muted); font-weight: 500; letter-spacing: -0.01em; line-height: 1.3; margin-bottom: 10px; }
+    .content .label { font-size: clamp(10px,1vw,12px); letter-spacing: 0.12em; text-transform: uppercase; color: var(--part); font-weight: 700; margin-bottom: 10px; }
+    .content .time-tag { display: inline-flex; align-items: center; margin-top: 12px; padding: 3px 12px; border-radius: 20px; border: 1px solid var(--stroke); color: var(--muted); font-size: clamp(11px,1.1vw,13px); }
+    .content .authors { font-size: clamp(15px,1.9vw,21px); color: var(--muted); margin-top: 14px; }
+    .content .orgs { font-size: clamp(12px,1.4vw,16px); color: var(--muted); opacity: 0.6; line-height: 1.5; margin-top: 8px; }
+    .content .date { font-size: clamp(11px,1.2vw,14px); color: var(--muted); opacity: 0.45; margin-top: 14px; }
+
+    /* ── SECTION BREAK ── */
+    .slide-break.active {
+      align-items: flex-start; justify-content: flex-end; overflow: hidden;
+      padding-bottom: clamp(32px,5vw,60px); padding-left: clamp(20px,5vw,80px);
+      background: linear-gradient(140deg, #0d1420 0%, var(--bg) 65%);
+    }
+    .slide-break .content { background: transparent; border: none; justify-content: flex-end; min-height: unset; }
+    .slide-break .content .break-tag { font-size: clamp(10px,1vw,13px); letter-spacing: 0.15em; text-transform: uppercase; color: var(--part); font-weight: 700; margin-bottom: 12px; }
+    .slide-break .content h1 { font-size: clamp(36px,7vw,80px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.04; }
+    .slide-break .content .break-sub { font-size: clamp(13px,1.5vw,18px); color: var(--muted); margin-top: 14px; }
+    .slide-break::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--part); }
+
+    /* ── TABLET / DESKTOP ── */
+    @media (min-width: 720px) {
+      section.slide { flex-direction: row; align-items: stretch; overflow: hidden; padding: var(--header-h) clamp(16px,2.5vw,32px) 16px; gap: clamp(12px,1.5vw,20px); }
+      .content { flex: 1 1 44%; overflow-y: auto; }
+      .stage { flex: 1 1 52%; height: auto; align-self: stretch; min-height: unset; }
+      /* Keep title slide stacked (title on top, artifact below) */
+      [data-slide="title"] { flex-direction: column; }
+      [data-slide="title"] .content { flex: 0 0 auto; overflow: visible; }
+      [data-slide="title"] .stage { flex: 1 1 auto; min-height: clamp(300px, 58vh, 760px); }
+
+      .slide-break.active { flex-direction: column; overflow: hidden; }
+      .slide-icebreaker .content { flex: 0 0 clamp(260px, 36%, 440px); }
+      .slide-icebreaker .stage { flex: 1 1 auto; }
+      .slide-icebreaker .content h1 { font-size: clamp(22px, 3vw, 38px); }
+      .q-grid { grid-template-columns: 1fr 1fr; align-content: start; }
+      .q-card:last-child { grid-column: 1 / -1; }
+      .nav-btn { display: inline-flex; }
+
+      /* Desktop: stage elements fill the full column */
+      .term-box, .term-stub { position: absolute; inset: 0; width: auto; overflow-y: auto; }
+      .stage-center { position: absolute; inset: 0; width: auto; }
+      .stageCenter { position: absolute; inset: 0; width: auto; }
+      .step-grid { position: absolute; inset: clamp(12px,2vw,24px); width: auto; overflow: hidden; }
+      .agenda-table { position: absolute; inset: 0; width: auto; overflow: hidden; }
+      .q-grid { position: absolute; inset: clamp(12px,2vw,20px); width: auto; overflow-y: auto; align-content: start; }
+      .res-wrap { position: absolute; inset: 0; width: auto; overflow-y: auto; }
+      .ph { position: absolute; inset: 0; width: auto; min-height: unset; }
+      .stageCompare { position: absolute; inset: 0; width: auto; overflow: hidden; }
+      .spectrumBar { position: absolute; inset: 0; width: auto; }
+    }
+    @media (min-width: 1200px) {
+      section.slide { padding: var(--header-h) clamp(28px,3vw,48px) 20px; gap: clamp(16px,2vw,28px); }
+    }
+    @media (max-width: 400px) {
+      :root { --stage-aspect: 4 / 3; }
+      .content { padding: 16px 14px; }
+      .content h1 { font-size: 22px; }
+    }
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+  </style>
+</head>
+<body>
+
+<a href="#slide-content" class="skip-link">Skip to slide content</a>
+
+<header role="banner">
+  <div class="bar">
+    <span class="logo-text">Foundations: Coding with Generative AI</span>
+  </div>
+  <div class="bar">
+    <button class="nav-btn" id="btn-prev" aria-label="Previous slide">&#8592;</button>
+    <span class="pill" id="counter" aria-live="polite" aria-atomic="true">1 / 16</span>
+    <button class="nav-btn" id="btn-next" aria-label="Next slide">&#8594;</button>
+  </div>
+</header>
+
+<main id="slide-content" role="main" aria-label="Workshop slides">
+
+  <!-- 1 · TITLE -->
+  <section class="slide" data-slide="title" aria-label="Title slide">
+    <div class="content">
+      <div class="label">CAIL Spotlight Workshop #1</div>
+      <h1>Foundations: Coding with Generative AI</h1>
+      <p class="orgs">CUNY AI Lab · New Media Lab · Teaching and Learning Center<br>ASHP/CML · GC Digital Initiatives · Mina Rees Library · ITP</p>
+      <p class="date">Spring 2026</p>
+    </div>
+    <div class="stage" aria-hidden="true">
+      <div class="stage-fill">
+        <iframe src="../gallery/chainwheel.html" title="Infinite Wheel" tabindex="-1"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 · AGENDA -->
+  <section class="slide" data-slide="agenda" aria-label="Agenda">
+    <div class="content">
+      <div class="label">Workshop</div>
+      <h1>Agenda</h1>
+    </div>
+    <div class="stage" aria-hidden="true">
+      <div class="agenda-table">
+
+        <div class="agenda-section">
+          <div class="agenda-section-head">
+            <span class="agenda-section-title">Part 1 — Coding &amp; Development Basics</span>
+          </div>
+          <div class="agenda-item"><span class="agenda-item-label">Icebreaker</span><span class="agenda-item-time">10m</span></div>
+          <div class="agenda-item"><span class="agenda-item-label">Inference as Coding Scaffold</span><span class="agenda-item-time"></span></div>
+          <div class="agenda-item"><span class="agenda-item-label">Problematics of Agentic Coding</span><span class="agenda-item-time"></span></div>
+          <div class="agenda-item"><span class="agenda-item-label">Social Coding + Collaboration with GitHub</span><span class="agenda-item-time"></span></div>
+          <div class="agenda-item"><span class="agenda-item-label">VSC-IDE Intro + Setup</span><span class="agenda-item-time"></span></div>
+          <div class="agenda-item"><span class="agenda-item-label">Command Line Basics</span><span class="agenda-item-time"></span></div>
+          <div class="agenda-item"><span class="agenda-item-label">Versioning + Project Management with Git</span><span class="agenda-item-time"></span></div>
+        </div>
+
+        <div class="agenda-section">
+          <div class="agenda-section-head">
+            <span class="agenda-section-title">Part 2 — Putting It Together</span>
+          </div>
+          <div class="agenda-item"><span class="agenda-item-label">Activity 1a</span><span class="agenda-item-time">10m</span></div>
+          <div class="agenda-item"><span class="agenda-item-label">Activity 1b</span><span class="agenda-item-time">10m</span></div>
+          <div class="agenda-item"><span class="agenda-item-label">Exit Ticket</span><span class="agenda-item-time">5m</span></div>
+          <div class="agenda-item"><span class="agenda-item-label">Next Steps</span><span class="agenda-item-time">2.5m</span></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · SECTION BREAK: PART 1 -->
+  <section class="slide slide-break" data-slide="part1" aria-label="Part 1 section break">
+    <div class="content">
+      <div class="break-tag">Part 1</div>
+      <h1>Coding &amp; Development Basics</h1>
+    </div>
+  </section>
+
+  <!-- 4 · ICEBREAKER -->
+  <section class="slide slide-icebreaker" data-slide="icebreaker" aria-label="Icebreaker">
+    <div class="content">
+      <div class="label">Icebreaker · 10 min</div>
+      <h1>Where does coding live in your imagination?</h1>
+      <h2>Pick one. Talk to a neighbor.</h2>
+    </div>
+    <div class="stage" aria-hidden="true">
+      <div class="q-grid">
+        <div class="q-card">
+          <div class="q-num">01</div>
+          <div class="q-text">What's one thing you've always wanted to code or build but never knew where to start?</div>
+        </div>
+        <div class="q-card">
+          <div class="q-num">02</div>
+          <div class="q-text">What's a project idea you've shelved because the technical side felt out of reach?</div>
+        </div>
+        <div class="q-card">
+          <div class="q-num">03</div>
+          <div class="q-text">What's something you've seen someone build with code that made you think "I want to do that"?</div>
+        </div>
+        <div class="q-card">
+          <div class="q-num">04</div>
+          <div class="q-text">What would you create first if coding felt as natural as writing?</div>
+        </div>
+        <div class="q-card">
+          <div class="q-num">05</div>
+          <div class="q-text">What's one thing you wish you could make your computer do for your research that it doesn't do right now?</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · INFERENCE AS CODING SCAFFOLD -->
+  <section class="slide" data-slide="inference" aria-label="Inference as coding scaffold">
+    <div class="content">
+      <div class="label">Concept</div>
+      <h1>Inference as Coding Scaffold</h1>
+    </div>
+    <!-- spectrum: one-shot → iterative → constraint-based; temperature comparison -->
+    <div class="stage" aria-hidden="true">
+      <div class="stageCompare">
+        <div class="col">
+          <div class="col-tag">One-shot</div>
+          <div class="col-title">Generate and run</div>
+          <div class="col-sub">Describe what you want. Receive code. Open in browser. That's the loop.</div>
+        </div>
+        <div class="col">
+          <div class="col-tag">Deliberate</div>
+          <div class="col-title">Decompose and iterate</div>
+          <div class="col-sub">Break the task into parts. Review each output. Use constraints to keep the model on track.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 · PROBLEMATICS OF AGENTIC CODING -->
+  <section class="slide" data-slide="agentic" aria-label="Problematics of agentic coding">
+    <div class="content">
+      <div class="label">Concept</div>
+      <h1>Problematics of Agentic Coding</h1>
+    </div>
+    <!-- no-review vs deliberate iteration; oversight framing; credit / authorship / debugging -->
+    <div class="stage" aria-hidden="true">
+      <div class="stageCenter">
+        <div class="stageInner">
+          <div class="stageBig">The model can write all the code. That doesn't mean it should write all the code.</div>
+          <div class="stageHint">No-review iteration speeds things up. It also obscures what's happening — and why it breaks.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · GITHUB -->
+  <section class="slide" data-slide="github" aria-label="Social coding and collaboration with GitHub">
+    <div class="content">
+      <div class="label">Tool</div>
+      <h1>Social Coding + Collaboration with GitHub</h1>
+    </div>
+    <!-- visual: repos, forks, issues, pull requests, GitHub Pages — pending ITP materials -->
+    <div class="stage" aria-hidden="true"><div class="ph"></div></div>
+  </section>
+
+  <!-- 8 · VSC-IDE -->
+  <section class="slide" data-slide="vscode" aria-label="VSC-IDE intro and setup">
+    <div class="content">
+      <div class="label">Setup</div>
+      <h1>VSC-IDE Intro + Setup</h1>
+    </div>
+    <div class="stage" aria-hidden="true">
+      <div class="step-grid">
+        <div class="step-row"><div class="step-num">1</div><div class="step-text">Download + install VS Code</div></div>
+        <div class="step-row"><div class="step-num">2</div><div class="step-text">Sign in with your GitHub profile</div></div>
+        <div class="step-row"><div class="step-num">3</div><div class="step-text">Add the GitHub extension; start tracking your project</div></div>
+        <div class="step-row"><div class="step-num">4</div><div class="step-text">Open the integrated terminal — this is where CLI + Git live</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 · COMMAND LINE -->
+  <section class="slide" data-slide="cli" aria-label="Command line basics">
+    <div class="content">
+      <div class="label">Tool</div>
+      <h1>Command Line Basics</h1>
+    </div>
+    <div class="stage" aria-hidden="true">
+      <div class="term-box" role="img" aria-label="CLI command examples">
+        <span class="dim"># where am I?</span><br>
+        <span class="hl">pwd</span><br><br>
+        <span class="dim"># list files</span><br>
+        <span class="hl">ls</span> -la<br><br>
+        <span class="dim"># move into a folder</span><br>
+        <span class="hl">cd</span> my-project<br><br>
+        <span class="dim"># go up one level</span><br>
+        <span class="hl">cd</span> ..<br><br>
+        <span class="dim"># create a file</span><br>
+        <span class="hl">touch</span> index.html<br><br>
+        <span class="dim"># make a new folder</span><br>
+        <span class="hl">mkdir</span> assets
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 · GIT -->
+  <section class="slide" data-slide="git" aria-label="Versioning and project management with Git">
+    <div class="content">
+      <div class="label">Tool</div>
+      <h1>Versioning + Project Management with Git</h1>
+    </div>
+    <div class="stage" aria-hidden="true">
+      <div class="term-box" role="img" aria-label="Git command examples">
+        <span class="dim"># initialize a repo</span><br>
+        git <span class="hl">init</span><br><br>
+        <span class="dim"># stage your changes</span><br>
+        git <span class="hl">add</span> .<br><br>
+        <span class="dim"># save a snapshot</span><br>
+        git <span class="hl">commit</span> -m <span class="str">"first commit"</span><br><br>
+        <span class="dim"># push to GitHub</span><br>
+        git <span class="hl">push</span> origin main<br><br>
+        <span class="dim"># view history</span><br>
+        git <span class="hl">log</span> --oneline<br><br>
+        <span class="dim"># check what changed</span><br>
+        git <span class="hl">status</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 · SECTION BREAK: PART 2 -->
+  <section class="slide slide-break" data-slide="part2" style="--part:#2ea043;" aria-label="Part 2 section break">
+    <div class="content">
+      <div class="break-tag">Part 2</div>
+      <h1>Putting It Together</h1>
+      <p class="break-sub">Activities, exit ticket, and next steps</p>
+    </div>
+  </section>
+
+  <!-- 12 · ACTIVITY 1A -->
+  <section class="slide" data-slide="activity1a" aria-label="Activity 1a">
+    <div class="content">
+      <div class="label">Activity 1a · 10 min</div>
+      <h1>Activity 1a</h1>
+      <span class="time-tag">10 min</span>
+    </div>
+    <!-- activity 1a prompt — to be filled from workshop materials -->
+    <div class="stage" aria-hidden="true"><div class="ph"></div></div>
+  </section>
+
+  <!-- 13 · ACTIVITY 1B -->
+  <section class="slide" data-slide="activity1b" aria-label="Activity 1b">
+    <div class="content">
+      <div class="label">Activity 1b · 10 min</div>
+      <h1>Activity 1b</h1>
+      <span class="time-tag">10 min</span>
+    </div>
+    <!-- activity 1b prompt — to be filled from workshop materials -->
+    <div class="stage" aria-hidden="true"><div class="ph"></div></div>
+  </section>
+
+  <!-- 14 · EXIT TICKET -->
+  <section class="slide" data-slide="exit" aria-label="Exit ticket">
+    <div class="content">
+      <div class="label">Exit Ticket · 5 min</div>
+      <h1>Exit Ticket</h1>
+      <span class="time-tag">5 min</span>
+    </div>
+    <!-- reflection prompts — to be filled from workshop materials -->
+    <div class="stage" aria-hidden="true"><div class="ph"></div></div>
+  </section>
+
+  <!-- 15 · NEXT STEPS -->
+  <section class="slide" data-slide="nextsteps" aria-label="Next steps">
+    <div class="content">
+      <div class="label">Next Steps · 2.5 min</div>
+      <h1>Next Steps</h1>
+      <span class="time-tag">2.5 min</span>
+    </div>
+    <!-- next steps — to be filled from workshop materials -->
+    <div class="stage" aria-hidden="true"><div class="ph"></div></div>
+  </section>
+
+  <!-- 16 · RESOURCES -->
+  <section class="slide" data-slide="resources" aria-label="Resources">
+    <div class="content">
+      <div class="label">Resources</div>
+      <h1>Links &amp; References</h1>
+    </div>
+    <div class="stage" aria-hidden="true">
+      <div class="res-wrap">
+        <ul class="res-list">
+          <li>
+            <a href="https://ailab.gc.cuny.edu" target="_blank" rel="noopener">ailab.gc.cuny.edu</a>
+            <div class="res-desc">CUNY AI Lab — home page, announcements, and model notes</div>
+          </li>
+          <li>
+            <a href="https://ailab.gc.cuny.edu/resources" target="_blank" rel="noopener">ailab.gc.cuny.edu/resources</a>
+            <div class="res-desc">CAIL Resources — guides, readings, and workshop materials</div>
+          </li>
+          <li>
+            <a href="https://chat.ailab.gc.cuny.edu" target="_blank" rel="noopener">chat.ailab.gc.cuny.edu</a>
+            <div class="res-desc">CAIL Sandbox (Open WebUI) — GLM 5, Kimi K2.5, and more</div>
+          </li>
+          <li>
+            <a href="https://tools.ailab.gc.cuny.edu" target="_blank" rel="noopener">tools.ailab.gc.cuny.edu</a>
+            <div class="res-desc">CAIL Tools — additional lab utilities and experiments</div>
+          </li>
+          <li>
+            <a href="https://newmedialab.cuny.edu" target="_blank" rel="noopener">newmedialab.cuny.edu</a>
+            <div class="res-desc">CUNY New Media Lab — workshop series host</div>
+          </li>
+          <li>
+            <a href="https://aitoolkit.gc.commons.edu" target="_blank" rel="noopener">aitoolkit.gc.commons.edu</a>
+            <div class="res-desc">GC AI Toolkit — curated tools and resources for the Graduate Center community</div>
+          </li>
+          <li>
+            <a href="https://github.com/cuny-ai-lab" target="_blank" rel="noopener">github.com/cuny-ai-lab</a>
+            <div class="res-desc">CUNY AI Lab on GitHub — open source repos, workshop decks, datasets</div>
+          </li>
+          <li>
+            <a href="https://cuny-ai-lab.github.io/Vibe-Coding-Workshop/" target="_blank" rel="noopener">cuny-ai-lab.github.io/Vibe-Coding-Workshop</a>
+            <div class="res-desc">Vibe Coding Workshop deck — companion CAIL workshop</div>
+          </li>
+          <li>
+            <a href="https://code.visualstudio.com/docs" target="_blank" rel="noopener">code.visualstudio.com/docs</a>
+            <div class="res-desc">VS Code documentation — setup, extensions, integrated terminal</div>
+          </li>
+          <li>
+            <a href="https://docs.github.com" target="_blank" rel="noopener">docs.github.com</a>
+            <div class="res-desc">GitHub documentation — repos, Pages, pull requests, Actions</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  'use strict';
+  let idx = 0;
+  const slides  = Array.from(document.querySelectorAll('section.slide'));
+  const counter = document.getElementById('counter');
+  const btnPrev = document.getElementById('btn-prev');
+  const btnNext = document.getElementById('btn-next');
+
+  function clamp(n, lo, hi) { return Math.max(lo, Math.min(hi, n)); }
+
+  function show(i) {
+    const next = clamp(i, 0, slides.length - 1);
+    slides[idx].classList.remove('active');
+    idx = next;
+    slides[idx].classList.add('active');
+    if (counter) counter.textContent = `${idx + 1} / ${slides.length}`;
+    if (btnPrev) btnPrev.disabled = idx === 0;
+    if (btnNext) btnNext.disabled = idx === slides.length - 1;
+    history.replaceState(null, '', `#${idx + 1}`);
+    const f = slides[idx].querySelector('.content');
+    if (f) { f.setAttribute('tabindex', '-1'); f.focus({ preventScroll: true }); }
+  }
+
+  document.addEventListener('keydown', e => {
+    if (['INPUT','TEXTAREA'].includes(document.activeElement.tagName)) return;
+    if (['ArrowRight','PageDown',' '].includes(e.key)) { e.preventDefault(); show(idx + 1); }
+    if (['ArrowLeft','PageUp'].includes(e.key))        { e.preventDefault(); show(idx - 1); }
+    if (e.key === 'Home') { e.preventDefault(); show(0); }
+    if (e.key === 'End')  { e.preventDefault(); show(slides.length - 1); }
+  });
+
+  if (btnPrev) btnPrev.addEventListener('click', () => show(idx - 1));
+  if (btnNext) btnNext.addEventListener('click', () => show(idx + 1));
+
+  let tx = 0, ty = 0, swipeOk = false;
+  document.addEventListener('touchstart', e => {
+    if (e.touches.length !== 1) { swipeOk = false; return; }
+    if (e.target.closest('.stage')) { swipeOk = false; return; }
+    tx = e.touches[0].clientX; ty = e.touches[0].clientY; swipeOk = true;
+  }, { passive: true });
+  document.addEventListener('touchmove', e => {
+    if (!swipeOk || e.touches.length !== 1) return;
+    if (Math.abs(e.touches[0].clientY - ty) > Math.abs(e.touches[0].clientX - tx) * 1.5) swipeOk = false;
+  }, { passive: true });
+  document.addEventListener('touchend', e => {
+    if (!swipeOk) return;
+    const dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty;
+    if (Math.abs(dx) >= 48 && Math.abs(dx) >= Math.abs(dy) * 1.2) show(dx < 0 ? idx + 1 : idx - 1);
+    swipeOk = false;
+  }, { passive: true });
+
+  window.addEventListener('hashchange', () => {
+    const m = location.hash.match(/^#(\d+)$/);
+    if (m) show(parseInt(m[1], 10) - 1);
+  });
+
+  const m = location.hash.match(/^#(\d+)$/);
+  show(m ? clamp(parseInt(m[1], 10) - 1, 0, slides.length - 1) : 0);
+</script>
+</body>
+</html>
