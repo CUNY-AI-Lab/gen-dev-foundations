@@ -7,6 +7,7 @@
 
 ## Backlog
 
+- [ ] Add commit step to git workflow — `git commit -m "add README.md"` _(include as a concrete example in the Initializing a Git Repo or Getting Started with GitHub slide)_
 - [ ] Slide 21 — Exit Ticket _(reflection prompts · to fill)_
 - [ ] Slide 22 — Next Steps _(to fill)_
 - [ ] Agenda href anchors — update slide numbers to match current order
