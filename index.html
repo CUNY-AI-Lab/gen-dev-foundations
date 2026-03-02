@@ -57,42 +57,52 @@
     .nav-btn:hover { background: rgba(255,255,255,0.09); opacity: 1; }
     .nav-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-    /* ── STICKY FOOTER NAVIGATION ── */
+    /* ── STICKY FOOTER SLIDER ── */
     .sticky-footer {
       position: fixed; bottom: 0; left: 0; right: 0; z-index: 30;
       background: linear-gradient(to top, rgba(11,14,20,.96), transparent);
       padding: 16px; pointer-events: none;
     }
-    .footer-nav {
-      display: flex; justify-content: space-between; align-items: center;
-      max-width: 1200px; margin: 0 auto; pointer-events: auto;
+    .footer-slider {
+      max-width: 800px; margin: 0 auto; pointer-events: auto;
+      display: flex; flex-direction: column; gap: 8px; align-items: center;
     }
-    .footer-btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 12px 20px; border-radius: 8px;
-      border: 1px solid rgba(255,255,255,0.15); 
-      background: rgba(255,255,255,0.08);
-      color: var(--fg); cursor: pointer; 
-      font-size: 14px; font-weight: 500;
-      transition: all 0.2s; opacity: 0.9;
+    .slider-track {
+      position: relative; width: 100%; height: 6px;
+      background: rgba(255,255,255,0.1); border-radius: 3px;
       backdrop-filter: blur(8px);
     }
-    .footer-btn:hover { 
-      background: rgba(255,255,255,0.15); 
-      border-color: rgba(255,255,255,0.25);
-      opacity: 1; 
+    .slider-progress {
+      position: absolute; top: 0; left: 0; height: 100%;
+      background: var(--accent); border-radius: 3px;
+      width: 4.35%; /* 1/23 slides */
+      transition: width 0.2s;
     }
-    .footer-btn:disabled {
-      opacity: 0.4; cursor: not-allowed;
-      background: rgba(255,255,255,0.03);
-      border-color: rgba(255,255,255,0.05);
+    #slide-scrubber {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      opacity: 0; cursor: pointer; margin: 0;
+      -webkit-appearance: none; appearance: none;
     }
-    .footer-btn .arrow {
-      font-size: 16px; color: var(--accent);
+    #slide-scrubber::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none;
+      width: 20px; height: 20px; border-radius: 50%;
+      background: var(--accent); cursor: pointer;
+      border: 2px solid rgba(255,255,255,0.2);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    #slide-scrubber::-moz-range-thumb {
+      width: 20px; height: 20px; border-radius: 50%;
+      background: var(--accent); cursor: pointer;
+      border: 2px solid rgba(255,255,255,0.2);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    .slider-label {
+      font-size: 13px; color: var(--muted); 
+      font-variant-numeric: tabular-nums;
     }
     @media (max-width: 600px) {
       .sticky-footer { padding: 12px; }
-      .footer-btn { padding: 10px 16px; font-size: 13px; }
+      .slider-label { font-size: 12px; }
     }
 
     /* ── SLIDE HOST ── */
@@ -626,8 +636,8 @@
           </div>
           <a class="agenda-item" href="#4"><span class="agenda-item-label">Icebreaker</span></a>
           <a class="agenda-item" href="#5"><span class="agenda-item-label">Demo</span></a>
-          <a class="agenda-item" href="#6"><span class="agenda-item-label">Inference as Coding Scaffold</span></a>
-          <a class="agenda-item" href="#7"><span class="agenda-item-label">Problematics of Agentic Coding</span></a>
+          <a class="agenda-item" href="#6"><span class="agenda-item-label">What is a Large Language Model (LLM)?</span></a>
+          <a class="agenda-item" href="#7"><span class="agenda-item-label">How Do LLMs Generate Code?</span></a>
           <a class="agenda-item" href="#9"><span class="agenda-item-label">What is VS Code?</span></a>
           <a class="agenda-item" href="#10"><span class="agenda-item-label">Setting up an IDE</span></a>
           <a class="agenda-item" href="#11"><span class="agenda-item-label">The Command Line</span></a>
@@ -641,7 +651,6 @@
           </div>
           <a class="agenda-item" href="#19"><span class="agenda-item-label">Installing Gemini CLI</span></a>
           <a class="agenda-item" href="#20"><span class="agenda-item-label">Login Setup</span></a>
-          <a class="agenda-item" href="#22"><span class="agenda-item-label">Exit Ticket</span></a>
           <a class="agenda-item" href="#23"><span class="agenda-item-label">What's Next</span></a>
         </div>
 
@@ -672,7 +681,7 @@
         </div>
         <div class="ib-q">
           <div class="ib-num">B</div>
-          <div class="ib-text">Describe a challenge you often face in your research, technical or otherwise.</div>
+          <div class="ib-text">Share a challenge you often face in your research, technical or otherwise.</div>
         </div>
       </div>
     </div>
@@ -694,23 +703,23 @@
     </div>
   </section>
 
-  <!-- 6 · INFERENCE AS CODING SCAFFOLD -->
-  <section class="slide" data-slide="inference" aria-label="Inference as coding scaffold">
+  <!-- 6 · WHAT IS A LARGE LANGUAGE MODEL? -->
+  <section class="slide" data-slide="llm" aria-label="What is a Large Language Model (LLM)?">
     <div class="content">
       <div class="label">Concept</div>
-      <h1>Inference as Coding Scaffold</h1>
+      <h1>What is a Large Language Model (LLM)?</h1>
     </div>
-    <!-- spectrum: one-shot → iterative → constraint-based; temperature comparison — content pending -->
+    <!-- content pending -->
     <div class="stage" aria-hidden="true"><div class="ph"></div></div>
   </section>
 
-  <!-- 7 · PROBLEMATICS OF AGENTIC CODING -->
-  <section class="slide" data-slide="agentic" aria-label="Problematics of agentic coding">
+  <!-- 7 · HOW DO LLMS GENERATE CODE? -->
+  <section class="slide" data-slide="code-generation" aria-label="How Do LLMs Generate Code?">
     <div class="content">
       <div class="label">Concept</div>
-      <h1>Problematics of Agentic Coding</h1>
+      <h1>How Do LLMs Generate Code?</h1>
     </div>
-    <!-- no-review vs deliberate iteration · oversight / authorship framing — content pending -->
+    <!-- content pending -->
     <div class="stage" aria-hidden="true"><div class="ph"></div></div>
   </section>
 
@@ -1070,17 +1079,16 @@ eval "$(/opt/homebrew/bin/brew shellenv)"</span>
 
 </main>
 
-<!-- STICKY FOOTER NAVIGATION -->
+<!-- STICKY FOOTER SLIDER -->
 <div class="sticky-footer">
-  <div class="footer-nav">
-    <button class="footer-btn" id="footer-prev" aria-label="Previous slide">
-      <span class="arrow">←</span>
-      <span>Previous</span>
-    </button>
-    <button class="footer-btn" id="footer-next" aria-label="Next slide">
-      <span>Next</span>
-      <span class="arrow">→</span>
-    </button>
+  <div class="footer-slider">
+    <div class="slider-track">
+      <input type="range" id="slide-scrubber" min="1" max="23" value="1" aria-label="Navigate to slide">
+      <div class="slider-progress"></div>
+    </div>
+    <div class="slider-label">
+      <span id="slider-counter">1 / 23</span>
+    </div>
   </div>
 </div>
 
@@ -1091,8 +1099,9 @@ eval "$(/opt/homebrew/bin/brew shellenv)"</span>
   const counter = document.getElementById('counter');
   const btnPrev = document.getElementById('btn-prev');
   const btnNext = document.getElementById('btn-next');
-  const footerPrev = document.getElementById('footer-prev');
-  const footerNext = document.getElementById('footer-next');
+  const scrubber = document.getElementById('slide-scrubber');
+  const sliderCounter = document.getElementById('slider-counter');
+  const sliderProgress = document.querySelector('.slider-progress');
 
   function clamp(n, lo, hi) { return Math.max(lo, Math.min(hi, n)); }
 
@@ -1107,8 +1116,9 @@ eval "$(/opt/homebrew/bin/brew shellenv)"</span>
     if (counter) counter.textContent = `${idx + 1} / ${slides.length}`;
     if (btnPrev) btnPrev.disabled = idx === 0;
     if (btnNext) btnNext.disabled = idx === slides.length - 1;
-    if (footerPrev) footerPrev.disabled = idx === 0;
-    if (footerNext) footerNext.disabled = idx === slides.length - 1;
+    if (scrubber) scrubber.value = idx + 1;
+    if (sliderCounter) sliderCounter.textContent = `${idx + 1} / ${slides.length}`;
+    if (sliderProgress) sliderProgress.style.width = `${((idx + 1) / slides.length) * 100}%`;
     history.replaceState(null, '', `#${idx + 1}`);
     const f = slides[idx].querySelector('.content');
     if (f) { f.setAttribute('tabindex', '-1'); f.focus({ preventScroll: true }); }
@@ -1157,8 +1167,12 @@ eval "$(/opt/homebrew/bin/brew shellenv)"</span>
 
   if (btnPrev) btnPrev.addEventListener('click', () => retreat());
   if (btnNext) btnNext.addEventListener('click', () => advance());
-  if (footerPrev) footerPrev.addEventListener('click', () => retreat());
-  if (footerNext) footerNext.addEventListener('click', () => advance());
+  if (scrubber) {
+    scrubber.max = slides.length;
+    scrubber.addEventListener('input', () => {
+      show(parseInt(scrubber.value) - 1, true);
+    });
+  }
 
   let tx = 0, ty = 0, swipeOk = false;
   document.addEventListener('touchstart', e => {

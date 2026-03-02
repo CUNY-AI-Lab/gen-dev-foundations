@@ -52,7 +52,7 @@ Part 2 — Installation & Setup:
 
 **Stage (ib-pair):**
 - **A** — What would you make if coding were as familiar as writing?
-- **B** — Describe a challenge you often face in your research, technical or otherwise.
+- **B** — Share a challenge you often face in your research, technical or otherwise.
 
 ---
 
