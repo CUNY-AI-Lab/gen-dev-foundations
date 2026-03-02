@@ -408,7 +408,7 @@
       .stage { flex: 1 1 52%; height: auto; align-self: stretch; min-height: unset; }
       /* Keep title slide stacked (title on top, artifact below) */
       [data-slide="title"] { flex-direction: column; }
-      [data-slide="title"] .content { flex: 0 0 auto; overflow: visible; }
+      [data-slide="title"] .content { flex: 0 0 auto; overflow: visible; max-width: 600px; margin: 0 auto; }
       [data-slide="title"] .stage { flex: 1 1 auto; min-height: clamp(340px, 62vh, 800px); }
 
       .slide-break.active { flex-direction: column; overflow: hidden; }
@@ -440,6 +440,7 @@
 
     @media (min-width: 1200px) {
       section.slide { padding: var(--header-h) clamp(28px,3vw,48px) 20px; gap: clamp(16px,2vw,28px); }
+      [data-slide="title"] .content { max-width: 700px; }
       [data-slide="title"] .stage {
         min-height: clamp(450px, 68vh, 1000px);
       }
@@ -447,6 +448,7 @@
 
     /* ── VERY LARGE SCREENS ── */
     @media (min-width: 1600px) {
+      [data-slide="title"] .content { max-width: 800px; }
       [data-slide="title"] .stage {
         min-height: clamp(500px, 70vh, 1100px);
       }
