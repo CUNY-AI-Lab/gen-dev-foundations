@@ -291,11 +291,15 @@ git status
 
 ---
 
-## Slide 22 — Next Steps
+## Slide 22 — What's Next
 
-**Label:** Next Steps
-**Title:** Next Steps
-**Stage:** _(to fill)_
+**Label:** What's Next
+**Title:** What's Next
+
+**Stage (step-grid, fragments):**
+- **Vibe-Coding Prototypes** — Tuesday, March 10 · 4:00–5:30 pm. Use AI from the command line to build a small prototype. We'll model prompting, project design, and troubleshooting — then you'll customize a feature of your own.
+- [Register for the next workshop](https://docs.google.com/forms/d/e/1FAIpQLSenSkDfoz3ftYiz6t5KJUEdYDGrbkUKmR6SGVC4j-fF6qNbdA/viewform) — Prerequisite: this workshop, or prior familiarity with the command line and Git/GitHub.
+- **In the meantime:** experiment with Gemini CLI on your own! Try building a small page, asking it to explain code, or exploring a new idea from your terminal.
 
 ---
 
