@@ -228,9 +228,11 @@ git status
 
 **Stage (step-grid, fragments):**
 1. Create a README file: `touch README.md`
-2. Stage and commit your files: `git add . && git commit -m "first commit"`
-3. Create a GitHub repo and push: `gh repo create my-project --public --source=. --push`
-4. Visit **github.com/your-username/my-project** to see it live
+2. Stage your files: `git add .`
+3. Commit your changes: `git commit -m "first commit"`
+4. Create a GitHub repo: `gh repo create my-project --public --source=.`
+5. Push your code to GitHub: `git push -u origin main`
+6. Visit **github.com/your-username/my-project** to see it live
 
 ---
 
