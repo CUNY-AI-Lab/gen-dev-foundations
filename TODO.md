@@ -13,6 +13,6 @@
 
 ## Done
 
-- [x] Slide reorder: git commands before gh CLI login (slides 14–16)
-- [x] Rename git commands slide → "Initializing a Git Repo"
-- [x] Command Line Basics — rearrange progression: mkdir → cd → cd .. → touch → mv → cd → ls
+- [ ] Slide reorder: git commands before gh CLI login (slides 14–16)
+- [ ] Rename git commands slide → "Initializing a Git Repo"
+- [ ] Command Line Basics — rearrange progression: mkdir → cd → cd .. → touch → mv → cd → ls
