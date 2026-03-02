@@ -57,6 +57,44 @@
     .nav-btn:hover { background: rgba(255,255,255,0.09); opacity: 1; }
     .nav-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
+    /* ── STICKY FOOTER NAVIGATION ── */
+    .sticky-footer {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 30;
+      background: linear-gradient(to top, rgba(11,14,20,.96), transparent);
+      padding: 16px; pointer-events: none;
+    }
+    .footer-nav {
+      display: flex; justify-content: space-between; align-items: center;
+      max-width: 1200px; margin: 0 auto; pointer-events: auto;
+    }
+    .footer-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 20px; border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.15); 
+      background: rgba(255,255,255,0.08);
+      color: var(--fg); cursor: pointer; 
+      font-size: 14px; font-weight: 500;
+      transition: all 0.2s; opacity: 0.9;
+      backdrop-filter: blur(8px);
+    }
+    .footer-btn:hover { 
+      background: rgba(255,255,255,0.15); 
+      border-color: rgba(255,255,255,0.25);
+      opacity: 1; 
+    }
+    .footer-btn:disabled {
+      opacity: 0.4; cursor: not-allowed;
+      background: rgba(255,255,255,0.03);
+      border-color: rgba(255,255,255,0.05);
+    }
+    .footer-btn .arrow {
+      font-size: 16px; color: var(--accent);
+    }
+    @media (max-width: 600px) {
+      .sticky-footer { padding: 12px; }
+      .footer-btn { padding: 10px 16px; font-size: 13px; }
+    }
+
     /* ── SLIDE HOST ── */
     main { height: 100%; position: relative; }
 
@@ -630,11 +668,11 @@
       <div class="ib-pair">
         <div class="ib-q">
           <div class="ib-num">A</div>
-          <div class="ib-text">What would you create if coding felt as natural as writing?</div>
+          <div class="ib-text">What would you make if coding were more like writing instructions, step by step?</div>
         </div>
         <div class="ib-q">
           <div class="ib-num">B</div>
-          <div class="ib-text">What do you wish your computer could do for your research?</div>
+          <div class="ib-text">Describe a challenge you often face in your research, technical or otherwise.</div>
         </div>
       </div>
     </div>
@@ -1032,6 +1070,20 @@ eval "$(/opt/homebrew/bin/brew shellenv)"</span>
 
 </main>
 
+<!-- STICKY FOOTER NAVIGATION -->
+<div class="sticky-footer">
+  <div class="footer-nav">
+    <button class="footer-btn" id="footer-prev" aria-label="Previous slide">
+      <span class="arrow">←</span>
+      <span>Previous</span>
+    </button>
+    <button class="footer-btn" id="footer-next" aria-label="Next slide">
+      <span>Next</span>
+      <span class="arrow">→</span>
+    </button>
+  </div>
+</div>
+
 <script>
   'use strict';
   let idx = 0;
@@ -1039,6 +1091,8 @@ eval "$(/opt/homebrew/bin/brew shellenv)"</span>
   const counter = document.getElementById('counter');
   const btnPrev = document.getElementById('btn-prev');
   const btnNext = document.getElementById('btn-next');
+  const footerPrev = document.getElementById('footer-prev');
+  const footerNext = document.getElementById('footer-next');
 
   function clamp(n, lo, hi) { return Math.max(lo, Math.min(hi, n)); }
 
@@ -1053,6 +1107,8 @@ eval "$(/opt/homebrew/bin/brew shellenv)"</span>
     if (counter) counter.textContent = `${idx + 1} / ${slides.length}`;
     if (btnPrev) btnPrev.disabled = idx === 0;
     if (btnNext) btnNext.disabled = idx === slides.length - 1;
+    if (footerPrev) footerPrev.disabled = idx === 0;
+    if (footerNext) footerNext.disabled = idx === slides.length - 1;
     history.replaceState(null, '', `#${idx + 1}`);
     const f = slides[idx].querySelector('.content');
     if (f) { f.setAttribute('tabindex', '-1'); f.focus({ preventScroll: true }); }
@@ -1101,6 +1157,8 @@ eval "$(/opt/homebrew/bin/brew shellenv)"</span>
 
   if (btnPrev) btnPrev.addEventListener('click', () => retreat());
   if (btnNext) btnNext.addEventListener('click', () => advance());
+  if (footerPrev) footerPrev.addEventListener('click', () => retreat());
+  if (footerNext) footerNext.addEventListener('click', () => advance());
 
   let tx = 0, ty = 0, swipeOk = false;
   document.addEventListener('touchstart', e => {
