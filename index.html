@@ -60,49 +60,72 @@
     /* ── STICKY FOOTER SLIDER ── */
     .sticky-footer {
       position: fixed; bottom: 0; left: 0; right: 0; z-index: 30;
-      background: linear-gradient(to top, rgba(11,14,20,.96), transparent);
-      padding: 16px; pointer-events: none;
+      background: linear-gradient(to top, rgba(11,14,20,.98), rgba(11,14,20,.6) 50%, transparent);
+      padding: 20px 16px; pointer-events: none;
+      backdrop-filter: blur(12px);
     }
     .footer-slider {
-      max-width: 800px; margin: 0 auto; pointer-events: auto;
-      display: flex; flex-direction: column; gap: 8px; align-items: center;
+      max-width: 720px; margin: 0 auto; pointer-events: auto;
+      display: flex; flex-direction: column; gap: 12px; align-items: center;
     }
     .slider-track {
-      position: relative; width: 100%; height: 6px;
-      background: rgba(255,255,255,0.1); border-radius: 3px;
-      backdrop-filter: blur(8px);
+      position: relative; width: 100%; height: 8px;
+      background: rgba(255,255,255,0.08); 
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 4px; overflow: hidden;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
     }
     .slider-progress {
       position: absolute; top: 0; left: 0; height: 100%;
-      background: var(--accent); border-radius: 3px;
-      width: 4.35%; /* 1/23 slides */
-      transition: width 0.2s;
+      background: linear-gradient(90deg, var(--accent) 0%, rgba(121,192,255,0.8) 100%);
+      width: 5%; /* 1/20 slides */
+      transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 0 8px rgba(121,192,255,0.3);
     }
     #slide-scrubber {
-      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      opacity: 0; cursor: pointer; margin: 0;
+      position: absolute; top: -4px; left: 0; width: 100%; height: 16px;
+      opacity: 0; cursor: grab; margin: 0;
       -webkit-appearance: none; appearance: none;
+      touch-action: manipulation;
     }
+    #slide-scrubber:active { cursor: grabbing; }
     #slide-scrubber::-webkit-slider-thumb {
       -webkit-appearance: none; appearance: none;
-      width: 20px; height: 20px; border-radius: 50%;
-      background: var(--accent); cursor: pointer;
-      border: 2px solid rgba(255,255,255,0.2);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      width: 18px; height: 18px; border-radius: 50%;
+      background: radial-gradient(circle, var(--accent) 0%, rgba(121,192,255,0.9) 100%);
+      cursor: grab; border: 1px solid rgba(255,255,255,0.3);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4), 0 0 0 1px rgba(11,14,20,0.8);
+      transition: all 0.2s ease;
+    }
+    #slide-scrubber::-webkit-slider-thumb:hover {
+      transform: scale(1.1);
+      box-shadow: 0 3px 12px rgba(0,0,0,0.5), 0 0 0 2px rgba(121,192,255,0.4);
+    }
+    #slide-scrubber::-webkit-slider-thumb:active {
+      cursor: grabbing; transform: scale(1.05);
     }
     #slide-scrubber::-moz-range-thumb {
-      width: 20px; height: 20px; border-radius: 50%;
-      background: var(--accent); cursor: pointer;
-      border: 2px solid rgba(255,255,255,0.2);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      width: 18px; height: 18px; border-radius: 50%;
+      background: radial-gradient(circle, var(--accent) 0%, rgba(121,192,255,0.9) 100%);
+      cursor: grab; border: 1px solid rgba(255,255,255,0.3);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
     }
     .slider-label {
-      font-size: 13px; color: var(--muted); 
-      font-variant-numeric: tabular-nums;
+      font-size: 12px; color: rgba(255,255,255,0.6); 
+      font-variant-numeric: tabular-nums; font-weight: 500;
+      letter-spacing: 0.5px; opacity: 0.8;
+    }
+    /* Touch enhancements */
+    @media (pointer: coarse) {
+      .slider-track { height: 12px; }
+      #slide-scrubber { height: 24px; top: -6px; }
+      #slide-scrubber::-webkit-slider-thumb { width: 24px; height: 24px; }
+      #slide-scrubber::-moz-range-thumb { width: 24px; height: 24px; }
     }
     @media (max-width: 600px) {
-      .sticky-footer { padding: 12px; }
-      .slider-label { font-size: 12px; }
+      .sticky-footer { padding: 16px 12px; }
+      .footer-slider { gap: 10px; }
+      .slider-label { font-size: 11px; }
     }
 
     /* ── SLIDE HOST ── */
@@ -590,11 +613,7 @@
 
 <header role="banner">
   <div class="bar">
-    <button class="nav-btn" id="btn-prev" aria-label="Previous slide">&#8592;</button>
-    <div id="counter" aria-live="polite" aria-atomic="true">1 / 16</div>
-    <button class="nav-btn" id="btn-next" aria-label="Next slide">&#8594;</button>
-    <div class="kbd" id="kbdKeys">← →</div>
-    <div class="kbd" id="kbdSwipe">Swipe</div>
+    <div id="counter" aria-live="polite" aria-atomic="true">1 / 20</div>
   </div>
 </header>
 
@@ -1083,11 +1102,11 @@ eval "$(/opt/homebrew/bin/brew shellenv)"</span>
 <div class="sticky-footer">
   <div class="footer-slider">
     <div class="slider-track">
-      <input type="range" id="slide-scrubber" min="1" max="23" value="1" aria-label="Navigate to slide">
+      <input type="range" id="slide-scrubber" min="1" max="20" value="1" aria-label="Navigate to slide">
       <div class="slider-progress"></div>
     </div>
     <div class="slider-label">
-      <span id="slider-counter">1 / 23</span>
+      <span id="slider-counter">1 / 20</span>
     </div>
   </div>
 </div>
@@ -1097,8 +1116,6 @@ eval "$(/opt/homebrew/bin/brew shellenv)"</span>
   let idx = 0;
   const slides  = Array.from(document.querySelectorAll('section.slide'));
   const counter = document.getElementById('counter');
-  const btnPrev = document.getElementById('btn-prev');
-  const btnNext = document.getElementById('btn-next');
   const scrubber = document.getElementById('slide-scrubber');
   const sliderCounter = document.getElementById('slider-counter');
   const sliderProgress = document.querySelector('.slider-progress');
@@ -1114,8 +1131,6 @@ eval "$(/opt/homebrew/bin/brew shellenv)"</span>
     slides[idx].classList.add('active');
     fragsOf(slides[idx]).forEach(f => f.classList.toggle('visible', !!revealAll));
     if (counter) counter.textContent = `${idx + 1} / ${slides.length}`;
-    if (btnPrev) btnPrev.disabled = idx === 0;
-    if (btnNext) btnNext.disabled = idx === slides.length - 1;
     if (scrubber) scrubber.value = idx + 1;
     if (sliderCounter) sliderCounter.textContent = `${idx + 1} / ${slides.length}`;
     if (sliderProgress) sliderProgress.style.width = `${((idx + 1) / slides.length) * 100}%`;
@@ -1165,8 +1180,6 @@ eval "$(/opt/homebrew/bin/brew shellenv)"</span>
     if (e.key === 'End')  { e.preventDefault(); show(slides.length - 1, true); }
   });
 
-  if (btnPrev) btnPrev.addEventListener('click', () => retreat());
-  if (btnNext) btnNext.addEventListener('click', () => advance());
   if (scrubber) {
     scrubber.max = slides.length;
     scrubber.addEventListener('input', () => {
