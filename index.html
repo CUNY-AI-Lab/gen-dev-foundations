@@ -72,7 +72,7 @@
       position: relative; width: 100%; height: 8px;
       background: rgba(255,255,255,0.08); 
       border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 4px; overflow: hidden;
+      border-radius: 4px; overflow: visible;
       box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
     }
     .slider-progress {
@@ -82,8 +82,22 @@
       transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       box-shadow: 0 0 8px rgba(121,192,255,0.3);
     }
+    .slider-thumb {
+      position: absolute; top: -6px; width: 20px; height: 20px;
+      left: calc(5% - 10px); /* center on progress */
+      border-radius: 50%; pointer-events: none;
+      background: radial-gradient(circle, var(--accent) 0%, rgba(121,192,255,0.9) 100%);
+      border: 2px solid rgba(255,255,255,0.4);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4), 0 0 0 1px rgba(11,14,20,0.8);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 2;
+    }
+    .slider-track:hover .slider-thumb {
+      transform: scale(1.1);
+      box-shadow: 0 3px 12px rgba(0,0,0,0.5), 0 0 0 2px rgba(121,192,255,0.4);
+    }
     #slide-scrubber {
-      position: absolute; top: -4px; left: 0; width: 100%; height: 16px;
+      position: absolute; top: -6px; left: 0; width: 100%; height: 20px;
       opacity: 0; cursor: grab; margin: 0;
       -webkit-appearance: none; appearance: none;
       touch-action: manipulation;
@@ -118,9 +132,13 @@
     /* Touch enhancements */
     @media (pointer: coarse) {
       .slider-track { height: 12px; }
-      #slide-scrubber { height: 24px; top: -6px; }
-      #slide-scrubber::-webkit-slider-thumb { width: 24px; height: 24px; }
-      #slide-scrubber::-moz-range-thumb { width: 24px; height: 24px; }
+      .slider-thumb { 
+        width: 28px; height: 28px; top: -8px;
+        border: 3px solid rgba(255,255,255,0.5);
+      }
+      #slide-scrubber { height: 32px; top: -10px; }
+      #slide-scrubber::-webkit-slider-thumb { width: 28px; height: 28px; }
+      #slide-scrubber::-moz-range-thumb { width: 28px; height: 28px; }
     }
     @media (max-width: 600px) {
       .sticky-footer { padding: 16px 12px; }
@@ -614,6 +632,7 @@
 <header role="banner">
   <div class="bar">
     <div id="counter" aria-live="polite" aria-atomic="true">1 / 20</div>
+    <div class="kbd" id="kbdSwipe">Swipe</div>
   </div>
 </header>
 
@@ -1104,6 +1123,7 @@ eval "$(/opt/homebrew/bin/brew shellenv)"</span>
     <div class="slider-track">
       <input type="range" id="slide-scrubber" min="1" max="20" value="1" aria-label="Navigate to slide">
       <div class="slider-progress"></div>
+      <div class="slider-thumb"></div>
     </div>
     <div class="slider-label">
       <span id="slider-counter">1 / 20</span>
@@ -1119,6 +1139,7 @@ eval "$(/opt/homebrew/bin/brew shellenv)"</span>
   const scrubber = document.getElementById('slide-scrubber');
   const sliderCounter = document.getElementById('slider-counter');
   const sliderProgress = document.querySelector('.slider-progress');
+  const sliderThumb = document.querySelector('.slider-thumb');
 
   function clamp(n, lo, hi) { return Math.max(lo, Math.min(hi, n)); }
 
@@ -1133,7 +1154,9 @@ eval "$(/opt/homebrew/bin/brew shellenv)"</span>
     if (counter) counter.textContent = `${idx + 1} / ${slides.length}`;
     if (scrubber) scrubber.value = idx + 1;
     if (sliderCounter) sliderCounter.textContent = `${idx + 1} / ${slides.length}`;
-    if (sliderProgress) sliderProgress.style.width = `${((idx + 1) / slides.length) * 100}%`;
+    const progress = ((idx + 1) / slides.length) * 100;
+    if (sliderProgress) sliderProgress.style.width = `${progress}%`;
+    if (sliderThumb) sliderThumb.style.left = `calc(${progress}% - 10px)`;
     history.replaceState(null, '', `#${idx + 1}`);
     const f = slides[idx].querySelector('.content');
     if (f) { f.setAttribute('tabindex', '-1'); f.focus({ preventScroll: true }); }
