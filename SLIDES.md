@@ -221,10 +221,10 @@ git status
 
 ---
 
-## Slide 16 — Creating a GitHub Repository
+## Slide 16 — Committing Changes and Pushing to GitHub
 
 **Label:** Setup
-**Title:** Creating a GitHub Repository
+**Title:** Committing Changes and Pushing to GitHub
 
 **Stage (step-grid, fragments):**
 1. Create a README file: `touch README.md`
