@@ -47,12 +47,12 @@ Part 2 — Installation & Setup:
 ## Slide 4 — Icebreaker
 
 **Label:** Icebreaker · 10 min
-**Title:** Where does coding live in your imagination?
-**Subtitle:** Pick one. Talk to a neighbor.
+**Title:** What's your AI coding confession?
+**Subtitle:** Pick one. Share with a neighbor.
 
 **Stage (ib-pair):**
-- **A** — What would you create first if coding felt as natural as writing?
-- **B** — What's one thing you wish you could make your computer do for your research that it doesn't do right now?
+- **A** — I've used ChatGPT/Claude to write code and felt like I was cheating... but it actually worked?
+- **B** — I'm secretly hoping AI can help me build [specific thing] without me having to learn [specific scary programming concept].
 
 ---
 
