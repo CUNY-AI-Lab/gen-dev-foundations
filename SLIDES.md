@@ -23,8 +23,8 @@ Companion to `index.html`. Keep this file in sync whenever slide titles or text 
 
 Part 1 — Coding & Development Basics:
 - Icebreaker (10m)
-- Inference as Coding Scaffold
-- Problematics of Agentic Coding
+- What is a Large Language Model?
+- Strengths & Limitations
 - Setting up an IDE
 - The Command Line
 - Initializing a Git Repo
@@ -67,36 +67,75 @@ Part 2 — Installation & Setup:
 
 ---
 
-## Slide 6 — Inference as Coding Scaffold
+## Slide 6 — What is a Large Language Model?
 
 **Label:** Concept
-**Title:** Inference as Coding Scaffold
-**Stage:** _(content pending)_
+**Title:** What is a Large Language Model (LLM)?
+
+**Stage (stageCenter + spectrumBar):**
+- **Big:** A probabilistic pattern engine for text.
+- It learns statistical relationships between tokens (not "facts")
+- It predicts the most likely next token, step by step
+- It generates output by repeating that prediction process
+- **Pipeline bar:** Tokens → Vectors → Attention → Probabilities → Output
 
 ---
 
-## Slide 7 — Problematics of Agentic Coding
+## Slide 7 — How Does an LLM Actually Produce an Answer?
 
 **Label:** Concept
-**Title:** Problematics of Agentic Coding
-**Stage:** _(content pending)_
+**Title:** How Does an LLM Actually Produce an Answer?
+
+**Stage (step-grid, fragments):**
+1. **Tokenize** — break your prompt into tokens
+2. **Embed** — turn tokens into vectors
+3. **Transform** — attention mixes information across tokens
+4. **Predict + decode** — choose the next token; repeat
+- **Insight:** Your prompt shapes the probability space. The response is a probabilistic approximation of what you like to see. Wording changes can dramatically shift output.
 
 ---
 
-## Slide 8 — Setting up an Interactive Development Environment
+## Slide 8 — How Do LLMs Generate Code?
 
-**Label:** Setup
-**Title:** Setting up an Interactive Development Environment
+**Label:** Concept
+**Title:** How Do LLMs Generate Code?
 
-**Stage steps:**
-1. Download + install VS Code
-2. Sign in with your GitHub profile
-3. Add the GitHub extension; start tracking your project
-4. Open the integrated terminal — this is where CLI + Git live
+**Stage (stageCenter):**
+- **Big:** Code is just another language pattern.
+- The model was trained on large amounts of code + documentation
+- It learned patterns in syntax, structure, and common problem solutions
+- When you ask for code, it predicts the most likely next tokens in a programming language
+- It does not run or test the code unless connected to tools
 
 ---
 
-## Slide 9 — What is VS Code?
+## Slide 9 — What's Good / What's Bad
+
+**Label:** Concept
+**Title:** What's Good / What's Bad
+
+**Stage (stageCompare):**
+- **✓ What Works:**
+  - They autocomplete entire functions, not just words
+  - They infer intent from partial instructions
+  - They generalize from patterns they have seen before
+- **✗ Where Things Go Wrong:**
+  - Silent logical errors
+  - Hallucinated functions or libraries
+  - Outdated APIs
+  - Confident but wrong assumptions
+
+---
+
+## Slide 10 — Section Break: Part 2
+
+**Tag:** Part 2
+**Title:** Development Environment
+**Accent:** `#5a8dee` (blue)
+
+---
+
+## Slide 11 — What is VS Code?
 
 **Label:** Concept
 **Title:** What is VS Code?
@@ -111,7 +150,20 @@ Part 2 — Installation & Setup:
 
 ---
 
-## Slide 10 — What is the Command Line?
+## Slide 12 — Setting up an Interactive Development Environment
+
+**Label:** Setup
+**Title:** Setting up an Interactive Development Environment
+
+**Stage steps:**
+1. Download + install VS Code
+2. Sign in with your GitHub profile
+3. Add the GitHub extension; start tracking your project
+4. Open the integrated terminal — this is where CLI + Git live
+
+---
+
+## Slide 13 — What is the Command Line?
 
 **Label:** Concept
 **Title:** What is the Command Line?
@@ -126,49 +178,51 @@ Part 2 — Installation & Setup:
 
 ---
 
-## Slide 11 — Opening Your Terminal
+## Slide 14 — Opening Your Terminal
 
-**Label:** Setup
-**Title:** Opening Your Terminal
+**Label:** Outside VS Code
+**Title:** Opening a Standalone Terminal
+**Subtitle:** (You won't need this today)
+**Visual:** slide-aside (dashed border, FYI badge, muted heading)
 
 **Stage (stageCompare):**
 - **macOS — Terminal:** 1. Press Cmd + Space → 2. Type "Terminal" → 3. Press Return
 - **Windows — PowerShell:** 1. Press the Windows key → 2. Type "PowerShell" → 3. Press Enter
 
+**Note:** It's the same terminal. VS Code just puts one inside the editor so you don't have to switch windows.
+
 ---
 
-## Slide 12 — Command Line Basics
+## Slide 15 — Command Line Basics: Navigating
 
 **Label:** Tool
 **Title:** Command Line Basics
+**Subtitle:** Navigating
 
-**Stage (terminal):**
-```
-# make a new folder
-mkdir my-project
-
-# move into it
-cd my-project
-
-# go up one level
-cd ..
-
-# create a file
-touch index.html
-
-# move file into folder
-mv index.html my-project
-
-# move into it
-cd my-project
-
-# list files
-ls
-```
+**Stage (cmd-cards, fragments):**
+Each command is a card with text + CRT screen visualization.
+- `pwd` — Print your current location · *screen: path breadcrumb with blinking cursor*
+- `mkdir my-project` — Make a new folder · *screen: folder icon pops in*
+- `cd my-project` — Move into a folder · *screen: arrow enters folder*
+- `cd ..` — Go up one level · *screen: arrow exits folder*
 
 ---
 
-## Slide 13 — What is Git? What is GitHub?
+## Slide 16 — Command Line Basics: Working with Files
+
+**Label:** Tool
+**Title:** Command Line Basics
+**Subtitle:** Working with Files
+
+**Stage (cmd-cards, fragments):**
+Each command is a card with text + CRT screen visualization.
+- `ls` — List what's in the folder · *screen: three items appear with stagger*
+- `touch index.html` — Create a new file · *screen: file icon pops in*
+- `mv index.html my-project` — Move a file into a folder · *screen: file slides toward folder*
+
+---
+
+## Slide 17 — What is Git? What is GitHub?
 
 **Label:** Concept
 **Title:** What is Git? What is GitHub?
@@ -179,35 +233,35 @@ ls
 
 ---
 
-## Slide 14 — Initializing a Git Repo
+## Slide 18 — Git Basics: Setting Up
 
 **Label:** Tool
-**Title:** Initializing a Git Repo
+**Title:** Git Basics
+**Subtitle:** Setting Up
 
-**Stage (terminal, fragments):**
-```
-# initialize a repo
-git init
-
-# stage your changes
-git add .
-
-# save a snapshot
-git commit -m "first commit"
-
-# push to GitHub
-git push origin main
-
-# view history
-git log --oneline
-
-# check what changed
-git status
-```
+**Stage (cmd-cards, fragments):**
+Each command is a card with text + CRT screen visualization.
+- `git init` — Initialize a repo · *screen: folder with green .git dot pops in*
+- `git add .` — Stage your changes · *screen: two files slide right toward dashed staging box*
+- `git commit -m "first commit"` — Save a snapshot · *screen: commit node circle pops in with hash label*
 
 ---
 
-## Slide 15 — Logging into GitHub
+## Slide 19 — Git Basics: Syncing & Inspecting
+
+**Label:** Tool
+**Title:** Git Basics
+**Subtitle:** Syncing & Inspecting
+
+**Stage (cmd-cards, fragments):**
+Each command is a card with text + CRT screen visualization.
+- `git push origin main` — Push to GitHub · *screen: commit node slides right toward cloud shape*
+- `git log --oneline` — View history · *screen: three commit nodes connected by lines stagger in*
+- `git status` — Check what changed · *screen: two files with green/bronze status dots stagger in*
+
+---
+
+## Slide 20 — Logging into GitHub
 
 **Label:** Setup
 **Title:** Logging into GitHub
@@ -221,7 +275,7 @@ git status
 
 ---
 
-## Slide 16 — Staging, Committing, and Pushing to GitHub
+## Slide 21 — Staging, Committing, and Pushing to GitHub
 
 **Label:** Setup
 **Title:** Staging, Committing, and Pushing to GitHub
@@ -236,7 +290,7 @@ git status
 
 ---
 
-## Slide 17 — Section Break: Part 2
+## Slide 22 — Section Break: Part 3
 
 **Tag:** Part 2
 **Title:** Installation & Setup
@@ -245,7 +299,7 @@ git status
 
 ---
 
-## Slide 18 — Installing Gemini CLI
+## Slide 23 — Installing Gemini CLI
 
 **Label:** Setup
 **Title:** Installing Gemini CLI
@@ -256,7 +310,7 @@ git status
 
 ---
 
-## Slide 19 — Login Setup
+## Slide 24 — Login Setup
 
 **Label:** Setup
 **Title:** Login Setup
@@ -269,7 +323,7 @@ git status
 
 ---
 
-## Slide 20 — Troubleshooting
+## Slide 25 — Troubleshooting
 
 **Label:** Check-in
 **Title:** Troubleshooting
@@ -283,15 +337,7 @@ git status
 
 ---
 
-## Slide 21 — Exit Ticket
-
-**Label:** Exit Ticket
-**Title:** What's Your Next Move?
-**Stage:** _(reflection prompts · to fill)_
-
----
-
-## Slide 22 — What's Next
+## Slide 26 — What's Next
 
 **Label:** What's Next
 **Title:** What's Next
@@ -303,7 +349,7 @@ git status
 
 ---
 
-## Slide 23 — Resources
+## Slide 27 — Resources
 
 **Label:** Resources
 **Title:** Links & References
@@ -324,4 +370,4 @@ git status
 
 ---
 
-_Last synced: 2026-03-01 (sync from gen-dev-foundations; removed Slide 8 — Social Coding + GitHub; exit ticket updated). Update both this file and `index.html` together._
+_Last synced: 2026-03-02 (split slide 18 git commands into two cmd-cards slides: 18 git-setup, 19 git-sync; renumbered 19→20 through 26→27; deck now 27 slides). Update both this file and `index.html` together._

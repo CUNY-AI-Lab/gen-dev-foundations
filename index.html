@@ -309,11 +309,11 @@
 
     /* Spectrum bar */
     .spectrumBar {
-      display: flex; align-items: center; width: 100%;
-      gap: 0;
+      display: flex; align-items: center; gap: 0;
+      width: 100%;
     }
     .spectrumNode {
-      flex: 1; padding: clamp(14px,2vw,24px) clamp(10px,1.5vw,20px);
+      flex: 1; min-width: 0; padding: clamp(10px,1.5vw,18px) clamp(4px,0.8vw,10px);
       text-align: center; border-right: 1px solid rgba(255,255,255,0.08);
     }
     .spectrumNode:last-child { border-right: none; }
@@ -325,7 +325,7 @@
       font-size: clamp(10px,1.1vw,13px); color: var(--muted); line-height: 1.4;
     }
     .spectrumArrow {
-      font-size: 16px; color: rgba(255,255,255,0.2); flex-shrink: 0;
+      font-size: 13px; color: rgba(255,255,255,0.2); flex-shrink: 0; padding: 0 2px;
     }
 
     /* icebreaker two-question layout */
@@ -441,6 +441,151 @@
     .term-box .str  { color: #a5d6ff; }
     .term-box .cmt  { color: rgba(130,200,100,0.55); }
 
+    /* ── COMMAND CARDS (CLI visualizations) ── */
+    .cmd-cards {
+      display: flex; flex-direction: column;
+      gap: clamp(8px, 1.2vw, 14px);
+      width: 100%; height: 100%;
+      padding: clamp(12px, 2vw, 24px);
+      justify-content: stretch;
+    }
+    .cmd-card {
+      display: grid; grid-template-columns: 2fr 3fr;
+      gap: clamp(8px, 1.2vw, 14px); align-items: stretch;
+      flex: 1;
+    }
+    .cmd-info {
+      display: flex; flex-direction: column;
+      justify-content: center; gap: 6px;
+      padding: clamp(12px, 1.4vw, 20px);
+      background: rgba(255,255,255,0.025);
+      border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);
+    }
+    .cmd-info code {
+      font: 600 clamp(14px, 1.5vw, 18px)/1.3 ui-monospace, SFMono-Regular, Menlo, monospace;
+      color: #e2e2e2;
+    }
+    .cmd-info code .hl { color: var(--accent); }
+    .cmd-info code .str { color: #a5d6ff; }
+    .cmd-info .cmd-desc {
+      font-size: clamp(12px, 1.15vw, 15px);
+      color: var(--muted); opacity: 0.55; line-height: 1.4;
+    }
+    /* CRT monitor */
+    .cmd-screen {
+      background: #030810;
+      border: 1px solid rgba(121,192,255,0.08);
+      border-radius: 10px;
+      padding: clamp(14px, 1.8vw, 24px);
+      position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: inset 0 0 20px rgba(0,0,0,0.4), 0 0 6px rgba(121,192,255,0.02);
+    }
+    .cmd-screen::before {
+      content: ''; position: absolute; top: 7px; right: 9px;
+      width: 4px; height: 4px; border-radius: 50%;
+      background: rgba(46,160,67,0.5); z-index: 2;
+    }
+    .cmd-screen::after {
+      content: ''; position: absolute; inset: 0;
+      background: repeating-linear-gradient(0deg,
+        transparent 0px, transparent 2px,
+        rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
+      pointer-events: none; border-radius: 10px; z-index: 1;
+    }
+    /* visualization primitives */
+    .vis {
+      position: relative; z-index: 0;
+      display: flex; align-items: center; gap: clamp(10px, 1.2vw, 16px);
+    }
+    .vis-col { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .vis-folder {
+      width: clamp(40px, 4.5vw, 56px); height: clamp(30px, 3.2vw, 42px);
+      border: 1.5px solid rgba(184,144,96,0.5);
+      border-radius: 1px 5px 5px 5px;
+      background: rgba(184,144,96,0.12);
+      position: relative; flex-shrink: 0;
+    }
+    .vis-folder::before {
+      content: ''; position: absolute;
+      left: -1.5px; bottom: calc(100% - 1px);
+      width: 16px; height: 9px;
+      background: rgba(184,144,96,0.12);
+      border: 1.5px solid rgba(184,144,96,0.5);
+      border-bottom: none; border-radius: 3px 5px 0 0;
+    }
+    .vis-file {
+      width: clamp(30px, 3.2vw, 42px); height: clamp(38px, 4vw, 52px);
+      border: 1.5px solid rgba(121,192,255,0.3);
+      border-radius: 2px; background: rgba(121,192,255,0.06); flex-shrink: 0;
+      position: relative;
+    }
+    .vis-path {
+      font: clamp(13px, 1.2vw, 16px)/1.3 ui-monospace, SFMono-Regular, Menlo, monospace;
+      color: rgba(200,255,200,0.65);
+    }
+    .vis-path .vis-here { color: var(--accent); }
+    .vis-cursor {
+      display: inline-block; width: 8px; height: 16px;
+      background: rgba(200,255,200,0.6); margin-left: 3px; vertical-align: middle;
+    }
+    .frag.visible .vis-cursor { animation: vis-blink 1s step-end infinite; }
+    .vis-label {
+      font: clamp(10px, 1vw, 13px)/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
+      color: rgba(255,255,255,0.4);
+    }
+    .vis-arrow { color: var(--accent); opacity: 0.5; font-size: clamp(18px, 2vw, 26px); flex-shrink: 0; }
+    /* git visualization primitives */
+    .vis-commit {
+      width: clamp(28px, 3vw, 38px); height: clamp(28px, 3vw, 38px);
+      border: 2px solid var(--accent); border-radius: 50%;
+      background: rgba(121,192,255,0.10); flex-shrink: 0;
+    }
+    .vis-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      position: absolute; top: 6px; right: 6px;
+    }
+    .vis-dot--ok  { background: #2ea043; }
+    .vis-dot--mod { background: var(--part); }
+    .vis-stage-box {
+      border: 1.5px dashed rgba(255,255,255,0.18);
+      border-radius: 6px; padding: clamp(8px, 1vw, 14px) clamp(10px, 1.2vw, 16px);
+      display: flex; align-items: center; gap: clamp(6px, 0.8vw, 10px);
+    }
+    .vis-cloud {
+      width: clamp(48px, 5vw, 64px); height: clamp(32px, 3.5vw, 44px);
+      border: 1.5px solid rgba(255,255,255,0.2); border-radius: 999px;
+      background: rgba(255,255,255,0.04); position: relative;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .vis-cloud::before {
+      content: ''; position: absolute;
+      width: 55%; height: 50%; top: -30%; left: 22.5%;
+      border: 1.5px solid rgba(255,255,255,0.2); border-bottom: none;
+      border-radius: 999px 999px 0 0; background: rgba(255,255,255,0.04);
+    }
+    .vis-line {
+      width: clamp(16px, 2vw, 24px); height: 2px;
+      background: rgba(121,192,255,0.3); flex-shrink: 0;
+    }
+    /* screen animations */
+    @keyframes vis-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+    @keyframes vis-pop { from { transform: scale(0.3); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    @keyframes vis-slide-r { from { transform: translateX(-20px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    @keyframes vis-slide-l { from { transform: translateX(20px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    .vis-pop { opacity: 0; }
+    .frag.visible .vis-pop { animation: vis-pop 0.45s cubic-bezier(0.34,1.56,0.64,1) 0.2s forwards; }
+    .vis-slide-r { opacity: 0; }
+    .frag.visible .vis-slide-r { animation: vis-slide-r 0.45s ease-out 0.2s forwards; }
+    .vis-slide-l { opacity: 0; }
+    .frag.visible .vis-slide-l { animation: vis-slide-l 0.45s ease-out 0.2s forwards; }
+    .vis-stagger > * { opacity: 0; }
+    .frag.visible .vis-stagger > :nth-child(1) { animation: vis-pop 0.35s ease-out 0.15s forwards; }
+    .frag.visible .vis-stagger > :nth-child(2) { animation: vis-pop 0.35s ease-out 0.35s forwards; }
+    .frag.visible .vis-stagger > :nth-child(3) { animation: vis-pop 0.35s ease-out 0.55s forwards; }
+    .frag.visible .vis-stagger > :nth-child(4) { animation: vis-pop 0.35s ease-out 0.75s forwards; }
+    .frag.visible .vis-stagger > :nth-child(5) { animation: vis-pop 0.35s ease-out 0.95s forwards; }
+
     /* resource list */
     .res-wrap { position: relative; width: 100%; padding: clamp(10px,1.5vw,20px) clamp(14px,2vw,24px); overflow-y: auto; }
     .res-group { margin-bottom: clamp(12px,2vw,20px); }
@@ -465,6 +610,28 @@
     .content .authors { font-size: clamp(18px,2.2vw,26px); color: var(--muted); margin-top: 18px; }
     .content .orgs { font-size: clamp(15px,1.8vw,20px); color: var(--muted); opacity: 0.65; line-height: 1.5; margin-top: 10px; }
     .content .date { font-size: clamp(14px,1.5vw,18px); color: var(--muted); opacity: 0.5; margin-top: 18px; }
+
+    /* ── ASIDE SLIDE ── */
+    .slide-aside .content {
+      border: 1px dashed rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.015);
+      position: relative;
+    }
+    .slide-aside .content::before {
+      content: 'FYI';
+      position: absolute; top: clamp(16px,2vw,24px); right: clamp(16px,2vw,24px);
+      font-size: 13px; font-weight: 700; letter-spacing: 0.12em;
+      color: var(--muted); opacity: 0.4;
+      padding: 3px 10px; border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .slide-aside .content .label { color: var(--muted); opacity: 0.6; }
+    .slide-aside .content h1 { opacity: 0.75; }
+    .slide-aside .content .aside-note {
+      font-size: clamp(12px,1.3vw,15px); color: var(--muted); opacity: 0.5;
+      line-height: 1.5; margin-top: auto; padding-top: clamp(12px,1.5vw,20px);
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
 
     /* ── SECTION BREAK ── */
     .slide-break.active {
@@ -505,6 +672,7 @@
 
       /* Desktop: stage elements fill the full column */
       .term-box, .term-stub { position: absolute; inset: 0; width: auto; overflow-y: auto; }
+      .cmd-cards { position: absolute; inset: 0; width: auto; }
       .stage-center { position: absolute; inset: 0; width: auto; }
       .stageCenter { position: absolute; inset: 0; width: auto; }
       .step-grid { position: absolute; inset: clamp(12px,2vw,24px); width: auto; overflow: hidden; }
@@ -513,7 +681,12 @@
       .res-wrap { position: absolute; inset: 0; width: auto; overflow-y: auto; }
       .ph { position: absolute; inset: 0; width: auto; min-height: unset; }
       .stageCompare { position: absolute; inset: 0; width: auto; overflow-y: auto; }
-      .spectrumBar { position: absolute; inset: 0; width: auto; }
+      .stage > .spectrumBar { position: absolute; inset: 0; width: auto; }
+
+      /* Slide 6: flex column layout — stageCenter above spectrumBar */
+      [data-slide="llm"] .stage { display: flex; flex-direction: column; }
+      [data-slide="llm"] .stageCenter { position: relative; inset: unset; width: auto; flex: 1; }
+      [data-slide="llm"] .stage > .spectrumBar { position: relative; inset: unset; flex-shrink: 0; }
     }
     /* ── LARGE DESKTOP ── */
     @media (min-width: 1024px) {
@@ -669,7 +842,8 @@
           <a class="agenda-item" href="#4"><span class="agenda-item-label">Icebreaker</span></a>
           <a class="agenda-item" href="#5"><span class="agenda-item-label">Vibe Coding Demo</span></a>
           <a class="agenda-item" href="#6"><span class="agenda-item-label">What is a Large Language Model (LLM)?</span></a>
-          <a class="agenda-item" href="#7"><span class="agenda-item-label">How Do LLMs Generate Code?</span></a>
+          <a class="agenda-item" href="#8"><span class="agenda-item-label">How Do LLMs Generate Code?</span></a>
+          <a class="agenda-item" href="#9"><span class="agenda-item-label">Strengths &amp; Limitations</span></a>
         </div>
 
         <div class="agenda-section">
@@ -677,11 +851,11 @@
             <span class="agenda-section-title">Part 2 — Development Environment</span>
             <span class="agenda-section-time">30m</span>
           </div>
-          <a class="agenda-item" href="#9"><span class="agenda-item-label">What is VS Code?</span></a>
-          <a class="agenda-item" href="#10"><span class="agenda-item-label">Setting up an IDE</span></a>
-          <a class="agenda-item" href="#11"><span class="agenda-item-label">The Command Line</span></a>
-          <a class="agenda-item" href="#15"><span class="agenda-item-label">Initializing a Git Repository</span></a>
-          <a class="agenda-item" href="#16"><span class="agenda-item-label">Getting Started with GitHub</span></a>
+          <a class="agenda-item" href="#11"><span class="agenda-item-label">What is VS Code?</span></a>
+          <a class="agenda-item" href="#12"><span class="agenda-item-label">Setting up an IDE</span></a>
+          <a class="agenda-item" href="#13"><span class="agenda-item-label">The Command Line</span></a>
+          <a class="agenda-item" href="#18"><span class="agenda-item-label">Initializing a Git Repository</span></a>
+          <a class="agenda-item" href="#20"><span class="agenda-item-label">Getting Started with GitHub</span></a>
         </div>
 
         <div class="agenda-section">
@@ -689,10 +863,10 @@
             <span class="agenda-section-title">Part 3 — Installation &amp; Setup</span>
             <span class="agenda-section-time">30m</span>
           </div>
-          <a class="agenda-item" href="#19"><span class="agenda-item-label">Installing Gemini CLI</span></a>
-          <a class="agenda-item" href="#20"><span class="agenda-item-label">Login Step</span></a>
-          <a class="agenda-item" href="#22"><span class="agenda-item-label">Upcoming Workshop</span></a>
-          <a class="agenda-item" href="#23"><span class="agenda-item-label">Links &amp; Resources</span></a>
+          <a class="agenda-item" href="#23"><span class="agenda-item-label">Installing Gemini CLI</span></a>
+          <a class="agenda-item" href="#24"><span class="agenda-item-label">Login Step</span></a>
+          <a class="agenda-item" href="#26"><span class="agenda-item-label">Upcoming Workshop</span></a>
+          <a class="agenda-item" href="#27"><span class="agenda-item-label">Links &amp; Resources</span></a>
         </div>
 
       </div>
@@ -750,21 +924,104 @@
       <div class="label">Concept</div>
       <h1>What is a Large Language Model (LLM)?</h1>
     </div>
-    <!-- content pending -->
-    <div class="stage" aria-hidden="true"><div class="ph"></div></div>
+    <div class="stage" aria-hidden="true" style="display:flex; flex-direction:column;">
+      <div class="stageCenter">
+        <div class="stageInner">
+          <div class="stageBig">A probabilistic pattern engine for text.</div>
+          <ul class="stageList" style="margin-top:clamp(18px,2.5vw,28px);">
+            <li class="frag">It learns statistical relationships between tokens (not &ldquo;facts&rdquo;)</li>
+            <li class="frag">It predicts the most likely next token, step by step</li>
+            <li class="frag">It generates output by repeating that prediction process</li>
+          </ul>
+        </div>
+      </div>
+      <div class="spectrumBar frag" style="flex-shrink:0; padding:clamp(12px,1.5vw,20px) clamp(16px,2vw,28px); border-top:1px solid rgba(255,255,255,0.08);">
+        <div class="spectrumNode"><div class="sn-label">Tokens</div></div>
+        <div class="spectrumArrow">&rarr;</div>
+        <div class="spectrumNode"><div class="sn-label">Vectors</div></div>
+        <div class="spectrumArrow">&rarr;</div>
+        <div class="spectrumNode"><div class="sn-label">Attention</div></div>
+        <div class="spectrumArrow">&rarr;</div>
+        <div class="spectrumNode"><div class="sn-label">Probabilities</div></div>
+        <div class="spectrumArrow">&rarr;</div>
+        <div class="spectrumNode"><div class="sn-label">Output</div></div>
+      </div>
+    </div>
   </section>
 
-  <!-- 7 · HOW DO LLMS GENERATE CODE? -->
+  <!-- 7 · HOW DOES AN LLM PRODUCE AN ANSWER? -->
+  <section class="slide" data-slide="llm-process" aria-label="How Does an LLM Actually Produce an Answer?">
+    <div class="content">
+      <div class="label">Concept</div>
+      <h1>How Does an LLM Actually Produce an Answer?</h1>
+    </div>
+    <div class="stage" aria-hidden="true">
+      <div class="step-grid">
+        <div class="step-row frag"><div class="step-num">1</div><div class="step-text"><strong>Tokenize</strong> &mdash; break your prompt into tokens</div></div>
+        <div class="step-row frag"><div class="step-num">2</div><div class="step-text"><strong>Embed</strong> &mdash; turn tokens into vectors</div></div>
+        <div class="step-row frag"><div class="step-num">3</div><div class="step-text"><strong>Transform</strong> &mdash; attention mixes information across tokens</div></div>
+        <div class="step-row frag"><div class="step-num">4</div><div class="step-text"><strong>Predict + decode</strong> &mdash; choose the next token; repeat</div></div>
+        <div class="step-row frag" style="margin-top:clamp(8px,1.5vw,16px); padding-top:clamp(12px,1.5vw,20px); border-top:1px solid rgba(255,255,255,0.1);">
+          <div class="step-num" style="background:var(--accent);">&darr;</div>
+          <div class="step-text" style="opacity:0.8; font-size:clamp(14px,1.6vw,19px);">Your prompt shapes the probability space. The response is a probabilistic approximation of what you like to see. Wording changes can dramatically shift output.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 · HOW DO LLMS GENERATE CODE? -->
   <section class="slide" data-slide="code-generation" aria-label="How Do LLMs Generate Code?">
     <div class="content">
       <div class="label">Concept</div>
       <h1>How Do LLMs Generate Code?</h1>
     </div>
-    <!-- content pending -->
-    <div class="stage" aria-hidden="true"><div class="ph"></div></div>
+    <div class="stage" aria-hidden="true">
+      <div class="stageCenter">
+        <div class="stageInner">
+          <div class="stageBig">Code is just another language pattern.</div>
+          <ul class="stageList" style="margin-top:clamp(18px,2.5vw,28px);">
+            <li class="frag">The model was trained on large amounts of code + documentation</li>
+            <li class="frag">It learned patterns in syntax, structure, and common problem solutions</li>
+            <li class="frag">When you ask for code, it predicts the most likely next tokens in a programming language</li>
+            <li class="frag">It does not run or test the code unless connected to tools</li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <!-- 8 · SECTION BREAK: PART 2 -->
+  <!-- 9 · WHAT'S GOOD / WHAT'S BAD -->
+  <section class="slide" data-slide="good-bad" aria-label="What is good, what is bad">
+    <div class="content">
+      <div class="label">Concept</div>
+      <h1>What&rsquo;s Good / What&rsquo;s Bad</h1>
+    </div>
+    <div class="stage" aria-hidden="true">
+      <div class="stageCompare">
+        <div class="col">
+          <div class="col-tag" style="color:#2ea043;">&check;</div>
+          <div class="col-title">What Works</div>
+          <div class="col-sub">
+            They autocomplete entire functions, not just words<br><br>
+            They infer intent from partial instructions<br><br>
+            They generalize from patterns they have seen before
+          </div>
+        </div>
+        <div class="col">
+          <div class="col-tag" style="color:#f85149;">&cross;</div>
+          <div class="col-title">Where Things Go Wrong</div>
+          <div class="col-sub">
+            Silent logical errors<br><br>
+            Hallucinated functions or libraries<br><br>
+            Outdated APIs<br><br>
+            Confident but wrong assumptions
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 · SECTION BREAK: PART 2 -->
   <section class="slide slide-break" data-slide="part2" style="--part:#5a8dee;" aria-label="Part 2 section break">
     <div class="content">
       <div class="break-tag">Part 2</div>
@@ -772,7 +1029,7 @@
     </div>
   </section>
 
-  <!-- 9 · WHAT IS VS CODE? -->
+  <!-- 11 · WHAT IS VS CODE? -->
   <section class="slide" data-slide="vscode-intro" aria-label="What is VS Code?">
     <div class="content">
       <div class="label">Concept</div>
@@ -794,7 +1051,7 @@
     </div>
   </section>
 
-  <!-- 10 · IDE SETUP -->
+  <!-- 12 · IDE SETUP -->
   <section class="slide" data-slide="vscode" aria-label="Setting up an Interactive Development Environment">
     <div class="content">
       <div class="label">Setup</div>
@@ -810,7 +1067,7 @@
     </div>
   </section>
 
-  <!-- 11 · WHAT IS THE COMMAND LINE? -->
+  <!-- 13 · WHAT IS THE COMMAND LINE? -->
   <section class="slide" data-slide="cli-intro" aria-label="What is the command line?">
     <div class="content">
       <div class="label">Concept</div>
@@ -832,11 +1089,13 @@
     </div>
   </section>
 
-  <!-- 12 · OPENING YOUR TERMINAL -->
-  <section class="slide" data-slide="cli-open" aria-label="Opening your terminal">
+  <!-- 14 · OPENING YOUR TERMINAL -->
+  <section class="slide slide-aside" data-slide="cli-open" aria-label="Opening your terminal">
     <div class="content">
-      <div class="label">Setup</div>
-      <h1>Opening Your Terminal</h1>
+      <div class="label">Outside VS Code</div>
+      <h1>Opening a Standalone Terminal</h1>
+      <h2>(You won't need this today)</h2>
+      <div class="aside-note">It's the same terminal. VS Code just puts one inside the editor so you don't have to switch windows.</div>
     </div>
     <div class="stage" aria-hidden="true">
       <div class="stageCompare">
@@ -854,26 +1113,139 @@
     </div>
   </section>
 
-  <!-- 13 · COMMAND LINE -->
-  <section class="slide" data-slide="cli" aria-label="Command line basics">
+  <!-- 15 · COMMAND LINE: NAVIGATING -->
+  <section class="slide" data-slide="cli-nav" aria-label="Command line navigation">
     <div class="content">
       <div class="label">Tool</div>
       <h1>Command Line Basics</h1>
+      <h2>Navigating</h2>
     </div>
     <div class="stage" aria-hidden="true">
-      <div class="term-box" role="img" aria-label="CLI command examples">
-        <div class="frag"><span class="dim"># make a new folder</span><br><span class="hl">mkdir</span> my-project</div>
-        <div class="frag"><br><span class="dim"># move into it</span><br><span class="hl">cd</span> my-project</div>
-        <div class="frag"><br><span class="dim"># go up one level</span><br><span class="hl">cd</span> ..</div>
-        <div class="frag"><br><span class="dim"># create a file</span><br><span class="hl">touch</span> index.html</div>
-        <div class="frag"><br><span class="dim"># move file into folder</span><br><span class="hl">mv</span> index.html my-project</div>
-        <div class="frag"><br><span class="dim"># move into it</span><br><span class="hl">cd</span> my-project</div>
-        <div class="frag"><br><span class="dim"># list files</span><br><span class="hl">ls</span></div>
+      <div class="cmd-cards">
+        <div class="cmd-card frag">
+          <div class="cmd-info">
+            <code><span class="hl">pwd</span></code>
+            <span class="cmd-desc">Print your current location</span>
+          </div>
+          <div class="cmd-screen">
+            <div class="vis">
+              <span class="vis-path">~ / <span class="vis-here">my-project</span></span><span class="vis-cursor"></span>
+            </div>
+          </div>
+        </div>
+        <div class="cmd-card frag">
+          <div class="cmd-info">
+            <code><span class="hl">mkdir</span> my-project</code>
+            <span class="cmd-desc">Make a new folder</span>
+          </div>
+          <div class="cmd-screen">
+            <div class="vis">
+              <div class="vis-col vis-pop">
+                <div class="vis-folder"></div>
+                <div class="vis-label">my-project</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="cmd-card frag">
+          <div class="cmd-info">
+            <code><span class="hl">cd</span> my-project</code>
+            <span class="cmd-desc">Move into a folder</span>
+          </div>
+          <div class="cmd-screen">
+            <div class="vis vis-slide-r">
+              <span class="vis-arrow">&rarr;</span>
+              <div class="vis-folder"></div>
+              <div class="vis-label">my-project</div>
+            </div>
+          </div>
+        </div>
+        <div class="cmd-card frag">
+          <div class="cmd-info">
+            <code><span class="hl">cd</span> ..</code>
+            <span class="cmd-desc">Go up one level</span>
+          </div>
+          <div class="cmd-screen">
+            <div class="vis vis-slide-l">
+              <div class="vis-folder" style="opacity:0.3;"></div>
+              <span class="vis-arrow">&larr;</span>
+              <span class="vis-path">~/</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- 14 · WHAT IS GIT / GITHUB? -->
+  <!-- 16 · COMMAND LINE: FILES -->
+  <section class="slide" data-slide="cli-files" aria-label="Command line file operations">
+    <div class="content">
+      <div class="label">Tool</div>
+      <h1>Command Line Basics</h1>
+      <h2>Working with Files</h2>
+    </div>
+    <div class="stage" aria-hidden="true">
+      <div class="cmd-cards">
+        <div class="cmd-card frag">
+          <div class="cmd-info">
+            <code><span class="hl">ls</span></code>
+            <span class="cmd-desc">List what's in the folder</span>
+          </div>
+          <div class="cmd-screen">
+            <div class="vis vis-stagger">
+              <div class="vis-col">
+                <div class="vis-file"></div>
+                <div class="vis-label">index.html</div>
+              </div>
+              <div class="vis-col">
+                <div class="vis-file"></div>
+                <div class="vis-label">style.css</div>
+              </div>
+              <div class="vis-col">
+                <div class="vis-folder"></div>
+                <div class="vis-label">img/</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="cmd-card frag">
+          <div class="cmd-info">
+            <code><span class="hl">touch</span> index.html</code>
+            <span class="cmd-desc">Create a new file</span>
+          </div>
+          <div class="cmd-screen">
+            <div class="vis">
+              <div class="vis-col vis-pop">
+                <div class="vis-file"></div>
+                <div class="vis-label">index.html</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="cmd-card frag">
+          <div class="cmd-info">
+            <code><span class="hl">mv</span> index.html my-project</code>
+            <span class="cmd-desc">Move a file into a folder</span>
+          </div>
+          <div class="cmd-screen">
+            <div class="vis">
+              <div class="vis-col vis-slide-r">
+                <div class="vis-file"></div>
+                <div class="vis-label">index.html</div>
+              </div>
+              <span class="vis-arrow">&rarr;</span>
+              <div class="vis-col">
+                <div class="vis-folder"></div>
+                <div class="vis-label">my-project</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 17 · WHAT IS GIT / GITHUB? -->
   <section class="slide" data-slide="git-intro" aria-label="What is Git and GitHub?">
     <div class="content">
       <div class="label">Concept</div>
@@ -895,25 +1267,141 @@
     </div>
   </section>
 
-  <!-- 15 · GIT COMMANDS -->
-  <section class="slide" data-slide="git" aria-label="Initializing a Git repo">
+  <!-- 18 · GIT BASICS: SETTING UP -->
+  <section class="slide" data-slide="git-setup" aria-label="Git basics: setting up">
     <div class="content">
       <div class="label">Tool</div>
-      <h1>Initializing a Git Repo</h1>
+      <h1>Git Basics</h1>
+      <h2>Setting Up</h2>
     </div>
     <div class="stage" aria-hidden="true">
-      <div class="term-box" role="img" aria-label="Git command examples">
-        <div class="frag"><span class="dim"># initialize a repo</span><br>git <span class="hl">init</span></div>
-        <div class="frag"><br><span class="dim"># stage your changes</span><br>git <span class="hl">add</span> .</div>
-        <div class="frag"><br><span class="dim"># save a snapshot</span><br>git <span class="hl">commit</span> -m <span class="str">"first commit"</span></div>
-        <div class="frag"><br><span class="dim"># push to GitHub</span><br>git <span class="hl">push</span> origin main</div>
-        <div class="frag"><br><span class="dim"># view history</span><br>git <span class="hl">log</span> --oneline</div>
-        <div class="frag"><br><span class="dim"># check what changed</span><br>git <span class="hl">status</span></div>
+      <div class="cmd-cards">
+        <div class="cmd-card frag">
+          <div class="cmd-info">
+            <code>git <span class="hl">init</span></code>
+            <span class="cmd-desc">Initialize a repo</span>
+          </div>
+          <div class="cmd-screen">
+            <div class="vis">
+              <div class="vis-col vis-pop">
+                <div class="vis-folder"><span class="vis-dot vis-dot--ok"></span></div>
+                <div class="vis-label">.git</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="cmd-card frag">
+          <div class="cmd-info">
+            <code>git <span class="hl">add</span> .</code>
+            <span class="cmd-desc">Stage your changes</span>
+          </div>
+          <div class="cmd-screen">
+            <div class="vis vis-slide-r">
+              <div class="vis-col">
+                <div class="vis-file"></div>
+                <div class="vis-label">index.html</div>
+              </div>
+              <div class="vis-col">
+                <div class="vis-file"></div>
+                <div class="vis-label">style.css</div>
+              </div>
+              <span class="vis-arrow">&rarr;</span>
+              <div class="vis-stage-box">
+                <div class="vis-label">staged</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="cmd-card frag">
+          <div class="cmd-info">
+            <code>git <span class="hl">commit</span> -m <span class="str">"first commit"</span></code>
+            <span class="cmd-desc">Save a snapshot</span>
+          </div>
+          <div class="cmd-screen">
+            <div class="vis">
+              <div class="vis-col vis-pop">
+                <div class="vis-commit"></div>
+                <div class="vis-label">a1b2c3d</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- 16 · LOGGING INTO GITHUB -->
+  <!-- 19 · GIT BASICS: SYNCING & INSPECTING -->
+  <section class="slide" data-slide="git-sync" aria-label="Git basics: syncing and inspecting">
+    <div class="content">
+      <div class="label">Tool</div>
+      <h1>Git Basics</h1>
+      <h2>Syncing &amp; Inspecting</h2>
+    </div>
+    <div class="stage" aria-hidden="true">
+      <div class="cmd-cards">
+        <div class="cmd-card frag">
+          <div class="cmd-info">
+            <code>git <span class="hl">push</span> origin main</code>
+            <span class="cmd-desc">Push to GitHub</span>
+          </div>
+          <div class="cmd-screen">
+            <div class="vis vis-slide-r">
+              <div class="vis-col">
+                <div class="vis-commit"></div>
+                <div class="vis-label">a1b2c3d</div>
+              </div>
+              <span class="vis-arrow">&rarr;</span>
+              <div class="vis-cloud"></div>
+            </div>
+          </div>
+        </div>
+        <div class="cmd-card frag">
+          <div class="cmd-info">
+            <code>git <span class="hl">log</span> --oneline</code>
+            <span class="cmd-desc">View history</span>
+          </div>
+          <div class="cmd-screen">
+            <div class="vis vis-stagger">
+              <div class="vis-col">
+                <div class="vis-commit"></div>
+                <div class="vis-label">a1b2c3d</div>
+              </div>
+              <div class="vis-line"></div>
+              <div class="vis-col">
+                <div class="vis-commit"></div>
+                <div class="vis-label">e4f5g6h</div>
+              </div>
+              <div class="vis-line"></div>
+              <div class="vis-col">
+                <div class="vis-commit"></div>
+                <div class="vis-label">i7j8k9l</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="cmd-card frag">
+          <div class="cmd-info">
+            <code>git <span class="hl">status</span></code>
+            <span class="cmd-desc">Check what changed</span>
+          </div>
+          <div class="cmd-screen">
+            <div class="vis vis-stagger">
+              <div class="vis-col">
+                <div class="vis-file"><span class="vis-dot vis-dot--ok"></span></div>
+                <div class="vis-label">index.html</div>
+              </div>
+              <div class="vis-col">
+                <div class="vis-file"><span class="vis-dot vis-dot--mod"></span></div>
+                <div class="vis-label">style.css</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 20 · LOGGING INTO GITHUB -->
   <section class="slide" data-slide="gh-login" aria-label="Logging into GitHub from the command line">
     <div class="content">
       <div class="label">Setup</div>
@@ -931,7 +1419,7 @@ winget install GitHub.cli  # Windows</span></div></div>
     </div>
   </section>
 
-  <!-- 17 · STAGING, COMMITTING, AND PUSHING TO GITHUB -->
+  <!-- 21 · STAGING, COMMITTING, AND PUSHING TO GITHUB -->
   <section class="slide" data-slide="gh-repo" aria-label="Staging, committing, and pushing to GitHub">
     <div class="content">
       <div class="label">Setup</div>
@@ -949,7 +1437,7 @@ winget install GitHub.cli  # Windows</span></div></div>
     </div>
   </section>
 
-  <!-- 19 · SECTION BREAK: PART 3 -->
+  <!-- 22 · SECTION BREAK: PART 3 -->
   <section class="slide slide-break" data-slide="part3" style="--part:#2ea043;" aria-label="Part 3 section break">
     <div class="content">
       <div class="break-tag">Part 3</div>
@@ -958,7 +1446,7 @@ winget install GitHub.cli  # Windows</span></div></div>
     </div>
   </section>
 
-  <!-- 19 · INSTALLING GEMINI CLI -->
+  <!-- 23 · INSTALLING GEMINI CLI -->
   <section class="slide" data-slide="install" aria-label="Installing Gemini CLI">
     <div class="content">
       <div class="label">Setup</div>
@@ -993,7 +1481,7 @@ eval "$(/opt/homebrew/bin/brew shellenv)"</span>
     </div>
   </section>
 
-  <!-- 20 · LOGIN SETUP -->
+  <!-- 24 · LOGIN SETUP -->
   <section class="slide" data-slide="login" aria-label="Login setup">
     <div class="content">
       <div class="label">Setup</div>
@@ -1009,7 +1497,7 @@ eval "$(/opt/homebrew/bin/brew shellenv)"</span>
     </div>
   </section>
 
-  <!-- 21 · TROUBLESHOOTING -->
+  <!-- 25 · TROUBLESHOOTING -->
   <section class="slide" data-slide="troubleshoot" aria-label="Troubleshooting">
     <div class="content">
       <div class="label">Check-in</div>
@@ -1031,7 +1519,7 @@ eval "$(/opt/homebrew/bin/brew shellenv)"</span>
   </section>
 
 
-  <!-- 23 · WHAT'S NEXT -->
+  <!-- 26 · WHAT'S NEXT -->
   <section class="slide" data-slide="nextsteps" aria-label="What's next">
     <div class="content">
       <div class="label">What's Next</div>
@@ -1055,7 +1543,7 @@ eval "$(/opt/homebrew/bin/brew shellenv)"</span>
     </div>
   </section>
 
-  <!-- 24 · RESOURCES -->
+  <!-- 27 · RESOURCES -->
   <section class="slide" data-slide="resources" aria-label="Resources">
     <div class="content">
       <div class="label">Resources</div>
@@ -1147,13 +1635,13 @@ eval "$(/opt/homebrew/bin/brew shellenv)"</span>
   <div class="footer-slider">
     <button class="footer-arrow" id="btn-prev" aria-label="Previous slide">&#8592;</button>
     <div class="slider-track">
-      <input type="range" id="slide-scrubber" min="1" max="20" value="1" aria-label="Navigate to slide">
+      <input type="range" id="slide-scrubber" min="1" max="27" value="1" aria-label="Navigate to slide">
       <div class="slider-progress"></div>
       <div class="slider-thumb"></div>
     </div>
     <button class="footer-arrow" id="btn-next" aria-label="Next slide">&#8594;</button>
     <div class="footer-meta">
-      <span id="slider-counter">1 / 20</span>
+      <span id="slider-counter">1 / 27</span>
       <span class="kbd">Space</span>
     </div>
   </div>
