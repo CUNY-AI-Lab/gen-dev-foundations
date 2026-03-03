@@ -38,15 +38,15 @@
       position: fixed; inset: 0 0 auto 0; height: var(--header-h);
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 16px;
-      background: linear-gradient(to bottom, rgba(11,14,20,.96), transparent);
+      background: linear-gradient(to bottom, rgba(11,14,20,.72), transparent);
       z-index: 20; pointer-events: none;
     }
-    header .bar { pointer-events: auto; display: flex; align-items: center; gap: 12px; }
-    #counter { font-variant-numeric: tabular-nums; font-size: 13px; opacity: 0.8; color: var(--fg); }
+    header .bar { pointer-events: auto; display: flex; align-items: center; gap: 8px; }
     .kbd {
       font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      border: 1px solid var(--stroke); background: rgba(255,255,255,0.04);
-      padding: 2px 8px; border-radius: 8px; font-size: 12px; opacity: 0.8; color: var(--muted);
+      border: 1px solid rgba(255,255,255,0.08); background: transparent;
+      padding: 2px 7px; border-radius: 6px; font-size: 11px; opacity: 0.45; color: var(--muted);
+      letter-spacing: 0.02em;
     }
     .nav-btn {
       display: inline-flex; width: 26px; height: 26px; border-radius: 6px;
@@ -60,44 +60,56 @@
     /* ── STICKY FOOTER SLIDER ── */
     .sticky-footer {
       position: fixed; bottom: 0; left: 0; right: 0; z-index: 30;
-      background: linear-gradient(to top, rgba(11,14,20,.98), rgba(11,14,20,.6) 50%, transparent);
-      padding: 20px 16px; pointer-events: none;
+      background: linear-gradient(to top, rgba(11,14,20,.97), rgba(11,14,20,.5) 60%, transparent);
+      padding: 10px 16px 12px; pointer-events: none;
       backdrop-filter: blur(12px);
     }
     .footer-slider {
-      max-width: 720px; margin: 0 auto; pointer-events: auto;
-      display: flex; flex-direction: column; gap: 12px; align-items: center;
+      max-width: 760px; margin: 0 auto; pointer-events: auto;
+      display: flex; flex-direction: row; gap: 10px; align-items: center;
+    }
+    .footer-arrow {
+      display: inline-flex; width: 28px; height: 28px; flex-shrink: 0;
+      border-radius: 6px; border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.04); color: var(--muted);
+      cursor: pointer; align-items: center; justify-content: center;
+      font-size: 13px; transition: background 0.15s, opacity 0.15s; opacity: 0.7;
+    }
+    .footer-arrow:hover { background: rgba(255,255,255,0.09); opacity: 1; }
+    .footer-arrow:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .footer-meta {
+      display: flex; align-items: center; gap: 8px; flex-shrink: 0;
+      font-size: 12px; color: rgba(255,255,255,0.45); font-variant-numeric: tabular-nums;
+    }
+    .footer-meta .kbd {
+      font-size: 10px; padding: 1px 6px; opacity: 0.6;
     }
     .slider-track {
-      position: relative; width: 100%; height: 8px;
-      background: rgba(255,255,255,0.08); 
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 4px; overflow: visible;
-      box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+      position: relative; flex: 1; height: 3px;
+      background: rgba(255,255,255,0.10);
+      border-radius: 2px; overflow: visible;
     }
     .slider-progress {
       position: absolute; top: 0; left: 0; height: 100%;
-      background: linear-gradient(90deg, var(--accent) 0%, rgba(121,192,255,0.8) 100%);
-      width: 5%; /* 1/20 slides */
-      transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 0 8px rgba(121,192,255,0.3);
+      background: rgba(255,255,255,0.55);
+      width: 5%;
+      transition: width 0.2s ease;
+      border-radius: 2px;
     }
     .slider-thumb {
-      position: absolute; top: -6px; width: 20px; height: 20px;
-      left: calc(5% - 10px); /* center on progress */
+      position: absolute; top: -5px; width: 13px; height: 13px;
+      left: calc(5% - 6px);
       border-radius: 50%; pointer-events: none;
-      background: radial-gradient(circle, var(--accent) 0%, rgba(121,192,255,0.9) 100%);
-      border: 2px solid rgba(255,255,255,0.4);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.4), 0 0 0 1px rgba(11,14,20,0.8);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      background: rgba(255,255,255,0.80);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.5);
+      transition: left 0.2s ease, transform 0.15s ease;
       z-index: 2;
     }
     .slider-track:hover .slider-thumb {
-      transform: scale(1.1);
-      box-shadow: 0 3px 12px rgba(0,0,0,0.5), 0 0 0 2px rgba(121,192,255,0.4);
+      transform: scale(1.2);
     }
     #slide-scrubber {
-      position: absolute; top: -6px; left: 0; width: 100%; height: 20px;
+      position: absolute; top: -10px; left: 0; width: 100%; height: 23px;
       opacity: 0; cursor: grab; margin: 0;
       -webkit-appearance: none; appearance: none;
       touch-action: manipulation;
@@ -105,45 +117,22 @@
     #slide-scrubber:active { cursor: grabbing; }
     #slide-scrubber::-webkit-slider-thumb {
       -webkit-appearance: none; appearance: none;
-      width: 18px; height: 18px; border-radius: 50%;
-      background: radial-gradient(circle, var(--accent) 0%, rgba(121,192,255,0.9) 100%);
-      cursor: grab; border: 1px solid rgba(255,255,255,0.3);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.4), 0 0 0 1px rgba(11,14,20,0.8);
-      transition: all 0.2s ease;
-    }
-    #slide-scrubber::-webkit-slider-thumb:hover {
-      transform: scale(1.1);
-      box-shadow: 0 3px 12px rgba(0,0,0,0.5), 0 0 0 2px rgba(121,192,255,0.4);
-    }
-    #slide-scrubber::-webkit-slider-thumb:active {
-      cursor: grabbing; transform: scale(1.05);
+      width: 22px; height: 22px; border-radius: 50%;
+      background: transparent; cursor: grab;
     }
     #slide-scrubber::-moz-range-thumb {
-      width: 18px; height: 18px; border-radius: 50%;
-      background: radial-gradient(circle, var(--accent) 0%, rgba(121,192,255,0.9) 100%);
-      cursor: grab; border: 1px solid rgba(255,255,255,0.3);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
-    }
-    .slider-label {
-      font-size: 12px; color: rgba(255,255,255,0.6); 
-      font-variant-numeric: tabular-nums; font-weight: 500;
-      letter-spacing: 0.5px; opacity: 0.8;
+      width: 22px; height: 22px; border-radius: 50%;
+      background: transparent; cursor: grab; border: none;
     }
     /* Touch enhancements */
     @media (pointer: coarse) {
-      .slider-track { height: 12px; }
-      .slider-thumb { 
-        width: 28px; height: 28px; top: -8px;
-        border: 3px solid rgba(255,255,255,0.5);
-      }
-      #slide-scrubber { height: 32px; top: -10px; }
-      #slide-scrubber::-webkit-slider-thumb { width: 28px; height: 28px; }
-      #slide-scrubber::-moz-range-thumb { width: 28px; height: 28px; }
+      .slider-track { height: 4px; }
+      .slider-thumb { width: 18px; height: 18px; top: -7px; left: calc(5% - 9px); }
+      #slide-scrubber { height: 36px; top: -16px; }
     }
     @media (max-width: 600px) {
-      .sticky-footer { padding: 16px 12px; }
-      .footer-slider { gap: 10px; }
-      .slider-label { font-size: 11px; }
+      .sticky-footer { padding: 8px 10px 10px; }
+      .footer-meta .kbd { display: none; }
     }
 
     /* ── SLIDE HOST ── */
@@ -278,8 +267,7 @@
     .stageCompare .col-tag {
       display: inline-block; margin-bottom: 10px;
       font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-      padding: 2px 10px; border-radius: 20px;
-      border: 1px solid var(--stroke); color: var(--part);
+      color: var(--part);
     }
 
     /* Big text + hint */
@@ -454,13 +442,20 @@
     .term-box .cmt  { color: rgba(130,200,100,0.55); }
 
     /* resource list */
-    .res-wrap { position: relative; width: 100%; padding: clamp(14px,2vw,24px); }
+    .res-wrap { position: relative; width: 100%; padding: clamp(10px,1.5vw,20px) clamp(14px,2vw,24px); overflow-y: auto; }
+    .res-group { margin-bottom: clamp(12px,2vw,20px); }
+    .res-group:last-child { margin-bottom: 0; }
+    .res-group-title {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--part); opacity: 0.8; padding: 0 14px 6px;
+      border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 2px;
+    }
     .res-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
-    .res-list li { padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .res-list li { padding: 8px 14px; border-bottom: 1px solid rgba(255,255,255,0.05); }
     .res-list li:last-child { border-bottom: none; }
-    .res-list li a { font-size: clamp(15px,1.7vw,20px); color: var(--accent); text-decoration: none; }
+    .res-list li a { font-size: clamp(13px,1.5vw,17px); color: var(--accent); text-decoration: none; }
     .res-list li a:hover { text-decoration: underline; }
-    .res-desc { font-size: clamp(13px,1.3vw,15px); color: var(--muted); margin-top: 3px; opacity: 0.7; }
+    .res-desc { font-size: clamp(11px,1.1vw,13px); color: var(--muted); margin-top: 2px; opacity: 0.65; }
 
     /* ── TYPOGRAPHY ── */
     .content h1 { font-size: clamp(36px,5vw,58px); letter-spacing: -0.025em; line-height: 1.08; margin-bottom: 8px; }
@@ -631,7 +626,6 @@
 
 <header role="banner">
   <div class="bar">
-    <div id="counter" aria-live="polite" aria-atomic="true">1 / 20</div>
     <div class="kbd" id="kbdSwipe">Swipe</div>
   </div>
 </header>
@@ -669,27 +663,36 @@
 
         <div class="agenda-section">
           <div class="agenda-section-head">
-            <span class="agenda-section-title">Part 1 — Coding &amp; Development Basics</span>
-            <span class="agenda-section-time">60m</span>
+            <span class="agenda-section-title">Part 1 — Concepts &amp; Context</span>
+            <span class="agenda-section-time">30m</span>
           </div>
           <a class="agenda-item" href="#4"><span class="agenda-item-label">Icebreaker</span></a>
-          <a class="agenda-item" href="#5"><span class="agenda-item-label">Demo</span></a>
+          <a class="agenda-item" href="#5"><span class="agenda-item-label">Vibe Coding Demo</span></a>
           <a class="agenda-item" href="#6"><span class="agenda-item-label">What is a Large Language Model (LLM)?</span></a>
           <a class="agenda-item" href="#7"><span class="agenda-item-label">How Do LLMs Generate Code?</span></a>
-          <a class="agenda-item" href="#9"><span class="agenda-item-label">What is VS Code?</span></a>
-          <a class="agenda-item" href="#10"><span class="agenda-item-label">Setting up an IDE</span></a>
-          <a class="agenda-item" href="#11"><span class="agenda-item-label">The Command Line</span></a>
-          <a class="agenda-item" href="#15"><span class="agenda-item-label">Initializing a Git Repo</span></a>
         </div>
 
         <div class="agenda-section">
           <div class="agenda-section-head">
-            <span class="agenda-section-title">Part 2 — Installation &amp; Setup</span>
+            <span class="agenda-section-title">Part 2 — Development Environment</span>
+            <span class="agenda-section-time">30m</span>
+          </div>
+          <a class="agenda-item" href="#9"><span class="agenda-item-label">What is VS Code?</span></a>
+          <a class="agenda-item" href="#10"><span class="agenda-item-label">Setting up an IDE</span></a>
+          <a class="agenda-item" href="#11"><span class="agenda-item-label">The Command Line</span></a>
+          <a class="agenda-item" href="#15"><span class="agenda-item-label">Initializing a Git Repository</span></a>
+          <a class="agenda-item" href="#16"><span class="agenda-item-label">Getting Started with GitHub</span></a>
+        </div>
+
+        <div class="agenda-section">
+          <div class="agenda-section-head">
+            <span class="agenda-section-title">Part 3 — Installation &amp; Setup</span>
             <span class="agenda-section-time">30m</span>
           </div>
           <a class="agenda-item" href="#19"><span class="agenda-item-label">Installing Gemini CLI</span></a>
-          <a class="agenda-item" href="#20"><span class="agenda-item-label">Login Setup</span></a>
-          <a class="agenda-item" href="#23"><span class="agenda-item-label">What's Next</span></a>
+          <a class="agenda-item" href="#20"><span class="agenda-item-label">Login Step</span></a>
+          <a class="agenda-item" href="#22"><span class="agenda-item-label">Upcoming Workshop</span></a>
+          <a class="agenda-item" href="#23"><span class="agenda-item-label">Links &amp; Resources</span></a>
         </div>
 
       </div>
@@ -700,7 +703,7 @@
   <section class="slide slide-break" data-slide="part1" aria-label="Part 1 section break">
     <div class="content">
       <div class="break-tag">Part 1</div>
-      <h1>Coding &amp; Development Basics</h1>
+      <h1>Concepts &amp; Context</h1>
     </div>
   </section>
 
@@ -715,11 +718,11 @@
       <div class="ib-pair">
         <div class="ib-q">
           <div class="ib-num">A</div>
-          <div class="ib-text">What would you make if coding were as familiar as writing?</div>
+          <div class="ib-text">Identify a challenge you face in your research, technical or otherwise.</div>
         </div>
         <div class="ib-q">
           <div class="ib-num">B</div>
-          <div class="ib-text">Share a challenge you often face in your research, technical or otherwise.</div>
+          <div class="ib-text">How would you address that challenge if coding were as familiar as writing?</div>
         </div>
       </div>
     </div>
@@ -729,7 +732,7 @@
   <section class="slide" data-slide="demo" aria-label="Live demo">
     <div class="content">
       <div class="label">Demo</div>
-      <h1>Vibe Coding in Action</h1>
+      <h1>Vibe Coding Demo</h1>
     </div>
     <div class="stage" aria-hidden="true">
       <div class="stageCenter">
@@ -759,6 +762,14 @@
     </div>
     <!-- content pending -->
     <div class="stage" aria-hidden="true"><div class="ph"></div></div>
+  </section>
+
+  <!-- 8 · SECTION BREAK: PART 2 -->
+  <section class="slide slide-break" data-slide="part2" style="--part:#5a8dee;" aria-label="Part 2 section break">
+    <div class="content">
+      <div class="break-tag">Part 2</div>
+      <h1>Development Environment</h1>
+    </div>
   </section>
 
   <!-- 9 · WHAT IS VS CODE? -->
@@ -791,9 +802,9 @@
     </div>
     <div class="stage" aria-hidden="true">
       <div class="step-grid">
-        <div class="step-row"><div class="step-num">1</div><div class="step-text">Download VS Code from <strong>code.visualstudio.com</strong></div></div>
+        <div class="step-row"><div class="step-num">1</div><div class="step-text">Download VS Code from <a href="https://code.visualstudio.com" target="_blank" rel="noopener"><strong>code.visualstudio.com</strong></a></div></div>
         <div class="step-row"><div class="step-num">2</div><div class="step-text">Install and open VS Code on your machine</div></div>
-        <div class="step-row"><div class="step-num">3</div><div class="step-text">Open the integrated terminal: <strong>Terminal → New Terminal</strong> (or <strong>Ctrl+`</strong>)</div></div>
+        <div class="step-row"><div class="step-num">3</div><div class="step-text">Open the integrated terminal: <a href="#" onclick="alert('In VS Code: click Terminal in the top menu bar, then New Terminal')"><strong>Terminal → New Terminal</strong></a> (or <strong>Ctrl+`</strong>)</div></div>
         <div class="step-row"><div class="step-num">4</div><div class="step-text">Confirm it works — you should see a command prompt at the bottom</div></div>
       </div>
     </div>
@@ -938,10 +949,10 @@ winget install GitHub.cli  # Windows</span></div></div>
     </div>
   </section>
 
-  <!-- 18 · SECTION BREAK: PART 2 -->
-  <section class="slide slide-break" data-slide="part2" style="--part:#2ea043;" aria-label="Part 2 section break">
+  <!-- 19 · SECTION BREAK: PART 3 -->
+  <section class="slide slide-break" data-slide="part3" style="--part:#2ea043;" aria-label="Part 3 section break">
     <div class="content">
-      <div class="break-tag">Part 2</div>
+      <div class="break-tag">Part 3</div>
       <h1>Installation &amp; Setup</h1>
       <p class="break-sub">Getting Gemini CLI running on your machine</p>
     </div>
@@ -986,7 +997,7 @@ eval "$(/opt/homebrew/bin/brew shellenv)"</span>
   <section class="slide" data-slide="login" aria-label="Login setup">
     <div class="content">
       <div class="label">Setup</div>
-      <h1>Login Setup</h1>
+      <h1>Login Step</h1>
     </div>
     <div class="stage" aria-hidden="true">
       <div class="step-grid">
@@ -1019,15 +1030,6 @@ eval "$(/opt/homebrew/bin/brew shellenv)"</span>
     </div>
   </section>
 
-  <!-- 22 · EXIT TICKET -->
-  <section class="slide" data-slide="exit" aria-label="Exit ticket">
-    <div class="content">
-      <div class="label">Exit Ticket</div>
-      <h1>What's Your Next Move?</h1>
-    </div>
-    <!-- reflection prompts — to be filled from workshop materials -->
-    <div class="stage" aria-hidden="true"><div class="ph"></div></div>
-  </section>
 
   <!-- 23 · WHAT'S NEXT -->
   <section class="slide" data-slide="nextsteps" aria-label="What's next">
@@ -1061,56 +1063,79 @@ eval "$(/opt/homebrew/bin/brew shellenv)"</span>
     </div>
     <div class="stage" aria-hidden="true">
       <div class="res-wrap">
-        <ul class="res-list">
-          <li>
-            <a href="https://ailab.gc.cuny.edu" target="_blank" rel="noopener">ailab.gc.cuny.edu</a>
-            <div class="res-desc">CUNY AI Lab — home page, announcements, and model notes</div>
-          </li>
-          <li>
-            <a href="https://ailab.gc.cuny.edu/resources" target="_blank" rel="noopener">ailab.gc.cuny.edu/resources</a>
-            <div class="res-desc">CAIL Resources: Model Registry, Support Docs, and Workshop Material</div>
-          </li>
-          <li>
-            <a href="https://chat.ailab.gc.cuny.edu" target="_blank" rel="noopener">chat.ailab.gc.cuny.edu</a>
-            <div class="res-desc">CAIL Sandbox (Open WebUI): Self-Hosted Chat Platform for Teaching and Research</div>
-          </li>
-          <li>
-            <a href="https://tools.ailab.gc.cuny.edu" target="_blank" rel="noopener">tools.ailab.gc.cuny.edu</a>
-            <div class="res-desc">CAIL Tools: Toolset for Multimedia Processing and Agentic Coding</div>
-          </li>
-          <li>
-            <a href="https://newmedialab.cuny.edu" target="_blank" rel="noopener">newmedialab.cuny.edu</a>
-            <div class="res-desc">CUNY New Media Lab — workshop series host</div>
-          </li>
-          <li>
-            <a href="https://aitoolkit.gc.commons.edu" target="_blank" rel="noopener">aitoolkit.gc.commons.edu</a>
-            <div class="res-desc">GC AI Toolkit — curated tools and resources for the Graduate Center community</div>
-          </li>
-          <li>
-            <a href="https://github.com/cuny-ai-lab" target="_blank" rel="noopener">github.com/cuny-ai-lab</a>
-            <div class="res-desc">CUNY AI Lab on GitHub — open source repos, workshop decks, datasets</div>
-          </li>
-          <li>
-            <a href="https://cuny-ai-lab.github.io/Vibe-Coding-Workshop/" target="_blank" rel="noopener">cuny-ai-lab.github.io/Vibe-Coding-Workshop</a>
-            <div class="res-desc">Vibe Coding Workshop deck — companion CAIL workshop</div>
-          </li>
-          <li>
-            <a href="https://code.visualstudio.com/docs" target="_blank" rel="noopener">code.visualstudio.com/docs</a>
-            <div class="res-desc">VS Code documentation — setup, extensions, integrated terminal</div>
-          </li>
-          <li>
-            <a href="https://github.com/google-gemini/gemini-cli" target="_blank" rel="noopener">github.com/google-gemini/gemini-cli</a>
-            <div class="res-desc">Gemini CLI — open-source AI coding agent that runs in your terminal</div>
-          </li>
-          <li>
-            <a href="https://developers.googleblog.com/gemini-cli-vs-code-native-diffing-context-aware-workflows/" target="_blank" rel="noopener">developers.googleblog.com/gemini-cli-vs-code…</a>
-            <div class="res-desc">Gemini CLI + VS Code — native diffing and context-aware workflows</div>
-          </li>
-          <li>
-            <a href="https://docs.github.com" target="_blank" rel="noopener">docs.github.com</a>
-            <div class="res-desc">GitHub documentation — repos, Pages, pull requests, Actions</div>
-          </li>
-        </ul>
+
+        <div class="res-group">
+          <div class="res-group-title">CAIL</div>
+          <ul class="res-list">
+            <li>
+              <a href="https://ailab.gc.cuny.edu" target="_blank" rel="noopener">ailab.gc.cuny.edu</a>
+              <div class="res-desc">CUNY AI Lab — home page, announcements, and model notes</div>
+            </li>
+            <li>
+              <a href="https://ailab.gc.cuny.edu/resources" target="_blank" rel="noopener">ailab.gc.cuny.edu/resources</a>
+              <div class="res-desc">Model Registry, Support Docs, and Workshop Material</div>
+            </li>
+            <li>
+              <a href="https://chat.ailab.gc.cuny.edu" target="_blank" rel="noopener">chat.ailab.gc.cuny.edu</a>
+              <div class="res-desc">CAIL Sandbox — self-hosted chat platform for teaching and research</div>
+            </li>
+            <li>
+              <a href="https://tools.ailab.gc.cuny.edu" target="_blank" rel="noopener">tools.ailab.gc.cuny.edu</a>
+              <div class="res-desc">CAIL Tools — multimedia processing and agentic coding</div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="res-group">
+          <div class="res-group-title">GC Community</div>
+          <ul class="res-list">
+            <li>
+              <a href="https://newmedialab.cuny.edu" target="_blank" rel="noopener">newmedialab.cuny.edu</a>
+              <div class="res-desc">CUNY New Media Lab — workshop series host</div>
+            </li>
+            <li>
+              <a href="https://aitoolkit.gc.commons.edu" target="_blank" rel="noopener">aitoolkit.gc.commons.edu</a>
+              <div class="res-desc">GC AI Toolkit — curated tools and resources for the Graduate Center</div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="res-group">
+          <div class="res-group-title">Workshops</div>
+          <ul class="res-list">
+            <li>
+              <a href="https://github.com/cuny-ai-lab" target="_blank" rel="noopener">github.com/cuny-ai-lab</a>
+              <div class="res-desc">CUNY AI Lab on GitHub — open source repos, workshop decks, datasets</div>
+            </li>
+            <li>
+              <a href="https://cuny-ai-lab.github.io/Vibe-Coding-Workshop/" target="_blank" rel="noopener">cuny-ai-lab.github.io/Vibe-Coding-Workshop</a>
+              <div class="res-desc">Vibe Coding Workshop — companion CAIL workshop deck</div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="res-group">
+          <div class="res-group-title">Tools &amp; Docs</div>
+          <ul class="res-list">
+            <li>
+              <a href="https://code.visualstudio.com/docs" target="_blank" rel="noopener">code.visualstudio.com/docs</a>
+              <div class="res-desc">VS Code documentation — setup, extensions, integrated terminal</div>
+            </li>
+            <li>
+              <a href="https://github.com/google-gemini/gemini-cli" target="_blank" rel="noopener">github.com/google-gemini/gemini-cli</a>
+              <div class="res-desc">Gemini CLI — open-source AI coding agent that runs in your terminal</div>
+            </li>
+            <li>
+              <a href="https://developers.googleblog.com/gemini-cli-vs-code-native-diffing-context-aware-workflows/" target="_blank" rel="noopener">developers.googleblog.com/gemini-cli-vs-code…</a>
+              <div class="res-desc">Gemini CLI + VS Code — native diffing and context-aware workflows</div>
+            </li>
+            <li>
+              <a href="https://docs.github.com" target="_blank" rel="noopener">docs.github.com</a>
+              <div class="res-desc">GitHub documentation — repos, Pages, pull requests, Actions</div>
+            </li>
+          </ul>
+        </div>
+
       </div>
     </div>
   </section>
@@ -1120,120 +1145,20 @@ eval "$(/opt/homebrew/bin/brew shellenv)"</span>
 <!-- STICKY FOOTER SLIDER -->
 <div class="sticky-footer">
   <div class="footer-slider">
+    <button class="footer-arrow" id="btn-prev" aria-label="Previous slide">&#8592;</button>
     <div class="slider-track">
       <input type="range" id="slide-scrubber" min="1" max="20" value="1" aria-label="Navigate to slide">
       <div class="slider-progress"></div>
       <div class="slider-thumb"></div>
     </div>
-    <div class="slider-label">
+    <button class="footer-arrow" id="btn-next" aria-label="Next slide">&#8594;</button>
+    <div class="footer-meta">
       <span id="slider-counter">1 / 20</span>
+      <span class="kbd">Space</span>
     </div>
   </div>
 </div>
 
-<script>
-  'use strict';
-  let idx = 0;
-  const slides  = Array.from(document.querySelectorAll('section.slide'));
-  const counter = document.getElementById('counter');
-  const scrubber = document.getElementById('slide-scrubber');
-  const sliderCounter = document.getElementById('slider-counter');
-  const sliderProgress = document.querySelector('.slider-progress');
-  const sliderThumb = document.querySelector('.slider-thumb');
-
-  function clamp(n, lo, hi) { return Math.max(lo, Math.min(hi, n)); }
-
-  function fragsOf(slide) { return Array.from(slide.querySelectorAll('.frag')); }
-
-  function show(i, revealAll) {
-    const next = clamp(i, 0, slides.length - 1);
-    slides[idx].classList.remove('active');
-    idx = next;
-    slides[idx].classList.add('active');
-    fragsOf(slides[idx]).forEach(f => f.classList.toggle('visible', !!revealAll));
-    if (counter) counter.textContent = `${idx + 1} / ${slides.length}`;
-    if (scrubber) scrubber.value = idx + 1;
-    if (sliderCounter) sliderCounter.textContent = `${idx + 1} / ${slides.length}`;
-    const progress = ((idx + 1) / slides.length) * 100;
-    if (sliderProgress) sliderProgress.style.width = `${progress}%`;
-    if (sliderThumb) sliderThumb.style.left = `calc(${progress}% - 10px)`;
-    history.replaceState(null, '', `#${idx + 1}`);
-    const f = slides[idx].querySelector('.content');
-    if (f) { f.setAttribute('tabindex', '-1'); f.focus({ preventScroll: true }); }
-  }
-
-  function advance() {
-    const frags = fragsOf(slides[idx]);
-    const hidden = frags.filter(f => !f.classList.contains('visible'));
-    if (hidden.length) hidden[0].classList.add('visible');
-    else show(idx + 1);
-  }
-
-  function retreat() {
-    const frags = fragsOf(slides[idx]);
-    const shown = frags.filter(f => f.classList.contains('visible'));
-    if (shown.length) shown[shown.length - 1].classList.remove('visible');
-    else show(idx - 1, true);
-  }
-
-  /* ── Overview mode ── */
-  function toggleOverview() {
-    const on = document.body.classList.toggle('overview');
-    if (on) {
-      slides[idx].scrollIntoView({ block: 'center', behavior: 'instant' });
-    }
-  }
-
-  slides.forEach((s, i) => {
-    s.setAttribute('data-slide-num', i + 1);
-    s.addEventListener('click', () => {
-      if (!document.body.classList.contains('overview')) return;
-      document.body.classList.remove('overview');
-      show(i, true);
-    });
-  });
-
-  document.addEventListener('keydown', e => {
-    if (['INPUT','TEXTAREA'].includes(document.activeElement.tagName)) return;
-    if (e.key === 'Escape') { e.preventDefault(); toggleOverview(); return; }
-    if (document.body.classList.contains('overview')) return;
-    if (['ArrowRight','PageDown',' '].includes(e.key)) { e.preventDefault(); advance(); }
-    if (['ArrowLeft','PageUp'].includes(e.key))        { e.preventDefault(); retreat(); }
-    if (e.key === 'Home') { e.preventDefault(); show(0); }
-    if (e.key === 'End')  { e.preventDefault(); show(slides.length - 1, true); }
-  });
-
-  if (scrubber) {
-    scrubber.max = slides.length;
-    scrubber.addEventListener('input', () => {
-      show(parseInt(scrubber.value) - 1, true);
-    });
-  }
-
-  let tx = 0, ty = 0, swipeOk = false;
-  document.addEventListener('touchstart', e => {
-    if (e.touches.length !== 1) { swipeOk = false; return; }
-    if (e.target.closest('.stage')) { swipeOk = false; return; }
-    tx = e.touches[0].clientX; ty = e.touches[0].clientY; swipeOk = true;
-  }, { passive: true });
-  document.addEventListener('touchmove', e => {
-    if (!swipeOk || e.touches.length !== 1) return;
-    if (Math.abs(e.touches[0].clientY - ty) > Math.abs(e.touches[0].clientX - tx) * 1.5) swipeOk = false;
-  }, { passive: true });
-  document.addEventListener('touchend', e => {
-    if (!swipeOk) return;
-    const dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty;
-    if (Math.abs(dx) >= 48 && Math.abs(dx) >= Math.abs(dy) * 1.2) { dx < 0 ? advance() : retreat(); }
-    swipeOk = false;
-  }, { passive: true });
-
-  window.addEventListener('hashchange', () => {
-    const m = location.hash.match(/^#(\d+)$/);
-    if (m) show(parseInt(m[1], 10) - 1, true);
-  });
-
-  const m = location.hash.match(/^#(\d+)$/);
-  show(m ? clamp(parseInt(m[1], 10) - 1, 0, slides.length - 1) : 0, true);
-</script>
+<script src="src/slides.js"></script>
 </body>
 </html>
