@@ -17,6 +17,7 @@
       --stroke:      rgba(255,255,255,0.13);
       --radius:      14px;
       --header-h:    48px;
+      --footer-h:    54px;
       --stage-aspect: 16 / 9;
       --stage-min:    160px;
     }
@@ -141,7 +142,7 @@
     section.slide {
       display: none; position: absolute; inset: 0;
       flex-direction: column;
-      padding: var(--header-h) 12px 12px; gap: 10px;
+      padding: var(--header-h) 12px calc(12px + var(--footer-h)); gap: 10px;
       overflow-y: auto; overscroll-behavior: contain;
       -webkit-overflow-scrolling: touch;
     }
@@ -309,24 +310,45 @@
 
     /* Spectrum bar */
     .spectrumBar {
-      display: flex; align-items: center; gap: 0;
-      width: 100%;
+      display: flex; align-items: center; justify-content: center;
+      gap: clamp(4px,0.8vw,10px); width: 100%;
     }
     .spectrumNode {
-      flex: 1; min-width: 0; padding: clamp(10px,1.5vw,18px) clamp(4px,0.8vw,10px);
-      text-align: center; border-right: 1px solid rgba(255,255,255,0.08);
+      min-width: 0; padding: clamp(8px,1.2vw,14px) clamp(2px,0.4vw,6px);
+      text-align: center;
     }
-    .spectrumNode:last-child { border-right: none; }
     .spectrumNode .sn-label {
-      font-size: clamp(11px,1.3vw,15px); font-weight: 700;
+      font-size: clamp(13px,1.6vw,18px); font-weight: 700;
       color: rgba(255,255,255,0.9); margin-bottom: 6px;
     }
     .spectrumNode .sn-desc {
       font-size: clamp(10px,1.1vw,13px); color: var(--muted); line-height: 1.4;
     }
     .spectrumArrow {
-      font-size: 13px; color: rgba(255,255,255,0.2); flex-shrink: 0; padding: 0 2px;
+      font-size: clamp(10px,1.2vw,14px); color: rgba(255,255,255,0.5); flex-shrink: 0;
+      transform: translateY(-2px);
     }
+
+    /* spectrum bar L→R sequenced reveal */
+    @keyframes spectrum-node-in {
+      from { opacity: 0; transform: translateX(-6px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes spectrum-arrow-in {
+      from { opacity: 0; transform: translateX(-10px) translateY(-2px); }
+      to   { opacity: 0.5; transform: translateX(0) translateY(-2px); }
+    }
+    .spectrumBar.frag { transition: none; }
+    .spectrumBar.visible > * { opacity: 0; }
+    .spectrumBar.visible > :nth-child(1) { animation: spectrum-node-in  0.28s ease-out 0.00s forwards; }
+    .spectrumBar.visible > :nth-child(2) { animation: spectrum-arrow-in 0.22s ease-out 0.18s forwards; }
+    .spectrumBar.visible > :nth-child(3) { animation: spectrum-node-in  0.28s ease-out 0.28s forwards; }
+    .spectrumBar.visible > :nth-child(4) { animation: spectrum-arrow-in 0.22s ease-out 0.46s forwards; }
+    .spectrumBar.visible > :nth-child(5) { animation: spectrum-node-in  0.28s ease-out 0.56s forwards; }
+    .spectrumBar.visible > :nth-child(6) { animation: spectrum-arrow-in 0.22s ease-out 0.74s forwards; }
+    .spectrumBar.visible > :nth-child(7) { animation: spectrum-node-in  0.28s ease-out 0.84s forwards; }
+    .spectrumBar.visible > :nth-child(8) { animation: spectrum-arrow-in 0.22s ease-out 1.02s forwards; }
+    .spectrumBar.visible > :nth-child(9) { animation: spectrum-node-in  0.28s ease-out 1.12s forwards; }
 
     /* icebreaker two-question layout */
     .ib-pair {
@@ -654,7 +676,7 @@
 
     /* ── TABLET / DESKTOP ── */
     @media (min-width: 720px) {
-      section.slide { flex-direction: row; align-items: stretch; overflow: hidden; padding: var(--header-h) clamp(16px,2.5vw,32px) 16px; gap: clamp(12px,1.5vw,20px); }
+      section.slide { flex-direction: row; align-items: stretch; overflow: hidden; padding: var(--header-h) clamp(16px,2.5vw,32px) calc(16px + var(--footer-h)); gap: clamp(12px,1.5vw,20px); }
       .content { flex: 1 1 44%; overflow-y: auto; }
       .stage { flex: 1 1 52%; height: auto; align-self: stretch; min-height: unset; }
       /* Keep title slide stacked (title on top, artifact below) */
@@ -696,7 +718,7 @@
     }
 
     @media (min-width: 1200px) {
-      section.slide { padding: var(--header-h) clamp(28px,3vw,48px) 20px; gap: clamp(16px,2vw,28px); }
+      section.slide { padding: var(--header-h) clamp(28px,3vw,48px) calc(20px + var(--footer-h)); gap: clamp(16px,2vw,28px); }
       [data-slide="title"] .content { max-width: 700px; }
       [data-slide="title"] .stage {
         min-height: clamp(450px, 68vh, 1000px);
@@ -840,7 +862,7 @@
             <span class="agenda-section-time">30m</span>
           </div>
           <a class="agenda-item" href="#4"><span class="agenda-item-label">Icebreaker</span></a>
-          <a class="agenda-item" href="#5"><span class="agenda-item-label">Vibe Coding Demo</span></a>
+          <a class="agenda-item" href="#5"><span class="agenda-item-label">Vibe Coding in Action</span></a>
           <a class="agenda-item" href="#6"><span class="agenda-item-label">What is a Large Language Model (LLM)?</span></a>
           <a class="agenda-item" href="#8"><span class="agenda-item-label">How Do LLMs Generate Code?</span></a>
           <a class="agenda-item" href="#9"><span class="agenda-item-label">Strengths &amp; Limitations</span></a>
@@ -903,10 +925,10 @@
   </section>
 
   <!-- 5 · DEMO -->
-  <section class="slide" data-slide="demo" aria-label="Live demo">
+  <section class="slide" data-slide="demo" aria-label="Vibe Coding in Action">
     <div class="content">
       <div class="label">Demo</div>
-      <h1>Vibe Coding Demo</h1>
+      <h1>Vibe Coding in Action</h1>
     </div>
     <div class="stage" aria-hidden="true">
       <div class="stageCenter">
@@ -1519,17 +1541,18 @@ eval "$(/opt/homebrew/bin/brew shellenv)"</span>
   </section>
 
 
-  <!-- 26 · WHAT'S NEXT -->
-  <section class="slide" data-slide="nextsteps" aria-label="What's next">
+  <!-- 26 · UPCOMING WORKSHOP -->
+  <section class="slide" data-slide="nextsteps" aria-label="Upcoming Workshop">
     <div class="content">
       <div class="label">What's Next</div>
-      <h1>What's Next</h1>
+      <h1>Upcoming Workshop</h1>
+      <h2>Vibe-Coding Prototypes &middot; Tuesday, March 10 &middot; 4:00&ndash;5:30 pm</h2>
     </div>
     <div class="stage" aria-hidden="true">
       <div class="step-grid">
         <div class="step-row frag">
           <div class="step-num">1</div>
-          <div class="step-text"><strong>Vibe-Coding Prototypes</strong><br>Tuesday, March 10 &middot; 4:00&ndash;5:30 pm<br><br>Use AI from the command line to build a small prototype. We'll model prompting, project design, and troubleshooting &mdash; then you'll customize a feature of your own.</div>
+          <div class="step-text">Use AI from the command line to build a small prototype. We'll model prompting, project design, and troubleshooting &mdash; then you'll customize a feature of your own.</div>
         </div>
         <div class="step-row frag">
           <div class="step-num">2</div>
