@@ -20,16 +20,18 @@ A single-page HTML slide deck for **CAIL Spotlight Workshop #1: Foundations — 
 
 ## Slide Architecture
 
-Each slide is a `<section class="slide">` with a `data-slide` attribute. Layout is two panels:
-- `.content` — left panel with label, title, subtitle
+Each slide is a `<section class="slide" role="group" aria-roledescription="slide">` with a `data-slide` attribute. Layout is two panels:
+- `.content` — left panel with label, title (`<h2>`), subtitle (`<h3>`)
 - `.stage` — right panel with visual content (terminal, cards, links, iframe, or placeholder `.ph`)
+
+A single visually-hidden `<h1>` at the top of `<main>` establishes the document heading. Slide titles use `<h2>`, subtitles use `<h3>`.
 
 Slide types with special CSS:
 - `data-slide="title"` — stacked layout (content on top, stage fills below)
 - `.slide-break` — full-bleed section dividers (Part 1 / Part 2)
 - `.slide-icebreaker` — custom two-question layout using `.ib-pair` / `.ib-q`
 
-Navigation is in `src/slides.js`: arrow keys, swipe, hash-based URLs (`#1` through `#27`), sticky footer slider.
+Navigation is in `src/slides.js`: arrow keys, swipe, hash-based URLs (`#1` through `#27`), sticky footer slider wrapped in `<nav aria-label="Slide navigation">`.
 
 ## Design Tokens
 
@@ -60,6 +62,14 @@ Agenda items are `<a>` elements with `href="#N"` pointing to slide numbers. If s
 ## Slide Design Workflow
 
 When making significant visual changes to a slide or adding a new slide, always invoke the `frontend-design` skill. This ensures design quality, consistent aesthetics, and intentional layout decisions across the deck.
+
+## Accessibility
+
+- Only the title slide's `.stage` (decorative chainwheel) uses `aria-hidden="true"`. All other stage panels are visible to assistive tech.
+- `#slide-announce` is an `aria-live="polite"` region. `slides.js` writes slide change announcements into it.
+- `.frag` elements toggle `aria-hidden` in sync with the `.visible` class so progressive reveals are mirrored for screen readers.
+- Avoid stacking `opacity` on already-muted `color` values — flatten to a single `rgba()` to maintain WCAG AA contrast.
+- `prefers-reduced-motion: reduce` disables all transitions and animations.
 
 ## Commit Style
 

@@ -47,7 +47,7 @@
     .kbd {
       font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
       border: 1px solid rgba(255,255,255,0.08); background: transparent;
-      padding: 2px 7px; border-radius: 6px; font-size: 11px; opacity: 0.45; color: var(--muted);
+      padding: 2px 7px; border-radius: 6px; font-size: 11px; color: rgba(255,255,255,0.42);
       letter-spacing: 0.02em;
     }
     .nav-btn {
@@ -117,6 +117,10 @@
       touch-action: manipulation;
     }
     #slide-scrubber:active { cursor: grabbing; }
+    #slide-scrubber:focus-visible ~ .slider-thumb {
+      outline: 2px solid var(--accent); outline-offset: 2px;
+      transform: scale(1.2);
+    }
     #slide-scrubber::-webkit-slider-thumb {
       -webkit-appearance: none; appearance: none;
       width: 22px; height: 22px; border-radius: 50%;
@@ -206,8 +210,7 @@
     .title-credit a:hover img { opacity: 1; }
     .title-credit .credit-names {
       font-size: clamp(12px,1.15vw,14px);
-      color: var(--muted);
-      opacity: 0.55;
+      color: rgba(255,255,255,0.50);
       line-height: 1.5;
       letter-spacing: 0.005em;
     }
@@ -492,7 +495,7 @@
     .cmd-info code .str { color: #a5d6ff; }
     .cmd-info .cmd-desc {
       font-size: clamp(12px, 1.15vw, 15px);
-      color: var(--muted); opacity: 0.55; line-height: 1.4;
+      color: rgba(255,255,255,0.50); line-height: 1.4;
     }
     /* CRT monitor */
     .cmd-screen {
@@ -623,11 +626,11 @@
     .res-list li:last-child { border-bottom: none; }
     .res-list li a { font-size: clamp(13px,1.5vw,17px); color: var(--accent); text-decoration: none; }
     .res-list li a:hover { text-decoration: underline; }
-    .res-desc { font-size: clamp(11px,1.1vw,13px); color: var(--muted); margin-top: 2px; opacity: 0.65; }
+    .res-desc { font-size: clamp(11px,1.1vw,13px); color: rgba(255,255,255,0.48); margin-top: 2px; }
 
     /* ── TYPOGRAPHY ── */
-    .content h1 { font-size: clamp(36px,5vw,58px); letter-spacing: -0.025em; line-height: 1.08; margin-bottom: 8px; }
-    .content h2 { font-size: clamp(20px,2.6vw,32px); color: var(--muted); font-weight: 500; letter-spacing: -0.01em; line-height: 1.3; margin-bottom: 10px; }
+    .content h2 { font-size: clamp(36px,5vw,58px); letter-spacing: -0.025em; line-height: 1.08; margin-bottom: 8px; }
+    .content h3 { font-size: clamp(20px,2.6vw,32px); color: var(--muted); font-weight: 500; letter-spacing: -0.01em; line-height: 1.3; margin-bottom: 10px; }
     .content .label { font-size: clamp(14px,1.8vw,20px); letter-spacing: 0.12em; text-transform: uppercase; color: var(--part); font-weight: 700; margin-bottom: 10px; }
     .content .time-tag { display: inline-flex; align-items: center; margin-top: 12px; padding: 3px 12px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.08); color: var(--muted); font-size: clamp(11px,1.1vw,13px); }
     .content .authors { font-size: clamp(18px,2.2vw,26px); color: var(--muted); margin-top: 18px; }
@@ -648,8 +651,8 @@
       padding: 3px 10px; border-radius: 20px;
       border: 1px solid rgba(255,255,255,0.1);
     }
-    .slide-aside .content .label { color: var(--muted); opacity: 0.6; }
-    .slide-aside .content h1 { opacity: 0.75; }
+    .slide-aside .content .label { color: rgba(255,255,255,0.45); }
+    .slide-aside .content h2 { opacity: 0.75; }
     .slide-aside .content .aside-note {
       font-size: clamp(12px,1.3vw,15px); color: var(--muted); opacity: 0.5;
       line-height: 1.5; margin-top: auto; padding-top: clamp(12px,1.5vw,20px);
@@ -664,7 +667,7 @@
     }
     .slide-break .content { background: transparent; border: none; justify-content: flex-end; min-height: unset; }
     .slide-break .content .break-tag { font-size: clamp(16px,2vw,24px); letter-spacing: 0.15em; text-transform: uppercase; color: var(--part); font-weight: 700; margin-bottom: 12px; }
-    .slide-break .content h1 { font-size: clamp(36px,7vw,80px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.04; }
+    .slide-break .content h2 { font-size: clamp(36px,7vw,80px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.04; }
     .slide-break .content .break-sub { font-size: clamp(13px,1.5vw,18px); color: var(--muted); margin-top: 14px; }
     .slide-break::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--part); }
 
@@ -688,7 +691,7 @@
       .slide-break.active { flex-direction: column; overflow: hidden; }
       .slide-icebreaker .content { flex: 1 1 38%; max-width: 440px; }
       .slide-icebreaker .stage { flex: 1 1 58%; }
-      .slide-icebreaker .content h1 { font-size: clamp(22px, 3vw, 38px); }
+      .slide-icebreaker .content h2 { font-size: clamp(22px, 3vw, 38px); }
       /* ib-pair fills stage at desktop */
       .ib-pair { position: absolute; inset: 0; overflow-y: auto; }
       #kbdSwipe { display: none; }
@@ -743,11 +746,24 @@
     @media (max-width: 400px) {
       :root { --stage-aspect: 4 / 3; }
       .content { padding: 16px 14px; }
-      .content h1 { font-size: 22px; }
+      .content h2 { font-size: 22px; }
       [data-slide="title"] .stage {
         min-height: clamp(220px, 45vh, 400px);
       }
     }
+    /* visually hidden but available to screen readers */
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+    /* live region for slide announcements */
+    #slide-announce {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+
     @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 
     /* ── OVERVIEW MODE ── */
@@ -796,10 +812,10 @@
       background: transparent; backdrop-filter: none;
       min-height: 0; overflow: hidden;
     }
-    body.overview .content h1 { font-size: 14px; line-height: 1.25; margin-bottom: 0; }
+    body.overview .content h2 { font-size: 14px; line-height: 1.25; margin-bottom: 0; }
     body.overview .content .label,
     body.overview .slide-break .content .break-tag { font-size: 9px; margin-bottom: 4px; letter-spacing: 0.1em; }
-    body.overview .content h2,
+    body.overview .content h3,
     body.overview .content .date,
     body.overview .content .authors,
     body.overview .content .orgs,
@@ -809,7 +825,7 @@
     /* section breaks */
     body.overview .slide-break { padding: 14px; }
     body.overview .slide-break .content { justify-content: center; }
-    body.overview .slide-break .content h1 { font-size: 13px; }
+    body.overview .slide-break .content h2 { font-size: 13px; }
     body.overview .slide-break::before { height: 2px; }
     @media (min-width: 720px) {
       body.overview section.slide { flex-direction: column; }
@@ -820,41 +836,44 @@
 
 <a href="#slide-content" class="skip-link">Skip to slide content</a>
 
-<header role="banner">
+<header>
   <div class="bar">
-    <div class="kbd" id="kbdSwipe">Swipe</div>
+    <div class="kbd" id="kbdSwipe" aria-hidden="true">Swipe</div>
   </div>
 </header>
 
-<main id="slide-content" role="main" aria-label="Workshop slides">
+<div id="slide-announce" aria-live="polite" aria-atomic="true"></div>
+
+<main id="slide-content" aria-label="Workshop slides">
+<h1 class="sr-only">Foundations: Coding with Generative AI — CAIL Workshop #1</h1>
 
   <!-- 1 · TITLE -->
-  <section class="slide" data-slide="title" aria-label="Title slide">
+  <section class="slide" role="group" aria-roledescription="slide" data-slide="title" aria-label="Title slide">
     <div class="content">
       <div>
         <div class="label">CAIL Spotlight Workshop #1</div>
-        <h1>Foundations: Coding with Generative AI</h1>
+        <h2>Foundations: Coding with Generative AI</h2>
         <p class="date">Spring 2026</p>
       </div>
       <div class="title-credit">
-        <a href="https://ailab.gc.cuny.edu/" target="_blank" rel="noopener"><img src="img/Logo Horizontal Bianco@2x.png" alt="CUNY AI Lab"></a>
+        <a href="https://ailab.gc.cuny.edu/" target="_blank" rel="noopener"><img src="img/Logo Horizontal Bianco@2x.png" alt="CUNY AI Lab" width="160" height="40"></a>
         <span class="credit-names">Developed by Stefano Morello, Zach Muhlbauer, Parisa Setayesh, and Stephen Zweibel</span>
       </div>
     </div>
     <div class="stage" aria-hidden="true">
       <div class="stage-fill">
-        <iframe src="src/chainwheel.html" title="Infinite Wheel" tabindex="-1"></iframe>
+        <iframe src="src/chainwheel.html" title="Decorative animation" tabindex="-1" loading="lazy"></iframe>
       </div>
     </div>
   </section>
 
   <!-- 2 · AGENDA -->
-  <section class="slide" data-slide="agenda" aria-label="Agenda">
+  <section class="slide" role="group" aria-roledescription="slide" data-slide="agenda" aria-label="Agenda">
     <div class="content">
       <div class="label">Workshop</div>
-      <h1>Agenda</h1>
+      <h2>Agenda</h2>
     </div>
-    <div class="stage" aria-hidden="true">
+    <div class="stage">
       <div class="agenda-table">
 
         <div class="agenda-section">
@@ -897,21 +916,21 @@
   </section>
 
   <!-- 3 · SECTION BREAK: PART 1 -->
-  <section class="slide slide-break" data-slide="part1" aria-label="Part 1 section break">
+  <section class="slide slide-break" role="group" aria-roledescription="slide" data-slide="part1" aria-label="Part 1 section break">
     <div class="content">
       <div class="break-tag">Part 1</div>
-      <h1>Concepts &amp; Context</h1>
+      <h2>Concepts &amp; Context</h2>
     </div>
   </section>
 
   <!-- 4 · ICEBREAKER -->
-  <section class="slide slide-icebreaker" data-slide="icebreaker" aria-label="Icebreaker">
+  <section class="slide slide-icebreaker" role="group" aria-roledescription="slide" data-slide="icebreaker" aria-label="Icebreaker">
     <div class="content">
       <div class="label">Icebreaker · 10 min</div>
-      <h1>Where does coding live in your imagination?</h1>
-      <h2>Turn to your neighbor and discuss.</h2>
+      <h2>Where does coding live in your imagination?</h2>
+      <h3>Turn to your neighbor and discuss.</h3>
     </div>
-    <div class="stage" aria-hidden="true">
+    <div class="stage">
       <div class="ib-pair">
         <div class="ib-q">
           <div class="ib-num">A</div>
@@ -926,12 +945,12 @@
   </section>
 
   <!-- 5 · DEMO -->
-  <section class="slide" data-slide="demo" aria-label="Vibe Coding in Action">
+  <section class="slide" role="group" aria-roledescription="slide" data-slide="demo" aria-label="Vibe Coding in Action">
     <div class="content">
       <div class="label">Demo</div>
-      <h1>Vibe Coding in Action</h1>
+      <h2>Vibe Coding in Action</h2>
     </div>
-    <div class="stage" aria-hidden="true">
+    <div class="stage">
       <div class="stageCenter">
         <div class="stageInner">
           <div class="stageBig">Live walkthrough: building something from scratch with an AI coding agent</div>
@@ -942,12 +961,12 @@
   </section>
 
   <!-- 6 · WHAT IS A LARGE LANGUAGE MODEL? -->
-  <section class="slide" data-slide="llm" aria-label="What is a Large Language Model (LLM)?">
+  <section class="slide" role="group" aria-roledescription="slide" data-slide="llm" aria-label="What is a Large Language Model (LLM)?">
     <div class="content">
       <div class="label">Concept</div>
-      <h1>What is a Large Language Model (LLM)?</h1>
+      <h2>What is a Large Language Model (LLM)?</h2>
     </div>
-    <div class="stage" aria-hidden="true" style="display:flex; flex-direction:column;">
+    <div class="stage" style="display:flex; flex-direction:column;">
       <div class="stageCenter">
         <div class="stageInner">
           <div class="stageBig">A probabilistic pattern engine for text.</div>
@@ -973,12 +992,12 @@
   </section>
 
   <!-- 7 · HOW DOES AN LLM PRODUCE AN ANSWER? -->
-  <section class="slide" data-slide="llm-process" aria-label="How Does an LLM Actually Produce an Answer?">
+  <section class="slide" role="group" aria-roledescription="slide" data-slide="llm-process" aria-label="How Does an LLM Actually Produce an Answer?">
     <div class="content">
       <div class="label">Concept</div>
-      <h1>How Does an LLM Actually Produce an Answer?</h1>
+      <h2>How Does an LLM Actually Produce an Answer?</h2>
     </div>
-    <div class="stage" aria-hidden="true">
+    <div class="stage">
       <div class="step-grid">
         <div class="step-row frag"><div class="step-num">1</div><div class="step-text"><strong>Tokenize</strong> &mdash; break your prompt into tokens</div></div>
         <div class="step-row frag"><div class="step-num">2</div><div class="step-text"><strong>Embed</strong> &mdash; turn tokens into vectors</div></div>
@@ -993,12 +1012,12 @@
   </section>
 
   <!-- 8 · HOW DO LLMS GENERATE CODE? -->
-  <section class="slide" data-slide="code-generation" aria-label="How Do LLMs Generate Code?">
+  <section class="slide" role="group" aria-roledescription="slide" data-slide="code-generation" aria-label="How Do LLMs Generate Code?">
     <div class="content">
       <div class="label">Concept</div>
-      <h1>How Do LLMs Generate Code?</h1>
+      <h2>How Do LLMs Generate Code?</h2>
     </div>
-    <div class="stage" aria-hidden="true">
+    <div class="stage">
       <div class="stageCenter">
         <div class="stageInner">
           <div class="stageBig">Code is just another language pattern.</div>
@@ -1014,12 +1033,12 @@
   </section>
 
   <!-- 9 · WHAT'S GOOD / WHAT'S BAD -->
-  <section class="slide" data-slide="good-bad" aria-label="What is good, what is bad">
+  <section class="slide" role="group" aria-roledescription="slide" data-slide="good-bad" aria-label="What is good, what is bad">
     <div class="content">
       <div class="label">Concept</div>
-      <h1>What&rsquo;s Good / What&rsquo;s Bad</h1>
+      <h2>What&rsquo;s Good / What&rsquo;s Bad</h2>
     </div>
-    <div class="stage" aria-hidden="true">
+    <div class="stage">
       <div class="stageCompare">
         <div class="col">
           <div class="col-tag" style="color:#2ea043;">&check;</div>
@@ -1045,20 +1064,20 @@
   </section>
 
   <!-- 10 · SECTION BREAK: PART 2 -->
-  <section class="slide slide-break" data-slide="part2" style="--part:#5a8dee;" aria-label="Part 2 section break">
+  <section class="slide slide-break" role="group" aria-roledescription="slide" data-slide="part2" style="--part:#5a8dee;" aria-label="Part 2 section break">
     <div class="content">
       <div class="break-tag">Part 2</div>
-      <h1>Development Environment</h1>
+      <h2>Development Environment</h2>
     </div>
   </section>
 
   <!-- 11 · WHAT IS VS CODE? -->
-  <section class="slide" data-slide="vscode-intro" aria-label="What is VS Code?">
+  <section class="slide" role="group" aria-roledescription="slide" data-slide="vscode-intro" aria-label="What is VS Code?">
     <div class="content">
       <div class="label">Concept</div>
-      <h1>What is VS Code?</h1>
+      <h2>What is VS Code?</h2>
     </div>
-    <div class="stage" aria-hidden="true">
+    <div class="stage">
       <div class="stageCenter">
         <div class="stageInner">
           <div class="stageBig">A free code editor that works like a smart writing desk for programmers</div>
@@ -1075,28 +1094,28 @@
   </section>
 
   <!-- 12 · IDE SETUP -->
-  <section class="slide" data-slide="vscode" aria-label="Setting up an Interactive Development Environment">
+  <section class="slide" role="group" aria-roledescription="slide" data-slide="vscode" aria-label="Setting up an Interactive Development Environment">
     <div class="content">
       <div class="label">Setup</div>
-      <h1>Setting up an Interactive Development Environment</h1>
+      <h2>Setting up an Interactive Development Environment</h2>
     </div>
-    <div class="stage" aria-hidden="true">
+    <div class="stage">
       <div class="step-grid">
         <div class="step-row"><div class="step-num">1</div><div class="step-text">Download VS Code from <a href="https://code.visualstudio.com" target="_blank" rel="noopener"><strong>code.visualstudio.com</strong></a></div></div>
         <div class="step-row"><div class="step-num">2</div><div class="step-text">Install and open VS Code on your machine</div></div>
-        <div class="step-row"><div class="step-num">3</div><div class="step-text">Open the integrated terminal: <a href="#" onclick="alert('In VS Code: click Terminal in the top menu bar, then New Terminal')"><strong>Terminal → New Terminal</strong></a> (or <strong>Ctrl+`</strong>)</div></div>
+        <div class="step-row"><div class="step-num">3</div><div class="step-text">Open the integrated terminal: <strong>Terminal &rarr; New Terminal</strong> in the top menu bar (or <strong>Ctrl+`</strong>)</div></div>
         <div class="step-row"><div class="step-num">4</div><div class="step-text">Confirm it works — you should see a command prompt at the bottom</div></div>
       </div>
     </div>
   </section>
 
   <!-- 13 · WHAT IS THE COMMAND LINE? -->
-  <section class="slide" data-slide="cli-intro" aria-label="What is the command line?">
+  <section class="slide" role="group" aria-roledescription="slide" data-slide="cli-intro" aria-label="What is the command line?">
     <div class="content">
       <div class="label">Concept</div>
-      <h1>What is the Command Line?</h1>
+      <h2>What is the Command Line?</h2>
     </div>
-    <div class="stage" aria-hidden="true">
+    <div class="stage">
       <div class="stageCenter">
         <div class="stageInner">
           <div class="stageBig">A text-based interface for controlling your computer</div>
@@ -1113,14 +1132,14 @@
   </section>
 
   <!-- 14 · OPENING YOUR TERMINAL -->
-  <section class="slide slide-aside" data-slide="cli-open" aria-label="Opening your terminal">
+  <section class="slide slide-aside" role="group" aria-roledescription="slide" data-slide="cli-open" aria-label="Opening your terminal">
     <div class="content">
       <div class="label">Outside VS Code</div>
-      <h1>Opening a Standalone Terminal</h1>
-      <h2>(You won't need this today)</h2>
+      <h2>Opening a Standalone Terminal</h2>
+      <h3>(You won't need this today)</h3>
       <div class="aside-note">It's the same terminal. VS Code just puts one inside the editor so you don't have to switch windows.</div>
     </div>
-    <div class="stage" aria-hidden="true">
+    <div class="stage">
       <div class="stageCompare">
         <div class="col">
           <div class="col-tag">macOS</div>
@@ -1137,13 +1156,13 @@
   </section>
 
   <!-- 15 · COMMAND LINE: NAVIGATING -->
-  <section class="slide" data-slide="cli-nav" aria-label="Command line navigation">
+  <section class="slide" role="group" aria-roledescription="slide" data-slide="cli-nav" aria-label="Command line navigation">
     <div class="content">
       <div class="label">Tool</div>
-      <h1>Command Line Basics</h1>
-      <h2>Navigating</h2>
+      <h2>Command Line Basics</h2>
+      <h3>Navigating</h3>
     </div>
-    <div class="stage" aria-hidden="true">
+    <div class="stage">
       <div class="cmd-cards">
         <div class="cmd-card frag">
           <div class="cmd-info">
@@ -1201,13 +1220,13 @@
   </section>
 
   <!-- 16 · COMMAND LINE: FILES -->
-  <section class="slide" data-slide="cli-files" aria-label="Command line file operations">
+  <section class="slide" role="group" aria-roledescription="slide" data-slide="cli-files" aria-label="Command line file operations">
     <div class="content">
       <div class="label">Tool</div>
-      <h1>Command Line Basics</h1>
-      <h2>Working with Files</h2>
+      <h2>Command Line Basics</h2>
+      <h3>Working with Files</h3>
     </div>
-    <div class="stage" aria-hidden="true">
+    <div class="stage">
       <div class="cmd-cards">
         <div class="cmd-card frag">
           <div class="cmd-info">
@@ -1282,12 +1301,12 @@
   </section>
 
   <!-- 17 · WHAT IS GIT / GITHUB? -->
-  <section class="slide" data-slide="git-intro" aria-label="What is Git and GitHub?">
+  <section class="slide" role="group" aria-roledescription="slide" data-slide="git-intro" aria-label="What is Git and GitHub?">
     <div class="content">
       <div class="label">Concept</div>
-      <h1>What is Git? What is GitHub?</h1>
+      <h2>What is Git? What is GitHub?</h2>
     </div>
-    <div class="stage" aria-hidden="true">
+    <div class="stage">
       <div class="stageCompare">
         <div class="col">
           <div class="col-tag">Local</div>
@@ -1304,13 +1323,13 @@
   </section>
 
   <!-- 18 · GIT BASICS: SETTING UP -->
-  <section class="slide" data-slide="git-setup" aria-label="Git basics: setting up">
+  <section class="slide" role="group" aria-roledescription="slide" data-slide="git-setup" aria-label="Git basics: setting up">
     <div class="content">
       <div class="label">Tool</div>
-      <h1>Git Basics</h1>
-      <h2>Setting Up</h2>
+      <h2>Git Basics</h2>
+      <h3>Setting Up</h3>
     </div>
-    <div class="stage" aria-hidden="true">
+    <div class="stage">
       <div class="cmd-cards">
         <div class="cmd-card frag">
           <div class="cmd-info">
@@ -1367,13 +1386,13 @@
   </section>
 
   <!-- 19 · GIT BASICS: SYNCING & INSPECTING -->
-  <section class="slide" data-slide="git-sync" aria-label="Git basics: syncing and inspecting">
+  <section class="slide" role="group" aria-roledescription="slide" data-slide="git-sync" aria-label="Git basics: syncing and inspecting">
     <div class="content">
       <div class="label">Tool</div>
-      <h1>Git Basics</h1>
-      <h2>Syncing &amp; Inspecting</h2>
+      <h2>Git Basics</h2>
+      <h3>Syncing &amp; Inspecting</h3>
     </div>
-    <div class="stage" aria-hidden="true">
+    <div class="stage">
       <div class="cmd-cards">
         <div class="cmd-card frag">
           <div class="cmd-info">
@@ -1438,12 +1457,12 @@
   </section>
 
   <!-- 20 · LOGGING INTO GITHUB -->
-  <section class="slide" data-slide="gh-login" aria-label="Logging into GitHub from the command line">
+  <section class="slide" role="group" aria-roledescription="slide" data-slide="gh-login" aria-label="Logging into GitHub from the command line">
     <div class="content">
       <div class="label">Setup</div>
-      <h1>Logging into GitHub</h1>
+      <h2>Logging into GitHub</h2>
     </div>
-    <div class="stage" aria-hidden="true">
+    <div class="stage">
       <div class="step-grid">
         <div class="step-row frag"><div class="step-num">1</div><div class="step-text">Install the GitHub CLI — download the installer at <a href="https://cli.github.com" target="_blank" rel="noopener">cli.github.com</a> or run:<span class="code-block">brew install gh          # macOS
 winget install GitHub.cli  # Windows</span></div></div>
@@ -1456,12 +1475,12 @@ winget install GitHub.cli  # Windows</span></div></div>
   </section>
 
   <!-- 21 · STAGING, COMMITTING, AND PUSHING TO GITHUB -->
-  <section class="slide" data-slide="gh-repo" aria-label="Staging, committing, and pushing to GitHub">
+  <section class="slide" role="group" aria-roledescription="slide" data-slide="gh-repo" aria-label="Staging, committing, and pushing to GitHub">
     <div class="content">
       <div class="label">Setup</div>
-      <h1>Staging, Committing, and Pushing to GitHub</h1>
+      <h2>Staging, Committing, and Pushing to GitHub</h2>
     </div>
-    <div class="stage" aria-hidden="true">
+    <div class="stage">
       <div class="step-grid">
         <div class="step-row frag"><div class="step-num">1</div><div class="step-text">Create a README file:<span class="code-block">touch README.md</span></div></div>
         <div class="step-row frag"><div class="step-num">2</div><div class="step-text">Stage your files:<span class="code-block">git add README.md</span></div></div>
@@ -1474,21 +1493,21 @@ winget install GitHub.cli  # Windows</span></div></div>
   </section>
 
   <!-- 22 · SECTION BREAK: PART 3 -->
-  <section class="slide slide-break" data-slide="part3" style="--part:#2ea043;" aria-label="Part 3 section break">
+  <section class="slide slide-break" role="group" aria-roledescription="slide" data-slide="part3" style="--part:#2ea043;" aria-label="Part 3 section break">
     <div class="content">
       <div class="break-tag">Part 3</div>
-      <h1>Installation &amp; Setup</h1>
+      <h2>Installation &amp; Setup</h2>
       <p class="break-sub">Getting Gemini CLI running on your machine</p>
     </div>
   </section>
 
   <!-- 23 · INSTALLING GEMINI CLI -->
-  <section class="slide" data-slide="install" aria-label="Installing Gemini CLI">
+  <section class="slide" role="group" aria-roledescription="slide" data-slide="install" aria-label="Installing Gemini CLI">
     <div class="content">
       <div class="label">Setup</div>
-      <h1>Installing Gemini CLI</h1>
+      <h2>Installing Gemini CLI</h2>
     </div>
-    <div class="stage" aria-hidden="true">
+    <div class="stage">
       <div class="stageCompare">
         <div class="col">
           <div class="col-tag">Windows</div>
@@ -1518,12 +1537,12 @@ eval "$(/opt/homebrew/bin/brew shellenv)"</span>
   </section>
 
   <!-- 24 · LOGIN SETUP -->
-  <section class="slide" data-slide="login" aria-label="Login setup">
+  <section class="slide" role="group" aria-roledescription="slide" data-slide="login" aria-label="Login setup">
     <div class="content">
       <div class="label">Setup</div>
-      <h1>Login Step</h1>
+      <h2>Login Step</h2>
     </div>
-    <div class="stage" aria-hidden="true">
+    <div class="stage">
       <div class="step-grid">
         <div class="step-row frag"><div class="step-num">1</div><div class="step-text">Run <code>gemini</code> in your terminal to start authentication</div></div>
         <div class="step-row frag"><div class="step-num">2</div><div class="step-text">Choose "Login with Google" and follow the browser prompt</div></div>
@@ -1534,12 +1553,12 @@ eval "$(/opt/homebrew/bin/brew shellenv)"</span>
   </section>
 
   <!-- 25 · TROUBLESHOOTING -->
-  <section class="slide" data-slide="troubleshoot" aria-label="Troubleshooting">
+  <section class="slide" role="group" aria-roledescription="slide" data-slide="troubleshoot" aria-label="Troubleshooting">
     <div class="content">
       <div class="label">Check-in</div>
-      <h1>Troubleshooting</h1>
+      <h2>Troubleshooting</h2>
     </div>
-    <div class="stage" aria-hidden="true">
+    <div class="stage">
       <div class="stageCenter">
         <div class="stageInner">
           <div class="stageBig">Having trouble installing or logging in?</div>
@@ -1556,13 +1575,13 @@ eval "$(/opt/homebrew/bin/brew shellenv)"</span>
 
 
   <!-- 26 · UPCOMING WORKSHOP -->
-  <section class="slide" data-slide="nextsteps" aria-label="Upcoming Workshop">
+  <section class="slide" role="group" aria-roledescription="slide" data-slide="nextsteps" aria-label="Upcoming Workshop">
     <div class="content">
       <div class="label">What's Next</div>
-      <h1>Upcoming Workshop</h1>
-      <h2>Vibe-Coding Prototypes &middot; Tuesday, March 10 &middot; 4:00&ndash;5:30 pm</h2>
+      <h2>Upcoming Workshop</h2>
+      <h3>Vibe-Coding Prototypes &middot; Tuesday, March 10 &middot; 4:00&ndash;5:30 pm</h3>
     </div>
-    <div class="stage" aria-hidden="true">
+    <div class="stage">
       <div class="step-grid">
         <div class="step-row frag">
           <div class="step-num">1</div>
@@ -1581,12 +1600,12 @@ eval "$(/opt/homebrew/bin/brew shellenv)"</span>
   </section>
 
   <!-- 27 · RESOURCES -->
-  <section class="slide" data-slide="resources" aria-label="Resources">
+  <section class="slide" role="group" aria-roledescription="slide" data-slide="resources" aria-label="Resources">
     <div class="content">
       <div class="label">Resources</div>
-      <h1>Links &amp; References</h1>
+      <h2>Links &amp; References</h2>
     </div>
-    <div class="stage" aria-hidden="true">
+    <div class="stage">
       <div class="res-wrap">
 
         <div class="res-group">
@@ -1668,21 +1687,21 @@ eval "$(/opt/homebrew/bin/brew shellenv)"</span>
 </main>
 
 <!-- STICKY FOOTER SLIDER -->
-<div class="sticky-footer">
+<nav class="sticky-footer" aria-label="Slide navigation">
   <div class="footer-slider">
-    <button class="footer-arrow" id="btn-prev" aria-label="Previous slide">&#8592;</button>
+    <button class="footer-arrow" id="btn-prev" aria-label="Previous slide"><span aria-hidden="true">&#8592;</span></button>
     <div class="slider-track">
       <input type="range" id="slide-scrubber" min="1" max="27" value="1" aria-label="Navigate to slide">
       <div class="slider-progress"></div>
-      <div class="slider-thumb"></div>
+      <div class="slider-thumb" aria-hidden="true"></div>
     </div>
-    <button class="footer-arrow" id="btn-next" aria-label="Next slide">&#8594;</button>
-    <div class="footer-meta">
+    <button class="footer-arrow" id="btn-next" aria-label="Next slide"><span aria-hidden="true">&#8594;</span></button>
+    <div class="footer-meta" aria-hidden="true">
       <span id="slider-counter">1 / 27</span>
       <span class="kbd">Space</span>
     </div>
   </div>
-</div>
+</nav>
 
 <script src="src/slides.js"></script>
 </body>
